@@ -10,15 +10,16 @@
 3. NodeJS for your OS/System: https://nodejs.org/en  
 4. Install MySQL Workbench/MySQL server
 #### Project Initialization  
-1. Clone this repository to your system and navigate to it using your console:  `cd TeamFiveApp/`  
+1. Clone this repository to your system and navigate to it using your console:  `cd TeamFiveApp`  
 2. Copy and rename `appsettings.Secrets.json.EXAMPLE` to `appsettings.Secrets.json` and configure the DB connection string to your local DB credentials.  
-3. Run `dotnet restore` to install dotnet project dependencies.  
-4. Run `dotnet ef database update` to build the database. 
-5. Run `dotnet watch run` to run the backend API on localhost:5000.  
-6. In another console, `cd Client/`  
-7. Run `npm run dev` to start the frontend DEV server.  
-8. Navigate to http://localhost:8000/ on your browser.  
-9. You should see the react app.  
+3. CD into the Api: `cd Api/`
+4. Run `dotnet restore` to install dotnet project dependencies.  
+5. Run `dotnet ef database update` to build the database. 
+6. Run `dotnet watch run` to run the backend API on localhost:5000.  
+7. In another console, `cd Client/`  
+8. Run `npm run dev` to start the frontend DEV server.  
+9. Navigate to http://localhost:8000/ on your browser.  
+10. You should see the react app.  
 ---  
 ### Suggested VSCode Extensions  
 - [Postman Extension](https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode) - Allows you to run Postman directly in VSCode. (For testing API)  
