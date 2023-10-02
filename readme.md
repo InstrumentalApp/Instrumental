@@ -51,7 +51,9 @@
 1. Please see [updating a pull request](#updating-a-pull-request)  
 ---  
 ### Squashing Commits  
-TBD  i'll write this out this evening with picture examples - Josh
+
+(TBD)  
+
 ---  
 ### Updating a Pull Request  
 If you make a pull request and your reviewers request changes to your code before merging:  
