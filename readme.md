@@ -2,6 +2,9 @@
 
  - [Installation and Setup](#installation-and-setup)  
  - [Suggested VSCode Extensions](#suggested-vscode-extensions)
+ - [Github Standards](#github-standards)
+ - [Squashing Commits](#squashing-commits)
+ - [Updating a Pull Request](#updating-a-pull-request)
 ---  
 ### Installation and Setup  
 #### Dependencies  
@@ -26,3 +29,36 @@
 - [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) - Language support for C#
 - [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree) - Comments with TODO in the text are searchable, allowing you to leave TODOs in your code to fix later.
 - [React Snippets](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets) - Great boilerplates for creating a new react component quickly.  
+---  
+### Github Standards  
+#### When beginning to work on a Trello ticket  
+1. Move to the main branch and pull: 
+`git checkout main`  
+`git pull`  
+2. Create a new branch for your ticket, for example: `git checkout -b making-token-service`  
+#### Along the way
+1. Create separate commits for files. For example, If you are working on `SomeComponent.jsx` in React:
+`git add Client/src/Components/SomeComponent.jsx` (adjust the route accordingly)
+`git commit -m "Update something in SomeComponent"`
+2. If you make a second change to the same file after committing, there are multiple ways to "squash" this file's commits into one. Please see [squashing commits](#squashing-commits). This step is optional depending on your desire to learn advanced git techs, and Josh is willing to demo and explain these processes.
+#### When you are finished working / ready to push
+1. Assuming you have been committing along the way, your files should be committed.  
+2. `git push -u origin <branch name>`  
+3. Click the link in the console to open the pull request page on github.  
+4. Fill out the pull request template as much as needed, and add members as "reviewers" in the right.  
+5. Reviewers can comment and request changes to your request.  
+#### If changes are requested to your pull request
+1. Please see [updating a pull request](#updating-a-pull-request)  
+---  
+### Squashing Commits  
+TBD  i'll write this out this evening with picture examples - Josh
+---  
+### Updating a Pull Request  
+If you make a pull request and your reviewers request changes to your code before merging:  
+1. Go back to the branch you worked on for this Trello ticket/ pull request:  
+`git checkout <branch name>`  
+2. Create additional changes.  
+3. Add your changes and commit them. Optionally, [squash them](#squashing-commits) as well.  
+4. If you did not squash, `git push` will update your pull request with the new changes.  
+5. If you DID squash, you must use `git push --force` to update your request.  
+6. Await further review of your code!  
