@@ -25,8 +25,6 @@ builder.Services.AddDbContext<DBContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-builder.Services.AddCors();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigins",
@@ -44,14 +42,12 @@ app.UseCors("AllowOrigins");
 
 app.UseStaticFiles();
 
-app.UseAuthorization();
+// app.UseAuthentication();
+
+// app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapControllerRoute(
-	name: "Index",
-	pattern: "{*url}",
-	defaults: new { controller = "Public", action = "Index" }
-);
+app.MapFallbackToController("Index", "Public");
 
 app.Run();
