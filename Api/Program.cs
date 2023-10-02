@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using TeamFive.DataStorage;
+using TeamFive.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
 

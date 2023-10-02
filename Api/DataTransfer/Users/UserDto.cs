@@ -3,10 +3,10 @@ using TeamFive.Models;
 namespace TeamFive.DataTransfer.Users;
 public class UserDto
 {
-    public int Id;
-    public string FirstName;
-    public string LastName;
-    public string Email;
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
 
     public UserDto(User user)
     {

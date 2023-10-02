@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
+using TeamFive.Services.Users;
 
 namespace TeamFive.Controllers;
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
+    private readonly IUserService _userService;
+
+    public AuthController(IUserService uServ)
+    {
+        _userService = uServ;
+    }
+
     [HttpGet("hello")]
     public async Task<ActionResult<string>> HelloWorld()
     {
@@ -17,13 +25,17 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> RegisterAsync(User user)
     {
-        await Task.Delay(1);//This is here until we do something "awaitable"
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        //TODO: Create an IUserService and a UserService to handle saving user, hashing password, etc.
-        UserDto? newUser = new(user);
+
+        UserDto? newUser = await _userService.CreateAsync(user);
+
+        if (newUser == null)
+        {
+            return StatusCode(500, "Unknown error occured. Please try again.");
+        }
 
         return newUser;
     }
