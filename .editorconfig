@@ -1,0 +1,17 @@
+# Top-most EditorConfig file
+# This file ensures that full size tabs are the default in C# and 2 Space Tabs are used in React.
+root = true
+
+# ASP.NET folder and subdirectories
+[Api/**]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# React folder and subdirectories
+[Client/**]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
