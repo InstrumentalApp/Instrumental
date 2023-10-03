@@ -11,8 +11,8 @@ using TeamFive.DataStorage;
 namespace TeamFive.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20231002181733_AddRFTAndRemoveConfirmFieldFromMappings")]
-    partial class AddRFTAndRemoveConfirmFieldFromMappings
+    [Migration("20231003054713_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace TeamFive.Migrations
 
             modelBuilder.Entity("MyApp.Models.RefreshToken", b =>
                 {
-                    b.Property<int>("RefreshTokenId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -33,9 +33,6 @@ namespace TeamFive.Migrations
 
                     b.Property<DateTime>("Expiry")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
@@ -50,7 +47,7 @@ namespace TeamFive.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("RefreshTokenId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
