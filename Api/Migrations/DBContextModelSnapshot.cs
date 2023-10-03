@@ -21,7 +21,7 @@ namespace TeamFive.Migrations
 
             modelBuilder.Entity("MyApp.Models.RefreshToken", b =>
                 {
-                    b.Property<int>("RefreshTokenId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -30,9 +30,6 @@ namespace TeamFive.Migrations
 
                     b.Property<DateTime>("Expiry")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
@@ -47,7 +44,7 @@ namespace TeamFive.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("RefreshTokenId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 

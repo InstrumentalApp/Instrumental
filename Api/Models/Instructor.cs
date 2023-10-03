@@ -27,7 +27,4 @@ public class Instructor : BaseEntity
     // A description of the instructor for their profile. An "About Me" section.
     [Required]
     public string Description { get; set; }
-    
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }
