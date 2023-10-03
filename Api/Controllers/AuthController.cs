@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
+using TeamFive.Services;
 using TeamFive.Services.Users;
 
 namespace TeamFive.Controllers;
@@ -9,10 +11,12 @@ namespace TeamFive.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(IUserService uServ)
+    public AuthController(IUserService uServ, ITokenService tServ)
     {
         _userService = uServ;
+        _tokenService = tServ;
     }
 
     [HttpGet("hello")]
@@ -38,5 +42,36 @@ public class AuthController : ControllerBase
         }
 
         return newUser;
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginUser>> LoginAsync(LoginUser loginUser)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        UserDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
+
+        if (validUser == null)
+        {
+            return BadRequest("Invalid email or password");
+        }
+
+        bool refreshTokensCleared = await _tokenService.DeactivateTokensForUserAsync(validUser.Id);
+
+        if (refreshTokensCleared == false)
+        {
+            return StatusCode(500, "Error updating user tokens, try again.");
+        }
+
+        TokensDto? tokens = await _tokenService.CreateTokensDtoAsync(validUser.Id);
+
+        if (tokens == null)
+        {
+            return StatusCode(500, "Error saving new refreshtoken to database, try again.");
+        }
+        return Ok(tokens);
     }
 }
