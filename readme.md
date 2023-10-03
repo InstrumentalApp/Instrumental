@@ -19,10 +19,11 @@
 4. Run `dotnet restore` to install dotnet project dependencies.  
 5. Run `dotnet ef database update` to build the database. 
 6. Run `dotnet watch run` to run the backend API on localhost:5000.  
-7. In another console, `cd Client/`  
-8. Run `npm run dev` to start the frontend DEV server.  
-9. Navigate to http://localhost:8000/ on your browser.  
-10. You should see the react app.  
+7. In another console, `cd Client/`
+8. Run `npm i` to install frontend dependencies.
+9. Run `npm run dev` to start the frontend DEV server.  
+10. Navigate to http://localhost:8000/ on your browser.  
+11. You should see the react app.  
 ---  
 ### Suggested VSCode Extensions  
 - [Postman Extension](https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode) - Allows you to run Postman directly in VSCode. (For testing API)  
