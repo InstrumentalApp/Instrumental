@@ -14,9 +14,9 @@
 3. NodeJS for your OS/System: https://nodejs.org/en  
 4. Install MySQL Workbench/MySQL server
 #### Project Initialization  
-1. Clone this repository to your system and navigate to it using your console:  `cd TeamFiveApp`  
-2. Copy and rename `appsettings.Secrets.json.EXAMPLE` to `appsettings.Secrets.json` and configure the DB connection string to your local DB credentials.  
-3. CD into the Api: `cd Api/`  
+1. Clone this repository to your system and navigate to it using your console:  `cd TeamFiveApp`
+2.  CD into the Api: `cd Api/`  
+3. Copy and rename `appsettings.Secrets.json.EXAMPLE` to `appsettings.Secrets.json` and configure the DB connection string to your local DB credentials.    
 4. Run `dotnet restore` to install dotnet project dependencies.  
 5. Run `dotnet ef database update` to build the database. 
 6. Run `dotnet watch run` to run the backend API on localhost:5000.  
