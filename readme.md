@@ -5,6 +5,7 @@
  - [Github Standards](#github-standards)
  - [Squashing Commits](#squashing-commits)
  - [Updating a Pull Request](#updating-a-pull-request)
+ - [Api Routes](#api-routes)
 ---  
 ### Installation and Setup  
 #### Dependencies  
@@ -65,3 +66,42 @@ If you make a pull request and your reviewers request changes to your code befor
 4. If you did not squash, `git push` will update your pull request with the new changes.  
 5. If you DID squash, you must use `git push --force` to update your request.  
 6. Await further review of your code!  
+---
+### Api Routes  
+#### Register New User: /api/auth/register  
+Expected JSON:   
+```
+{
+	"firstName":"Jane",
+	"lastName": "Doe",
+	"email": "example@mail.com",
+	"password":"Password1!",
+	"confirm": "Password1!"
+}
+```
+Returned JSON:  
+```
+{
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "example@mail.com"
+}
+```
+#### Login: /api/auth/login  
+Expected JSON:  
+```
+{
+    "email":"example@mail.com",
+    "password": "Password1!"
+}
+```
+Returned JSON:  (This will be altered based on needed dashboard data)
+```
+{
+
+    "refreshToken": "WjMSxiBLYViMk6hM1m6eFZ1s37JQAFC70RCX8BvBqsU=",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE2OTY0NTk4MjQsImV4cCI6MTY5NjQ2NzAyNCwiaWF0IjoxNjk2NDU5ODI0LCJpc3MiOiJUZWFtRml2ZSIsImF1ZCI6IkxvY2FsSG9zdCJ9.Z16Wl0J4rKR7n0xA8nSFtU_TN163a9UC9J5GEmn4T4E"
+}
+```
+
