@@ -27,5 +27,4 @@ public class Instructor : BaseEntity
     // A description of the instructor for their profile. An "About Me" section.
     [Required]
     public string Description { get; set; }
-
 }
