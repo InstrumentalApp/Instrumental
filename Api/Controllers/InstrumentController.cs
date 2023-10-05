@@ -8,8 +8,14 @@ using TeamFive.Services.Users;
 
 namespace TeamFive.Controllers;
 
-public class InstrumentController
+public class InstrumentController : ControllerBase
 {
+  private readonly DBContext _context;
+
+  public InstrumentController(DBContext context)
+  {
+    _context = context;
+  }
 
   // First Call to Database to return full instrument list stored in DB.
   // Call could be used to populate full list of instruments to choose lesson from or offer lesson for teachers.
@@ -21,7 +27,7 @@ public class InstrumentController
     await Task.Delay(1);
 
     // Return full list of all instruments, unsorted
-    List<Instrument> InstrumentList = DBContext.Instruments.ToList();
+    List<Instrument> InstrumentList = _context.Instruments.ToList();
 
     return (InstrumentList);
   } 
@@ -37,7 +43,7 @@ public class InstrumentController
     await Task.Delay(1);
 
     // Returns list of instruments, where Category = category in search
-    List<Instrument> InstrumentCategory = DBContext.Instruments.Where(i => i.Category == category).ToList();
+    List<Instrument> InstrumentCategory = _context.Instruments.Where(i => i.Category == category).ToList();
 
     return (InstrumentCategory);
   }

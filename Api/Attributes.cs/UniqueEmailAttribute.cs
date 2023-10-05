@@ -1,14 +1,28 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TeamFive.DataStorage;
 using MyApp.Models;
+using TeamFive.DataTransfer.Tokens;
+using TeamFive.DataTransfer.Users;
+using TeamFive.Models;
+using TeamFive.Services;
+using TeamFive.Services.Users;
 
-namespace TeamFive.Models;
+namespace TeamFive.Attributes;
 
 // Below is a check in our database (_context) for any objects holding the entered email in their email field
 
 public class UniqueEmailAttribute : ValidationAttribute
 {
+
+  private readonly DBContext _context;
+
+  public UniqueEmailAttribute(DBContext context)
+  {
+    _context = context;
+  }
+
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
   {
     if(value == null)
