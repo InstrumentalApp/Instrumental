@@ -7,7 +7,8 @@ using TeamFive.Services;
 using TeamFive.Services.Users;
 
 namespace TeamFive.Controllers;
-
+[ApiController]
+[Route("api/instrument")]
 public class InstrumentController : ControllerBase
 {
   private readonly DBContext _context;
@@ -20,7 +21,7 @@ public class InstrumentController : ControllerBase
   // First Call to Database to return full instrument list stored in DB.
   // Call could be used to populate full list of instruments to choose lesson from or offer lesson for teachers.
 
-  [HttpGet("instruments")]
+  [HttpGet("all")]
   public async Task<ActionResult<List<Instrument>>> AllInstruments()
   {
 
@@ -36,7 +37,7 @@ public class InstrumentController : ControllerBase
   // Get Instruments by Category
   // This was chosen as a string search since an int category was suggested against for the React app
 
-  [HttpGet("instruments/{category}")]
+  [HttpGet("{category}")]
   public async Task<ActionResult<List<Instrument>>> InstrumentCategory(string category)
   {
 
@@ -48,6 +49,5 @@ public class InstrumentController : ControllerBase
     return (InstrumentCategory);
   }
 
-  
 
 }
