@@ -8,14 +8,6 @@ public class Instructor : BaseEntity
     [Required]
     public int YearsExperience { get; set; }
 
-    // A bool for having your teaching profile show on the page if you are accepting students
-    [Required]
-    public bool AcceptingStudents { get; set; } = true;
-
-    // A list of instruments you are offering lessons in
-    [Required]
-    public List<Instrument> LessonCatalogue { get; set; }
-
     // Location of the current instrutor offering lessons, to match with students
     [Required]
     public string Location { get; set;  }
@@ -26,5 +18,13 @@ public class Instructor : BaseEntity
 
     // A description of the instructor for their profile. An "About Me" section.
     [Required]
-    public string Description { get; set; }
+    public string InstructorAboutMe { get; set; }
+    // A bool for having your teaching profile show on the page if you are accepting students
+    
+    [Required]
+    public bool AcceptingNewStudents { get; set; } = true;
+
+    // A list of instruments you are offering lessons in
+    [Required]
+    public List<Lesson> LessonCatalogue { get; set; }
 }
