@@ -20,7 +20,6 @@ public class DBContext : DbContext
 
     public DBContext(DbContextOptions options) : base(options) { }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Seed();
@@ -38,8 +37,8 @@ public class DBContext : DbContext
         .WithMany(l => l.BookedStudents)
         .HasForeignKey(sl => sl.LessonId);
 
+        modelBuilder.Entity<RefreshToken>().HasQueryFilter(u => u.IsActive);
     }
-
 }
 
 
