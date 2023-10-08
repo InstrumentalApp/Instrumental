@@ -6,6 +6,7 @@ using TeamFive.Models;
 using TeamFive.Services;
 using TeamFive.Services.Users;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -59,7 +60,8 @@ public class AuthController : ControllerBase
 
         if (validUser == null)
         {
-            return BadRequest("Invalid email or password");
+            ModelState.AddModelError("email", "Invalid email or password");
+            return BadRequest(ModelState);
         }
 
         bool refreshTokensCleared = await _tokenService.DeactivateTokensForUserAsync(validUser.Id);
