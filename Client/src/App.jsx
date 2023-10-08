@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
 import NavBar from './Components/NavBar';
+import Login from './Components/Login';
+import { Route, Routes } from 'react-router-dom';
+import Example from './Components/Example';
 
 function App() {
 
@@ -19,8 +22,11 @@ function App() {
 
   return (
     <>
-      <h1>{hello}</h1>
-      <NavBar/>
+      <NavBar />
+      <Routes>
+        <Route path="/hello" element={<Example />} />
+        <Route path="/sign-in" element={<Login />} />
+      </Routes>
     </>
   )
 }
