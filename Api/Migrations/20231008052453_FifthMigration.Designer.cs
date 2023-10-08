@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeamFive.DataStorage;
 
@@ -10,9 +11,11 @@ using TeamFive.DataStorage;
 namespace TeamFive.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20231008052453_FifthMigration")]
+    partial class FifthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,41 +86,6 @@ namespace TeamFive.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            AcceptingNewStudents = true,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5965),
-                            InstructorAboutMe = "Best Floutist on the web",
-                            Location = "Online",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5965),
-                            WillingToTravel = false,
-                            YearsExperience = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AcceptingNewStudents = false,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5970),
-                            InstructorAboutMe = "Teaching Guitar up and down the Coast.",
-                            Location = "Sacremento, CA",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5970),
-                            WillingToTravel = true,
-                            YearsExperience = 10
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AcceptingNewStudents = true,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5971),
-                            InstructorAboutMe = "When the student is ready, the teacher will appear.",
-                            Location = "Hidden Cave, Sacred Mountains",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5972),
-                            WillingToTravel = false,
-                            YearsExperience = 100
-                        });
                 });
 
             modelBuilder.Entity("TeamFive.Models.Instrument", b =>
@@ -137,10 +105,15 @@ namespace TeamFive.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Instruments");
 
@@ -149,49 +122,49 @@ namespace TeamFive.Migrations
                         {
                             Id = 1,
                             Category = "String Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6228),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7815),
                             InstrumentName = "Acoustic Guitar",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6231)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7818)
                         },
                         new
                         {
                             Id = 2,
                             Category = "String Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6423),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7967),
                             InstrumentName = "Electric Guitar",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6424)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7967)
                         },
                         new
                         {
                             Id = 3,
                             Category = "String Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6440),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7982),
                             InstrumentName = "Violin",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6440)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7982)
                         },
                         new
                         {
                             Id = 4,
                             Category = "Woodwind Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6453),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7995),
                             InstrumentName = "Flute",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6453)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(7996)
                         },
                         new
                         {
                             Id = 5,
                             Category = "Woodwind Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6484),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(8027),
                             InstrumentName = "Clarinet",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6484)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(8028)
                         },
                         new
                         {
                             Id = 6,
                             Category = "Woodwind Instruments",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6503),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(8048),
                             InstrumentName = "Saxophone",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 409, DateTimeKind.Utc).AddTicks(6503)
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 224, DateTimeKind.Utc).AddTicks(8048)
                         });
                 });
 
@@ -210,10 +183,6 @@ namespace TeamFive.Migrations
 
                     b.Property<int>("InstructorId")
                         .HasColumnType("int");
-
-                    b.Property<string>("LessonName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("LessonTypeId")
                         .HasColumnType("int");
@@ -234,56 +203,6 @@ namespace TeamFive.Migrations
                     b.HasIndex("LessonTypeId");
 
                     b.ToTable("Lessons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6045),
-                            Description = "First Lesson: $50 per lesson",
-                            InstructorId = 3,
-                            LessonName = "Beginner Guitar",
-                            LessonTypeId = 1,
-                            OnlineAvailable = true,
-                            PricePerLesson = 50,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6046)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6051),
-                            Description = "Second Lesson: $100 per lesson",
-                            InstructorId = 3,
-                            LessonName = "Intermediate Electric Guitar",
-                            LessonTypeId = 2,
-                            OnlineAvailable = false,
-                            PricePerLesson = 100,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6051)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6054),
-                            Description = "Third Lesson: $150 per lesson",
-                            InstructorId = 4,
-                            LessonName = "Beginner Violin",
-                            LessonTypeId = 3,
-                            OnlineAvailable = true,
-                            PricePerLesson = 150,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6054)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6057),
-                            Description = "Fourth Lesson: $200 per lesson",
-                            InstructorId = 4,
-                            LessonName = "Expert Flute",
-                            LessonTypeId = 4,
-                            OnlineAvailable = false,
-                            PricePerLesson = 200,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6057)
-                        });
                 });
 
             modelBuilder.Entity("TeamFive.Models.Student", b =>
@@ -320,41 +239,6 @@ namespace TeamFive.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5913),
-                            Description = "The First Student in Instrumental",
-                            FirstName = "John",
-                            LastName = "Doe",
-                            Location = "Online",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5917),
-                            WillingToTravel = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5924),
-                            Description = "Second Student in DB",
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            Location = "Seattle, WA",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5924),
-                            WillingToTravel = true
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5926),
-                            Description = "When the student is truly ready, the teacher disappears.",
-                            FirstName = "Eve",
-                            LastName = "Davis",
-                            Location = "Hidden Cave, Sacred Mountains",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(5927),
-                            WillingToTravel = false
-                        });
                 });
 
             modelBuilder.Entity("TeamFive.Models.StudentLessonBooking", b =>
@@ -378,6 +262,9 @@ namespace TeamFive.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<int>("LessonNameId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -385,29 +272,9 @@ namespace TeamFive.Migrations
 
                     b.HasIndex("LessonId");
 
-                    b.ToTable("StudentLessonBookings");
+                    b.HasIndex("LessonNameId");
 
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            LessonId = 1,
-                            BookingDate = new DateTime(2023, 10, 8, 0, 39, 13, 837, DateTimeKind.Local).AddTicks(6104),
-                            BookingNotes = "Notes for the first Booking",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6094),
-                            Id = 1,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6095)
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            LessonId = 3,
-                            BookingDate = new DateTime(2023, 10, 8, 0, 39, 13, 837, DateTimeKind.Local).AddTicks(6186),
-                            BookingNotes = "Notes for the second Booking",
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6184),
-                            Id = 1,
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 837, DateTimeKind.Utc).AddTicks(6185)
-                        });
+                    b.ToTable("StudentLessonBookings");
                 });
 
             modelBuilder.Entity("TeamFive.Models.User", b =>
@@ -446,52 +313,52 @@ namespace TeamFive.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 415, DateTimeKind.Utc).AddTicks(5276),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 229, DateTimeKind.Utc).AddTicks(5344),
                             Email = "a@email.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "AQAAAAIAAYagAAAAEKEnvwPZoQiLUuWOzzS+S57E3zxE8wbLQJ8cdC6PojR6V75re9Eosw1Vpm22XXYyJQ==",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 415, DateTimeKind.Utc).AddTicks(5281)
+                            Password = "AQAAAAIAAYagAAAAEIYbMoMeW1kaBZP2S7N2F8+5L9koVQLow71nCrrzqVjcHMIFAn9wo3Y7D+Xsj/QnPA==",
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 229, DateTimeKind.Utc).AddTicks(5349)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 491, DateTimeKind.Utc).AddTicks(6136),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 305, DateTimeKind.Utc).AddTicks(8815),
                             Email = "b@email.com",
                             FirstName = "Jane",
                             LastName = "Smith",
-                            Password = "AQAAAAIAAYagAAAAEMnZI3nxZXVBpJWuOdiGEgfI/hrYfC/Pwtaxyc68JGEjbUh+0rYY5TLpNKyGBhzl0Q==",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 491, DateTimeKind.Utc).AddTicks(6144)
+                            Password = "AQAAAAIAAYagAAAAECotU5J+Wy8P30iiaxzjN1FY4y/QwDlz1uKHZAGjoeVhN92cxbw1m7nI9dGE6+zqpg==",
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 305, DateTimeKind.Utc).AddTicks(8820)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 572, DateTimeKind.Utc).AddTicks(5638),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 382, DateTimeKind.Utc).AddTicks(9742),
                             Email = "c@email.com",
                             FirstName = "Alice",
                             LastName = "Johnson",
-                            Password = "AQAAAAIAAYagAAAAEDi/PytRqjZNhHywmPXJhSNcCw7dN6QQWPnuD3K+w/zI66SgbPDMnQvpguyCR86+gA==",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 572, DateTimeKind.Utc).AddTicks(5643)
+                            Password = "AQAAAAIAAYagAAAAEPYpW2v+pVl5kVmoP61E0UUIJ31plkjsqzefgQiu1Oi0K+xfhuAEM28eAA53U08kpA==",
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 382, DateTimeKind.Utc).AddTicks(9746)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 650, DateTimeKind.Utc).AddTicks(712),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 466, DateTimeKind.Utc).AddTicks(8651),
                             Email = "d@email.com",
                             FirstName = "Bob",
                             LastName = "Williams",
-                            Password = "AQAAAAIAAYagAAAAEMAs0fG16m8SC/aRhSermx+gxoKHEIxTxjKLsX1K0aRxv6cHWdPR4Y/e099sDUNrvg==",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 650, DateTimeKind.Utc).AddTicks(717)
+                            Password = "AQAAAAIAAYagAAAAED0VtxhNDg6z6vvVaApO16mnwNFPE1icLXIPA2wBvLNYOSxNP8CTDvMIHXhTOlmGow==",
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 466, DateTimeKind.Utc).AddTicks(8655)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 744, DateTimeKind.Utc).AddTicks(6068),
+                            CreatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 571, DateTimeKind.Utc).AddTicks(406),
                             Email = "e@email.com",
                             FirstName = "Eve",
                             LastName = "Davis",
-                            Password = "AQAAAAIAAYagAAAAENJ+6DEIFtSf65/ijpIffATpF8SRn0vp3IvW3zpn7RdIkmnM8HqjTxmlZ1b/MNlpPA==",
-                            UpdatedAt = new DateTime(2023, 10, 8, 7, 39, 13, 744, DateTimeKind.Utc).AddTicks(6072)
+                            Password = "AQAAAAIAAYagAAAAEMuztCTGFDiY+1oexy5StMKkOe/g0W4BU2JKHZYfxlfrAJ0uh5gA04fRIwAugD6ARA==",
+                            UpdatedAt = new DateTime(2023, 10, 8, 5, 24, 53, 571, DateTimeKind.Utc).AddTicks(411)
                         });
                 });
 
@@ -504,6 +371,13 @@ namespace TeamFive.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TeamFive.Models.Instrument", b =>
+                {
+                    b.HasOne("TeamFive.Models.Student", null)
+                        .WithMany("SeekingLessons")
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("TeamFive.Models.Lesson", b =>
@@ -533,6 +407,12 @@ namespace TeamFive.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TeamFive.Models.Lesson", "LessonName")
+                        .WithMany()
+                        .HasForeignKey("LessonNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TeamFive.Models.Student", "BookingStudent")
                         .WithMany("BookedLessons")
                         .HasForeignKey("StudentId")
@@ -542,6 +422,8 @@ namespace TeamFive.Migrations
                     b.Navigation("BookingLesson");
 
                     b.Navigation("BookingStudent");
+
+                    b.Navigation("LessonName");
                 });
 
             modelBuilder.Entity("TeamFive.Models.Instructor", b =>
@@ -557,6 +439,8 @@ namespace TeamFive.Migrations
             modelBuilder.Entity("TeamFive.Models.Student", b =>
                 {
                     b.Navigation("BookedLessons");
+
+                    b.Navigation("SeekingLessons");
                 });
 #pragma warning restore 612, 618
         }
