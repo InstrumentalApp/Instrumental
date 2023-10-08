@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeamFive.DataStorage;
 
@@ -10,9 +11,11 @@ using TeamFive.DataStorage;
 namespace TeamFive.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20231006055132_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace TeamFive.Migrations
 
             modelBuilder.Entity("MyApp.Models.RefreshToken", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RefreshTokenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -30,6 +33,9 @@ namespace TeamFive.Migrations
 
                     b.Property<DateTime>("Expiry")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
@@ -44,7 +50,7 @@ namespace TeamFive.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("RefreshTokenId");
 
                     b.HasIndex("UserId");
 

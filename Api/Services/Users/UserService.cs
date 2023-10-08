@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeamFive.DataStorage;
@@ -16,9 +17,11 @@ public class UserService : IUserService
 
     public async Task<UserDto?> CreateAsync(User user)
     {
-        //TODO: Add password hashing.
         try
         {
+            PasswordHasher<User> hasher = new();
+            user.Password = hasher.HashPassword(user, user.Password);
+
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return new UserDto(user);
@@ -33,5 +36,18 @@ public class UserService : IUserService
             Console.WriteLine("Unkown error in UserService.CreateAsync");
             return null;
         }
+    }
+
+    public async Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser)
+    {
+         User? check = await _context.Users.Where(u => u.Email == loginUser.Email).FirstOrDefaultAsync();
+
+        if (check == null) return null;
+
+        PasswordHasher<LoginUser> hasher = new();
+
+        if (hasher.VerifyHashedPassword(loginUser, check.Password, loginUser.Password) == 0) return null;
+
+        return new UserDto(check);
     }
 }

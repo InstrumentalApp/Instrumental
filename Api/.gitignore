@@ -28,4 +28,6 @@ sketch
 
 appsettings.Secrets.json
 
+*.sln
+
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,react
