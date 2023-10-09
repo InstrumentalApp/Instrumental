@@ -9,6 +9,6 @@ public interface ITokenService
     Task<TokensDto?> CreateTokensDtoAsync(int userId);
     string GenerateAccessToken(int id);
     //TODO: Task<int> ValidateRefreshTokenAsync(string rft);
-    //TODO: Task<TokensDto?> DoRefreshActionAsync(string rft);
+    Task<TokensDto?> DoRefreshActionAsync(RefreshRequestDto refreshRequest);
     //TODO: int GetClaimFromHeaderValue(HttpRequest request);
 }

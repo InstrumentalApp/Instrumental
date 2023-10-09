@@ -23,7 +23,7 @@
 7. In another console, `cd Client/`
 8. Run `npm i` to install frontend dependencies.
 9. Run `npm run dev` to start the frontend DEV server.  
-10. Navigate to http://localhost:8000/ on your browser.  
+10. Navigate to http://localhost:8000/hello on your browser.  
 11. You should see the react app.  
 ---  
 ### Suggested VSCode Extensions  
