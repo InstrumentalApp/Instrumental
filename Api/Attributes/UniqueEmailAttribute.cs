@@ -15,22 +15,15 @@ namespace TeamFive.Attributes;
 
 public class UniqueEmailAttribute : ValidationAttribute
 {
-
-  private readonly DBContext _context;
-
-  public UniqueEmailAttribute(DBContext context)
-  {
-    _context = context;
-  }
-
   protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
   {
+
     if(value == null)
     {
       return new ValidationResult("Email is required");
     }
 
-    DBContext _context = (DBContext)validationContext.GetService(typeof(DBContext));
+    DBContext _context = (DBContext)validationContext.GetService(typeof(DBContext))!;
 
     if(_context.Users.Any(e => e.Email == value.ToString()))
     {

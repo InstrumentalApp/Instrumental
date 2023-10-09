@@ -107,4 +107,22 @@ public class TokenService : ITokenService
             return false;
         }
     }
+
+    public async Task<TokensDto?> DoRefreshActionAsync(RefreshRequestDto refreshRequest)
+    {
+        RefreshToken? check = await _context.RefreshTokens
+            .Include(t=>t.User)
+            .Where(t => t.Value == refreshRequest.Value)
+            .FirstOrDefaultAsync();
+        if (check == null || check.User == null)
+        {
+            return null;
+        }
+        TokensDto? tokensDto = await CreateTokensDtoAsync(check.User.Id);
+        if (tokensDto == null)
+        {
+            return null;
+        }
+        return tokensDto;
+    }
 }

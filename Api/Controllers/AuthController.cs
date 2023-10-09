@@ -6,6 +6,7 @@ using TeamFive.Models;
 using TeamFive.Services;
 using TeamFive.Services.Users;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -14,30 +15,19 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
-    private readonly DBContext _context;
 
     public AuthController(IUserService uServ, ITokenService tServ, DBContext context)
     {
         _userService = uServ;
         _tokenService = tServ;
-        _context = context;
     }
 
 
     [HttpGet("hello")]
     public async Task<ActionResult<string>> HelloWorld()
     {
-
-        Instrument? instrument = _context.Instruments.FirstOrDefault(i => i.Id == 1);
-        string instrumentString = instrument.InstrumentName + " : " + instrument.Category;
-
-        User? firstUser = _context.Users.FirstOrDefault(u => u.Id == 1);
-        string userName = firstUser.FirstName + " " + firstUser.LastName;
         await Task.Delay(1);//This is here until we do something "awaitable"
-        
-
-        // return "Hello world, From the C# API!" ;
-        return instrumentString;
+        return "Hello world, From the C# API!" ;
     }
 
     [HttpPost("register")]
@@ -70,7 +60,8 @@ public class AuthController : ControllerBase
 
         if (validUser == null)
         {
-            return BadRequest("Invalid email or password");
+            ModelState.AddModelError("email", "Invalid email or password");
+            return BadRequest(ModelState);
         }
 
         bool refreshTokensCleared = await _tokenService.DeactivateTokensForUserAsync(validUser.Id);
@@ -87,5 +78,20 @@ public class AuthController : ControllerBase
             return StatusCode(500, "Error saving new refreshtoken to database, try again.");
         }
         return Ok(tokens);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<ActionResult<TokensDto>> DoRefreshAsync(RefreshRequestDto refreshRequest)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        TokensDto? tokens = await _tokenService.DoRefreshActionAsync(refreshRequest);
+        if (tokens == null)
+        {
+            return BadRequest("Something went wrong, try again.");
+        }
+        return tokens;
     }
 }
