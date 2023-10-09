@@ -5,6 +5,7 @@ using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 using TeamFive.Services;
 using TeamFive.Services.Users;
+using TeamFive.Services.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -27,7 +28,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<string>> HelloWorld()
     {
         await Task.Delay(1);//This is here until we do something "awaitable"
-        return "Hello world, From the C# API!" ;
+        return "Hello world, From the C# API!";
     }
 
     [HttpPost("register")]
