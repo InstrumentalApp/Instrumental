@@ -29,6 +29,8 @@ public class User : BaseEntity
     //Associations
     public ICollection<RefreshToken> RefreshTokens = new List<RefreshToken>();
 
+    public List<UserLessonBooking> BookedLessons { get; set; } = new List<UserLessonBooking>();
+
 
     // Custom validation
     public class StrongPasswordAttribute : ValidationAttribute

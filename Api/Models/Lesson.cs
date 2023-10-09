@@ -28,7 +28,7 @@ public class Lesson : BaseEntity
     public int InstructorId { get; set; }
     public Instructor? LessonInstructor { get; set; }
 
-    public List<StudentLessonBooking> BookedStudents { get;set; } = new List<StudentLessonBooking>();
+    public List<UserLessonBooking> BookedUser { get;set; } = new List<UserLessonBooking>();
 }
 
 

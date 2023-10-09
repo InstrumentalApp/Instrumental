@@ -80,25 +80,6 @@ public static class ModelBuilderExtensions
 
 
 
-    // SeedData for Students ------------------------
-
-    Student student1 = new Student() { Id = firstUser.Id, FirstName = firstUser.FirstName, LastName = firstUser.LastName, Location = "Online", WillingToTravel = false, Description = "The First Student in Instrumental"};
-
-    Student student2 = new Student() { Id = secondUser.Id, FirstName = secondUser.FirstName, LastName = secondUser.LastName, Location = "Seattle, WA", WillingToTravel = true, Description = "Second Student in DB"};
-
-    // This student is also an instructor
-    Student student3 = new Student() { Id = fifthUser.Id, FirstName = fifthUser.FirstName, LastName = fifthUser.LastName, Location = "Hidden Cave, Sacred Mountains", WillingToTravel = false, Description = "When the student is truly ready, the teacher disappears."};    
-
-    // Student List
-    List<Student> StudentSeedList = new List<Student>();
-    StudentSeedList.Add(student1);
-    StudentSeedList.Add(student2);
-    StudentSeedList.Add(student3);
-
-    // Builder Seed
-    modelBuilder.Entity<Student>().HasData(StudentSeedList);
-
-
 
 
     // Seed Data for Instructors ---------------------
@@ -144,23 +125,23 @@ public static class ModelBuilderExtensions
     modelBuilder.Entity<Lesson>().HasData(LessonSeedList);
 
 
-    // Seed Data for StudentLessonBooking 
+    // Seed Data for UserLessonBooking 
 
-    StudentLessonBooking studentLessonBooking1 = new StudentLessonBooking() {
-      Id = 1, BookingDate = DateTime.Now, BookingNotes = "Notes for the first Booking", LessonId = instructor1Lesson1.Id, StudentId = student1.Id
+    UserLessonBooking UserLessonBooking1 = new UserLessonBooking() {
+      Id = 1, BookingDate = DateTime.Now, BookingNotes = "Notes for the first Booking", LessonId = instructor1Lesson1.Id, UserId = firstUser.Id
     };
 
-    StudentLessonBooking studentLessonBooking2 = new StudentLessonBooking() {
-      Id = 2, BookingDate = DateTime.Now, BookingNotes = "Notes for the second Booking", LessonId = instructor2Lesson1.Id, StudentId = student2.Id
+    UserLessonBooking UserLessonBooking2 = new UserLessonBooking() {
+      Id = 2, BookingDate = DateTime.Now, BookingNotes = "Notes for the second Booking", LessonId = instructor2Lesson1.Id, UserId = secondUser.Id
     };
 
     // Bookings List
-    List<StudentLessonBooking> studentLessonBookingsList = new List<StudentLessonBooking>();
-    studentLessonBookingsList.Add(studentLessonBooking1);
-    studentLessonBookingsList.Add(studentLessonBooking2);
+    List<UserLessonBooking> UserLessonBookingsList = new List<UserLessonBooking>();
+    UserLessonBookingsList.Add(UserLessonBooking1);
+    UserLessonBookingsList.Add(UserLessonBooking2);
 
     // Builder Seed
-    modelBuilder.Entity<StudentLessonBooking>().HasData(studentLessonBookingsList);
+    modelBuilder.Entity<UserLessonBooking>().HasData(UserLessonBookingsList);
 
   }
 

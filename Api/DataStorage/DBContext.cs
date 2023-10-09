@@ -13,9 +13,8 @@ public class DBContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Instrument> Instruments { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
-    public DbSet<Student> Students { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
-    public DbSet<StudentLessonBooking> StudentLessonBookings { get; set; }
+    public DbSet<UserLessonBooking> UserLessonBookings { get; set; }
 
 
     public DBContext(DbContextOptions options) : base(options) { }
@@ -24,17 +23,17 @@ public class DBContext : DbContext
     {
         modelBuilder.Seed();
 
-        modelBuilder.Entity<StudentLessonBooking>()
-        .HasKey(sl => new { sl.StudentId, sl.LessonId });
+        modelBuilder.Entity<UserLessonBooking>()
+        .HasKey(sl => new { sl.UserId, sl.LessonId });
 
-        modelBuilder.Entity<StudentLessonBooking>()
-        .HasOne(sl => sl.BookingStudent)
+        modelBuilder.Entity<UserLessonBooking>()
+        .HasOne(sl => sl.BookingUser)
         .WithMany(s => s.BookedLessons)
-        .HasForeignKey(sl => sl.StudentId);
+        .HasForeignKey(sl => sl.UserId);
 
-        modelBuilder.Entity<StudentLessonBooking>()
+        modelBuilder.Entity<UserLessonBooking>()
         .HasOne(sl => sl.BookingLesson)
-        .WithMany(l => l.BookedStudents)
+        .WithMany(l => l.BookedUser)
         .HasForeignKey(sl => sl.LessonId);
 
         modelBuilder.Entity<RefreshToken>().HasQueryFilter(u => u.IsActive);
