@@ -8,7 +8,7 @@ using MyApp.Models;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer.Tokens;
 
-namespace TeamFive.Services;
+namespace TeamFive.Services.Tokens;
 public class TokenService : ITokenService
 {
     private readonly DBContext _context;

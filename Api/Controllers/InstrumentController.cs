@@ -1,21 +1,26 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 using TeamFive.Services;
-using TeamFive.Services.Users;
+using TeamFive.Services.Tokens;
+using TeamFive.Services.Instruments;
 
 namespace TeamFive.Controllers;
 [ApiController]
 [Route("api/instrument")]
 public class InstrumentController : ControllerBase
 {
-  private readonly DBContext _context;
+  // Calls on IInstrumentService
+  private readonly IInstrumentService _instrumentService;
 
-  public InstrumentController(DBContext context)
+  // Imports Context and _isntrumentService
+  public InstrumentController(IInstrumentService InstService)
   {
-    _context = context;
+    _instrumentService = InstService;
   }
 
   // First Call to Database to return full instrument list stored in DB.
@@ -25,29 +30,22 @@ public class InstrumentController : ControllerBase
   public async Task<ActionResult<List<Instrument>>> AllInstruments()
   {
 
-    await Task.Delay(1);
-
     // Return full list of all instruments, unsorted
-    List<Instrument> InstrumentList = _context.Instruments.ToList();
+    // Needs await because it is calling an API
 
-    return (InstrumentList);
+    List<Instrument> instrumentList = await _instrumentService.AllInstruments();
+
+    return instrumentList;
   } 
 
 
-  // Get Instruments by Category
-  // This was chosen as a string search since an int category was suggested against for the React app
-
-  [HttpGet("{category}")]
-  public async Task<ActionResult<List<Instrument>>> InstrumentCategory(string category)
+  [HttpGet("one")]
+  public async Task<ActionResult<Instrument>> OneInstrument()
   {
+    Instrument? oneInstrument = await _instrumentService.OneInstrument();
 
-    await Task.Delay(1);
-
-    // Returns list of instruments, where Category = category in search
-    List<Instrument> InstrumentCategory = _context.Instruments.Where(i => i.Category == category).ToList();
-
-    return (InstrumentCategory);
-  }
+    return oneInstrument;
+  } 
 
 
 }

@@ -40,7 +40,7 @@ public class UserService : IUserService
 
     public async Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser)
     {
-         User? check = await _context.Users.Where(u => u.Email == loginUser.Email).FirstOrDefaultAsync();
+        User? check = await _context.Users.Where(u => u.Email == loginUser.Email).FirstOrDefaultAsync();
 
         if (check == null) return null;
 

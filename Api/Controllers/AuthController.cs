@@ -5,7 +5,9 @@ using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 using TeamFive.Services;
 using TeamFive.Services.Users;
+using TeamFive.Services.Tokens;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -28,16 +30,25 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<string>> HelloWorld()
     {
 
+
         Instrument? instrument = _context.Instruments.FirstOrDefault(i => i.Id == 1);
         string instrumentString = instrument.InstrumentName + " : " + instrument.Category;
 
         User? firstUser = _context.Users.FirstOrDefault(u => u.Id == 1);
         string userName = firstUser.FirstName + " " + firstUser.LastName;
-        await Task.Delay(1);//This is here until we do something "awaitable"
         
+        Lesson? firstLesson = _context.Lessons.FirstOrDefault(l => l.Id == 1);
+        string lessonName = firstLesson.LessonName;
+
+        
+        string firstLessonJson = JsonSerializer.Serialize(firstLesson);
+        Console.WriteLine("------------------" + firstLessonJson + "------------------" );
+
+        
+        await Task.Delay(1);//This is here until we do something "awaitable"
 
         // return "Hello world, From the C# API!" ;
-        return instrumentString;
+        return "Welcome to Instrumental";
     }
 
     [HttpPost("register")]

@@ -5,6 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using TeamFive.DataStorage;
 using TeamFive.Services;
 using TeamFive.Services.Users;
+using TeamFive.Services.Tokens;
+using TeamFive.Services.Instruments;
+using TeamFive.Services.Instructors;
+using TeamFive.Services.Lessons;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IInstrumentService, InstrumentService>();
+builder.Services.AddScoped<ILessonService, LessonService>();
+builder.Services.AddScoped<IInstructorService, InstructorService>();
 
 builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
 

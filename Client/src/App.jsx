@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
+import InstrumentComponent from './Components/Instrument';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <h1>{hello}</h1>
+      <div><InstrumentComponent /></div>
     </>
   )
 }

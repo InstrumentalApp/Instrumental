@@ -17,7 +17,7 @@ public static class ModelBuilderExtensions
     // InstrumentJson data is formatted to Instrument Model
     string InstrumentJson = 
                 @"[
-                    {""Id"": 1, ""InstrumentName"": ""Acoustic Guitar"", ""Category"": ""String Instruments""},
+                    {""Id"": 1, ""InstrumentName"": ""Cello"", ""Category"": ""String Instruments""},
                     {""Id"": 2, ""InstrumentName"": ""Electric Guitar"", ""Category"": ""String Instruments""},
                     {""Id"": 3, ""InstrumentName"": ""Violin"", ""Category"": ""String Instruments""},
                     {""Id"": 4, ""InstrumentName"": ""Flute"", ""Category"": ""Woodwind Instruments""},
@@ -50,16 +50,16 @@ public static class ModelBuilderExtensions
     User firstUser = new User { Id = 1, FirstName = "John", LastName = "Doe", Email = "a@email.com", Password = "99999999"};
     firstUser.Password = hasher.HashPassword(firstUser, firstUser.Password);
 
-    User secondUser = new User { Id = 2, FirstName = "Jane", LastName = "Smith", Email = "b@email.com", Password = "88888888" };
+    User secondUser = new User { Id = 2, FirstName = "Jane", LastName = "Smith", Email = "b@email.com", Password = "99999999" };
     secondUser.Password = hasher.HashPassword(secondUser, secondUser.Password);
 
-    User thirdUser = new User { Id = 3, FirstName = "Alice", LastName = "Johnson", Email = "c@email.com", Password = "77777777" };
+    User thirdUser = new User { Id = 3, FirstName = "Alice", LastName = "Johnson", Email = "c@email.com", Password = "99999999" };
     thirdUser.Password = hasher.HashPassword(thirdUser, thirdUser.Password);
 
-    User fourthUser = new User { Id = 4, FirstName = "Bob", LastName = "Williams", Email = "d@email.com", Password = "66666666" };
+    User fourthUser = new User { Id = 4, FirstName = "Bob", LastName = "Williams", Email = "d@email.com", Password = "99999999" };
     fourthUser.Password = hasher.HashPassword(fourthUser, fourthUser.Password);
 
-    User fifthUser = new User { Id = 5, FirstName = "Eve", LastName = "Davis", Email = "e@email.com", Password = "55555555" };
+    User fifthUser = new User { Id = 5, FirstName = "Eve", LastName = "Davis", Email = "e@email.com", Password = "99999999" };
     fifthUser.Password = hasher.HashPassword(fifthUser, fifthUser.Password);
 
     UserSeedList.Add(firstUser);
@@ -142,7 +142,6 @@ public static class ModelBuilderExtensions
     LessonSeedList.Add(instructor2Lesson2);
 
     modelBuilder.Entity<Lesson>().HasData(LessonSeedList);
-
 
 
     // Seed Data for StudentLessonBooking 
