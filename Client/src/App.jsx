@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
 import { Route, Routes } from 'react-router-dom';
+
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
-import Footer from './Components/Footer';
 import LandingPage from './Components/LandingPage';
 import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
+import Footer from './Components/Footer'
+import Register from "./Components/Register";
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/sign-in" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer/>
     </>
