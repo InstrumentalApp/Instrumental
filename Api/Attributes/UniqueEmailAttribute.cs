@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TeamFive.DataStorage;
-using MyApp.Models;
 using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;

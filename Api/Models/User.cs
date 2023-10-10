@@ -1,12 +1,14 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
-using MyApp.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using TeamFive.Attributes;
 
 namespace TeamFive.Models;
 public class User : BaseEntity
 {
+    [Key]
+    public int UserId { get; set; }
     [Required]
     public string FirstName { get; set; }
 
@@ -27,26 +29,9 @@ public class User : BaseEntity
     public string Confirm { get; set; }
 
     //Associations
-    public ICollection<RefreshToken> RefreshTokens = new List<RefreshToken>();
-
-    public List<UserLessonBooking> BookedLessons { get; set; } = new List<UserLessonBooking>();
-
-
-    // Custom validation
-    public class StrongPasswordAttribute : ValidationAttribute
-    {
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-        {
-            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\W).+$";
-
-            if (Regex.IsMatch(value.ToString(), pattern))
-            {
-                return ValidationResult.Success;
-            }
-            else
-            {
-                return new ValidationResult("Your password must include at least 1 of each of the following: Uppercase letter, lowercase letter, number, and special character");
-            }
-        }
-    }
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public virtual ICollection<Lesson> TaughtLessons { get; set; } = new List<Lesson>();
+    public virtual ICollection<Lesson> AttendedLessons { get; set; } = new List<Lesson>();
+    public virtual ICollection<UserInstrument> UserInstruments { get; set; } = new List<UserInstrument>();
 }

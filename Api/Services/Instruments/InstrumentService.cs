@@ -22,9 +22,7 @@ public class InstrumentService : IInstrumentService
   {
 
     // Return full list of all instruments, unsorted
-    List<Instrument>? instrumentList = _context.Instruments.ToList();
-
-    await Task.Delay(1);
+    List<Instrument> instrumentList = await _context.Instruments.ToListAsync();
 
     return instrumentList;
   } 
@@ -35,7 +33,7 @@ public class InstrumentService : IInstrumentService
   {
 
     // Return full list of all instruments, unsorted
-    Instrument? oneInstrument = _context.Instruments.FirstOrDefault();
+    Instrument? oneInstrument = await _context.Instruments.FirstOrDefaultAsync();
 
     await Task.Delay(1);
 

@@ -2,8 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TeamFive.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-// using Bogus;
+using Bogus;
 
 namespace TeamFive.DataStorage;
 
@@ -12,136 +11,121 @@ public static class ModelBuilderExtensions
   public static void Seed(this ModelBuilder modelBuilder)
   {
 
-    // Instrument Data ---------------------------
-
     // InstrumentJson data is formatted to Instrument Model
-    string InstrumentJson = 
+    string InstrumentJson =
                 @"[
-                    {""Id"": 1, ""InstrumentName"": ""Cello"", ""Category"": ""String Instruments""},
-                    {""Id"": 2, ""InstrumentName"": ""Electric Guitar"", ""Category"": ""String Instruments""},
-                    {""Id"": 3, ""InstrumentName"": ""Violin"", ""Category"": ""String Instruments""},
-                    {""Id"": 4, ""InstrumentName"": ""Flute"", ""Category"": ""Woodwind Instruments""},
-                    {""Id"": 5, ""InstrumentName"": ""Clarinet"", ""Category"": ""Woodwind Instruments""},
-                    {""Id"": 6, ""InstrumentName"": ""Saxophone"", ""Category"": ""Woodwind Instruments""}
+                    {""InstrumentId"": 1, ""Name"": ""Cello"", ""Family"": ""Strings""},
+                    {""InstrumentId"": 2, ""Name"": ""Electric Guitar"", ""Family"": ""Strings""},
+                    {""InstrumentId"": 3, ""Name"": ""Violin"", ""Family"": ""String""},
+                    {""InstrumentId"": 4, ""Name"": ""Flute"", ""Family"": ""Woodwinds""},
+                    {""InstrumentId"": 5, ""Name"": ""Clarinet"", ""Family"": ""Woodwinds""},
+                    {""InstrumentId"": 6, ""Name"": ""Saxophone"", ""Family"": ""Woodwinds""}
                   ]";
 
 
-    // JSON data is Deserialized and stored in instrument 
-    List<Instrument>? instrumentList = JsonSerializer.Deserialize<List<Instrument>>(InstrumentJson);
+    // JSON data is Deserialized and stored in instrument
+    List<Instrument> instrumentList = JsonSerializer.Deserialize<List<Instrument>>(InstrumentJson)!;
 
-    // Console tests
-    foreach(Instrument instrument in instrumentList)
+    // // modelBuilder.Entity for Instrument is stored for Seed
+    // // Seed is called in OnModelCreating in DBContext when builder is initiated in Program
+    // modelBuilder.Entity<Instrument>().HasData(instrumentList);
+
+    // Create Users
+
+    PasswordHasher<User> hasher = new();
+
+    List<User> teachers = new()
     {
-      Console.WriteLine($"Instrument: {instrument.InstrumentName}");
-      Console.WriteLine($"Category: {instrument.Category}");
-    }
-
-    // modelBuilder.Entity for Instrument is stored for Seed
-    // Seed is called in OnModelCreating in DBContext when builder is initiated in Program
-    modelBuilder.Entity<Instrument>().HasData(instrumentList);
-
-
-
-    // Test for User Seed data ---------------------------
-
-    PasswordHasher<User> hasher = new PasswordHasher<User>();
-    List<User> UserSeedList = new List<User>();
-
-    User firstUser = new User { Id = 1, FirstName = "John", LastName = "Doe", Email = "a@email.com", Password = "99999999"};
-    firstUser.Password = hasher.HashPassword(firstUser, firstUser.Password);
-
-    User secondUser = new User { Id = 2, FirstName = "Jane", LastName = "Smith", Email = "b@email.com", Password = "99999999" };
-    secondUser.Password = hasher.HashPassword(secondUser, secondUser.Password);
-
-    User thirdUser = new User { Id = 3, FirstName = "Alice", LastName = "Johnson", Email = "c@email.com", Password = "99999999" };
-    thirdUser.Password = hasher.HashPassword(thirdUser, thirdUser.Password);
-
-    User fourthUser = new User { Id = 4, FirstName = "Bob", LastName = "Williams", Email = "d@email.com", Password = "99999999" };
-    fourthUser.Password = hasher.HashPassword(fourthUser, fourthUser.Password);
-
-    User fifthUser = new User { Id = 5, FirstName = "Eve", LastName = "Davis", Email = "e@email.com", Password = "99999999" };
-    fifthUser.Password = hasher.HashPassword(fifthUser, fifthUser.Password);
-
-    UserSeedList.Add(firstUser);
-    UserSeedList.Add(secondUser);
-    UserSeedList.Add(thirdUser);
-    UserSeedList.Add(fourthUser);
-    UserSeedList.Add(fifthUser);
-
-    foreach(User u in UserSeedList)
-    {
-      Console.WriteLine($"User FirstName: {u.FirstName}");
-      Console.WriteLine($"User LastName: {u.LastName}");
-      Console.WriteLine($"User Email: {u.Email}");
-      Console.WriteLine($"User Password: {u.Password}");
-    }
-
-    modelBuilder.Entity<User>().HasData(UserSeedList);
-
-
-
-
-
-    // Seed Data for Instructors ---------------------
-    Instructor instructor1 = new Instructor() { Id = thirdUser.Id, YearsExperience = 3, Location = "Online", WillingToTravel = false, InstructorAboutMe = "Best Floutist on the web", AcceptingNewStudents = true };
-
-    Instructor instructor2 = new Instructor() { Id = fourthUser.Id, YearsExperience = 10, Location = "Sacremento, CA", WillingToTravel = true, InstructorAboutMe = "Teaching Guitar up and down the Coast.", AcceptingNewStudents = false };
-
-    // This instructor is also a student
-    Instructor instructor3 = new Instructor() { Id = fifthUser.Id, YearsExperience = 100, Location = "Hidden Cave, Sacred Mountains", WillingToTravel = false, InstructorAboutMe = "When the student is ready, the teacher will appear.", AcceptingNewStudents = true };
-
-    // Instructor List
-    List<Instructor> InstructorSeedList = new List<Instructor>();
-    InstructorSeedList.Add(instructor1);
-    InstructorSeedList.Add(instructor2);
-    InstructorSeedList.Add(instructor3);
-
-    // Builder Seed
-    modelBuilder.Entity<Instructor>().HasData(InstructorSeedList);
-
-
-
-
-    // Seed Data for Lessons -------------------------
-    // Two Instructors - Each offers 2 lessons
-
-    // INSTRUCTOR 1 - LESSON 1
-    Lesson instructor1Lesson1 = new Lesson { Id = 1, LessonName = "Beginner Guitar", LessonTypeId = instrumentList[0].Id, PricePerLesson = 50, Description = "First Lesson: $50 per lesson",  OnlineAvailable = true, InstructorId = instructor1.Id};
-    // INSTRUCTOR 1 - LESSON 2
-    Lesson instructor1Lesson2 = new Lesson { Id = 2, LessonName = "Intermediate Electric Guitar", LessonTypeId = instrumentList[1].Id, PricePerLesson = 100, Description = "Second Lesson: $100 per lesson",  OnlineAvailable = false, InstructorId = instructor1.Id};
-
-    // INSTRUCTOR 2 - LESSON 1
-    Lesson instructor2Lesson1 = new Lesson { Id = 3, LessonName = "Beginner Violin", LessonTypeId = instrumentList[2].Id, PricePerLesson = 150, Description = "Third Lesson: $150 per lesson",  OnlineAvailable = true, InstructorId = instructor2.Id};
-    // INSTRUCTOR 2 - LESSON 2
-    Lesson instructor2Lesson2 = new Lesson { Id = 4, LessonName = "Expert Flute", LessonTypeId = instrumentList[3].Id, PricePerLesson = 200, Description = "Fourth Lesson: $200 per lesson",  OnlineAvailable = false, InstructorId = instructor2.Id};
-
-
-    List<Lesson> LessonSeedList = new List<Lesson>();
-    LessonSeedList.Add(instructor1Lesson1);
-    LessonSeedList.Add(instructor1Lesson2);
-    LessonSeedList.Add(instructor2Lesson1);
-    LessonSeedList.Add(instructor2Lesson2);
-
-    modelBuilder.Entity<Lesson>().HasData(LessonSeedList);
-
-
-    // Seed Data for UserLessonBooking 
-
-    UserLessonBooking UserLessonBooking1 = new UserLessonBooking() {
-      Id = 1, BookingDate = DateTime.Now, BookingNotes = "Notes for the first Booking", LessonId = instructor1Lesson1.Id, UserId = firstUser.Id
+        new() { FirstName = "Teacher", LastName = "One", Email = "teacher1@email.com", Password = "99999999"},
+        new() { FirstName = "Teacher", LastName = "Two", Email = "teacher2@email.com", Password = "99999999" },
+        new() { FirstName = "Teacher", LastName = "Three", Email = "teacher3@email.com", Password = "99999999" },
+        new() { FirstName = "Teacher", LastName = "Four", Email = "teacher4@email.com", Password = "99999999" },
+        new() { FirstName = "Teacher", LastName = "Five", Email = "teacher5@email.com", Password = "99999999" },
+        new() { FirstName = "Teacher", LastName = "Six", Email = "teacher6@email.com", Password = "99999999" }
     };
 
-    UserLessonBooking UserLessonBooking2 = new UserLessonBooking() {
-      Id = 2, BookingDate = DateTime.Now, BookingNotes = "Notes for the second Booking", LessonId = instructor2Lesson1.Id, UserId = secondUser.Id
+    List<User> students = new()
+    {
+        new() { FirstName = "Student", LastName = "One", Email = "student1@email.com", Password = "99999999" },
+        new() { FirstName = "Student", LastName = "Two", Email = "student2@email.com", Password = "99999999" },
+        new() { FirstName = "Student", LastName = "Three", Email = "student3@email.com", Password = "99999999" },
+        new() { FirstName = "Student", LastName = "Four", Email = "student4@email.com", Password = "99999999" },
+        new() { FirstName = "Student", LastName = "Five", Email = "student5@email.com", Password = "99999999" },
+        new() { FirstName = "Student", LastName = "Six", Email = "student6@email.com", Password = "99999999" }
     };
 
-    // Bookings List
-    List<UserLessonBooking> UserLessonBookingsList = new List<UserLessonBooking>();
-    UserLessonBookingsList.Add(UserLessonBooking1);
-    UserLessonBookingsList.Add(UserLessonBooking2);
+    //Create roles/lessons for users
+    int x = 0;
+    foreach (var t in teachers)
+    {
+        x++;
+        t.UserId = x;
+        Role role = new() { RoleId = x, RoleType = Enums.RoleType.TEACHER };
+        UserRole userRole = new(){ UserId = t.UserId, RoleId = role.RoleId};
+        Instrument instrument = instrumentList[x-1];
+        UserInstrument userInstrument = new() {InstrumentId = instrument.InstrumentId, UserId = t.UserId};
 
-    // Builder Seed
-    modelBuilder.Entity<UserLessonBooking>().HasData(UserLessonBookingsList);
+        modelBuilder.Entity<User>().HasData(t);
+        modelBuilder.Entity<Role>().HasData(role);
+        modelBuilder.Entity<UserRole>().HasData(userRole);
+        modelBuilder.Entity<Instrument>().HasData(instrument);
+        modelBuilder.Entity<UserInstrument>().HasData(userInstrument);
+    }
+
+    x = 0;
+    foreach (var s in students)
+    {
+        x++;
+        s.UserId = x;
+        Role role = new() { RoleId = x, RoleType = Enums.RoleType.STUDENT };
+        UserRole userRole = new(){ UserId = s.UserId, RoleId = role.RoleId};
+
+        modelBuilder.Entity<User>().HasData(s);
+        modelBuilder.Entity<Role>().HasData(role);
+        modelBuilder.Entity<UserRole>().HasData(userRole);
+    }
+    //Create Lessons offered by Teachers.
+
+    // // Seed Data for Lessons -------------------------
+    // // Two Instructors - Each offers 2 lessons
+
+    // // INSTRUCTOR 1 - LESSON 1
+    // Lesson instructor1Lesson1 = new Lesson { Id = 1, LessonName = "Beginner Guitar", LessonTypeId = instrumentList[0].Id, PricePerLesson = 50, Description = "First Lesson: $50 per lesson",  OnlineAvailable = true, InstructorId = instructor1.Id};
+    // // INSTRUCTOR 1 - LESSON 2
+    // Lesson instructor1Lesson2 = new Lesson { Id = 2, LessonName = "Intermediate Electric Guitar", LessonTypeId = instrumentList[1].Id, PricePerLesson = 100, Description = "Second Lesson: $100 per lesson",  OnlineAvailable = false, InstructorId = instructor1.Id};
+
+    // // INSTRUCTOR 2 - LESSON 1
+    // Lesson instructor2Lesson1 = new Lesson { Id = 3, LessonName = "Beginner Violin", LessonTypeId = instrumentList[2].Id, PricePerLesson = 150, Description = "Third Lesson: $150 per lesson",  OnlineAvailable = true, InstructorId = instructor2.Id};
+    // // INSTRUCTOR 2 - LESSON 2
+    // Lesson instructor2Lesson2 = new Lesson { Id = 4, LessonName = "Expert Flute", LessonTypeId = instrumentList[3].Id, PricePerLesson = 200, Description = "Fourth Lesson: $200 per lesson",  OnlineAvailable = false, InstructorId = instructor2.Id};
+
+
+    // List<Lesson> LessonSeedList = new List<Lesson>();
+    // LessonSeedList.Add(instructor1Lesson1);
+    // LessonSeedList.Add(instructor1Lesson2);
+    // LessonSeedList.Add(instructor2Lesson1);
+    // LessonSeedList.Add(instructor2Lesson2);
+
+    // modelBuilder.Entity<Lesson>().HasData(LessonSeedList);
+
+
+    // // Seed Data for UserLessonBooking
+
+    // UserLessonBooking UserLessonBooking1 = new UserLessonBooking() {
+    //   Id = 1, BookingDate = DateTime.Now, BookingNotes = "Notes for the first Booking", LessonId = instructor1Lesson1.Id, UserId = firstUser.Id
+    // };
+
+    // UserLessonBooking UserLessonBooking2 = new UserLessonBooking() {
+    //   Id = 2, BookingDate = DateTime.Now, BookingNotes = "Notes for the second Booking", LessonId = instructor2Lesson1.Id, UserId = secondUser.Id
+    // };
+
+    // // Bookings List
+    // List<UserLessonBooking> UserLessonBookingsList = new List<UserLessonBooking>();
+    // UserLessonBookingsList.Add(UserLessonBooking1);
+    // UserLessonBookingsList.Add(UserLessonBooking2);
+
+    // // Builder Seed
+    // modelBuilder.Entity<UserLessonBooking>().HasData(UserLessonBookingsList);
 
   }
 

@@ -4,9 +4,9 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MyApp.Models;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer.Tokens;
+using TeamFive.Models;
 
 namespace TeamFive.Services.Tokens;
 public class TokenService : ITokenService
@@ -118,7 +118,7 @@ public class TokenService : ITokenService
         {
             return null;
         }
-        TokensDto? tokensDto = await CreateTokensDtoAsync(check.User.Id);
+        TokensDto? tokensDto = await CreateTokensDtoAsync(check.User.UserId);
         if (tokensDto == null)
         {
             return null;

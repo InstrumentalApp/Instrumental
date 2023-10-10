@@ -20,30 +20,26 @@ public class InstructorService : IInstructorService
         _context = context;
     }
 
-    // Get All Lessons
-    public async Task<List<Instructor>> AllInstructors()
-    {
-        List<Instructor> allInstructors = _context.Instructors.ToList();
+    // // Get All Lessons
+    // public async Task<List<Instructor>> AllInstructors()
+    // {
+    //     List<Instructor> allInstructors = await _context.Instructors.ToListAsync();
 
-        await Task.Delay(1);//This is here until we do something "awaitable"
-
-        return allInstructors;
-    }
+    //     return allInstructors;
+    // }
 
 
-    // Get One Instructor
-    public async Task<Instructor?> OneInstructor()
-    {
-      Instructor? oneInstructor = _context.Instructors.FirstOrDefault();
-
-      await Task.Delay(1);
+    // // Get One Instructor
+    // public async Task<Instructor?> OneInstructor()
+    // {
+    //   Instructor? oneInstructor = await _context.Instructors.FirstOrDefaultAsync();
       
-      if(oneInstructor == null)
-      {
-        return null;
-      }
+    //   if(oneInstructor == null)
+    //   {
+    //     return null;
+    //   }
 
-      return oneInstructor;
-    }
+    //   return oneInstructor;
+    // }
 
 }
