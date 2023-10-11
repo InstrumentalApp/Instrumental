@@ -26,26 +26,26 @@ public class InstructorController : ControllerBase
   // First Call to Database to return full Instructor list stored in DB.
   // Call could be used to populate full list of Instructors to choose lesson from or offer lesson for teachers.
 
-  [HttpGet("all")]
-  public async Task<ActionResult<List<Instructor>>> AllInstructors()
-  {
+  // [HttpGet("all")]
+  // public async Task<ActionResult<List<Instructor>>> AllInstructors()
+  // {
 
-    // Return full list of all Instructors, unsorted
-    // Needs await because it is calling an API
+  //   // Return full list of all Instructors, unsorted
+  //   // Needs await because it is calling an API
 
-    List<Instructor> InstructorList = await _InstructorService.AllInstructors();
+  //   List<Instructor> InstructorList = await _InstructorService.AllInstructors();
 
-    return InstructorList;
-  } 
+  //   return InstructorList;
+  // } 
 
 
-  [HttpGet("one")]
-  public async Task<ActionResult<Instructor>> OneInstructor()
-  {
-    Instructor? oneInstructor = await _InstructorService.OneInstructor();
+  // [HttpGet("one")]
+  // public async Task<ActionResult<Instructor>> OneInstructor()
+  // {
+  //   Instructor? oneInstructor = await _InstructorService.OneInstructor();
 
-    return oneInstructor;
-  } 
+  //   return oneInstructor;
+  // } 
 
 
 }

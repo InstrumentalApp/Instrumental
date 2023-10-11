@@ -6,7 +6,6 @@ using TeamFive.Attributes;
 namespace TeamFive.Models;
 public class UserInstrument : BaseEntity
 {
-    //This is just for teachers, students wouldn't funcionally need instruments per se
     public int UserId { get; set; }
     public User? User { get; set; }
 

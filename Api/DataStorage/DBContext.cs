@@ -12,29 +12,15 @@ public class DBContext : DbContext
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Instrument> Instruments { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<UserInstrument> UserInstruments { get; set; }
-
     public DBContext(DbContextOptions options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Seed();
         modelBuilder.Entity<RefreshToken>().HasQueryFilter(u => u.IsActive);
-
-        modelBuilder.Entity<UserRole>()
-        .HasKey(ur => new { ur.UserId, ur.RoleId });  // Composite primary key
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.User)
-            .WithMany(u => u.UserRoles)
-            .HasForeignKey(ur => ur.UserId);
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.Role)
-            .WithMany(r => r.UserRoles)
-            .HasForeignKey(ur => ur.RoleId);
 
         modelBuilder.Entity<Lesson>()
             .HasOne(l => l.Teacher)
@@ -54,14 +40,11 @@ public class DBContext : DbContext
             .HasForeignKey(l => l.InstrumentId);
 
         modelBuilder.Entity<UserInstrument>()
-            .HasOne(ui => ui.User)
-            .WithMany(u => u.UserInstruments)
-            .HasForeignKey(ui => ui.UserId);
+            .HasKey(ui => new { ui.UserId, ui.InstrumentId });
 
-        modelBuilder.Entity<UserInstrument>()
-            .HasOne(ui => ui.Instrument)
-            .WithMany(i => i.UserInstruments)
-            .HasForeignKey(ui => ui.InstrumentId);
+        modelBuilder.Entity<UserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
     }
 }
 

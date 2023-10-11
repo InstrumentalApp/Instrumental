@@ -65,14 +65,14 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        bool refreshTokensCleared = await _tokenService.DeactivateTokensForUserAsync(validUser.Id);
+        bool refreshTokensCleared = await _tokenService.DeactivateTokensForUserAsync(validUser.UserId);
 
         if (refreshTokensCleared == false)
         {
             return StatusCode(500, "Error updating user tokens, try again.");
         }
 
-        TokensDto? tokens = await _tokenService.CreateTokensDtoAsync(validUser.Id);
+        TokensDto? tokens = await _tokenService.CreateTokensDtoAsync(validUser.UserId);
 
         if (tokens == null)
         {

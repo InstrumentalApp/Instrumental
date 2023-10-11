@@ -8,7 +8,7 @@ public class Instrument : BaseEntity
     public int InstrumentId { get; set; }
     public string Name { get; set; }
 
-    public string Category { get; set; }
+    public string Family { get; set; }
 
     // Associations
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();

@@ -10,56 +10,28 @@ public static class ModelBuilderExtensions
 {
   public static void Seed(this ModelBuilder modelBuilder)
   {
-
-    // InstrumentJson data is formatted to Instrument Model
-    string InstrumentJson =
-                @"[
-                    {""InstrumentId"": 1, ""Name"": ""Cello"", ""Family"": ""Strings""},
-                    {""InstrumentId"": 2, ""Name"": ""Electric Guitar"", ""Family"": ""Strings""},
-                    {""InstrumentId"": 3, ""Name"": ""Violin"", ""Family"": ""String""},
-                    {""InstrumentId"": 4, ""Name"": ""Flute"", ""Family"": ""Woodwinds""},
-                    {""InstrumentId"": 5, ""Name"": ""Clarinet"", ""Family"": ""Woodwinds""},
-                    {""InstrumentId"": 6, ""Name"": ""Saxophone"", ""Family"": ""Woodwinds""}
-                  ]";
-
-
-    // JSON data is Deserialized and stored in instrument
-    List<Instrument> instrumentList = JsonSerializer.Deserialize<List<Instrument>>(InstrumentJson)!;
-
-    // // modelBuilder.Entity for Instrument is stored for Seed
-    // // Seed is called in OnModelCreating in DBContext when builder is initiated in Program
-    // modelBuilder.Entity<Instrument>().HasData(instrumentList);
-
-    // Create Users
-
+    string _filePath = "seedInstruments.json";
+    if (!File.Exists(_filePath))
+    {
+        throw new FileNotFoundException("seedInstruments.json file not found!");
+    }
     PasswordHasher<User> hasher = new();
-
-    List<User> teachers = new()
-    {
-        new() { FirstName = "Teacher", LastName = "One", Email = "teacher1@email.com", Password = "99999999"},
-        new() { FirstName = "Teacher", LastName = "Two", Email = "teacher2@email.com", Password = "99999999" },
-        new() { FirstName = "Teacher", LastName = "Three", Email = "teacher3@email.com", Password = "99999999" },
-        new() { FirstName = "Teacher", LastName = "Four", Email = "teacher4@email.com", Password = "99999999" },
-        new() { FirstName = "Teacher", LastName = "Five", Email = "teacher5@email.com", Password = "99999999" },
-        new() { FirstName = "Teacher", LastName = "Six", Email = "teacher6@email.com", Password = "99999999" }
-    };
-
-    List<User> students = new()
-    {
-        new() { FirstName = "Student", LastName = "One", Email = "student1@email.com", Password = "99999999" },
-        new() { FirstName = "Student", LastName = "Two", Email = "student2@email.com", Password = "99999999" },
-        new() { FirstName = "Student", LastName = "Three", Email = "student3@email.com", Password = "99999999" },
-        new() { FirstName = "Student", LastName = "Four", Email = "student4@email.com", Password = "99999999" },
-        new() { FirstName = "Student", LastName = "Five", Email = "student5@email.com", Password = "99999999" },
-        new() { FirstName = "Student", LastName = "Six", Email = "student6@email.com", Password = "99999999" }
-    };
+    string? _jsonData = File.ReadAllText(_filePath);
+    List<Instrument> instrumentList = JsonSerializer.Deserialize<List<Instrument>>(_jsonData)!;
 
     //Create roles/lessons for users
     int x = 0;
-    foreach (var t in teachers)
+    foreach (var i in instrumentList)
     {
         x++;
-        t.UserId = x;
+        Faker<User> faker = new Faker<User>()
+            .RuleFor(u=>u.UserId, f => x)
+            .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+            .RuleFor(u => u.LastName, f => f.Name.LastName())
+            .RuleFor(u => u.Email, (f, u) => $"{u.FirstName.ToLower()}.{u.LastName.ToLower()}@email.com")
+            .RuleFor(u=> u.Password, f=> "99999999");
+        User t = faker.Generate();
+        t.Password = hasher.HashPassword(t, t.Password);
         Role role = new() { RoleId = x, RoleType = Enums.RoleType.TEACHER };
         UserRole userRole = new(){ UserId = t.UserId, RoleId = role.RoleId};
         Instrument instrument = instrumentList[x-1];
@@ -72,18 +44,17 @@ public static class ModelBuilderExtensions
         modelBuilder.Entity<UserInstrument>().HasData(userInstrument);
     }
 
-    x = 0;
-    foreach (var s in students)
-    {
-        x++;
-        s.UserId = x;
-        Role role = new() { RoleId = x, RoleType = Enums.RoleType.STUDENT };
-        UserRole userRole = new(){ UserId = s.UserId, RoleId = role.RoleId};
+    // foreach (var s in students)
+    // {
+    //     x++;
+    //     s.UserId = x;
+    //     Role role = new() { RoleId = x, RoleType = Enums.RoleType.STUDENT };
+    //     UserRole userRole = new(){ UserId = s.UserId, RoleId = role.RoleId};
 
-        modelBuilder.Entity<User>().HasData(s);
-        modelBuilder.Entity<Role>().HasData(role);
-        modelBuilder.Entity<UserRole>().HasData(userRole);
-    }
+    //     modelBuilder.Entity<User>().HasData(s);
+    //     modelBuilder.Entity<Role>().HasData(role);
+    //     modelBuilder.Entity<UserRole>().HasData(userRole);
+    // }
     //Create Lessons offered by Teachers.
 
     // // Seed Data for Lessons -------------------------
