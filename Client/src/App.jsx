@@ -27,9 +27,9 @@ function App() {
   return (
     <>
       <NavBar />
-      <InstrumentLessonsOffered />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/instruments" element={<InstrumentLessonsOffered />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
