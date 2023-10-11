@@ -34,7 +34,7 @@ const InstrumentLessonsOffered = () => {
 
   // Sets state of displayed instrument list using user's search input and filtering through original, unfiltered list
   useEffect(() => {
-    const filteredOptions = unfilteredList.current.filter((instrument) => instrument.instrumentName.toLowerCase().includes(searchInput.toLowerCase()))
+    const filteredOptions = unfilteredList.current.filter((instrument) => instrument.name.toLowerCase().includes(searchInput.toLowerCase()))
     setInstrumentList(filteredOptions);
   }, [searchInput])
 
