@@ -1,4 +1,3 @@
-import React from 'react';
 import instrumentalImage from '../Assets/Images/instrumentalImage.jpg'
 
 const Footer = () => {
