@@ -25,7 +25,7 @@ const NavBar = () => {
 
       {/* Links */}
       <ul className="nav-links" style={linkStyle}>
-        <li><Link to="/" style={linkStyle}>Find Lessons</Link></li>
+        <li><Link to="/instruments" style={linkStyle}>Find Lessons</Link></li>
         <li><Link to="/rentals" style={linkStyle}>Rentals</Link></li>
         <li><Link to="/how-it-works" style={linkStyle}>How it Works</Link></li>
         <li><Link to="/teach-with-us" style={linkStyle}>Teach With Us</Link></li>
