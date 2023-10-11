@@ -57,7 +57,7 @@ const InstrumentLessonsOffered = () => {
             <div key={index} className="instrument-card">
               <Link to="#">
                 <img className="instrument-image" src="https://placehold.co/100" alt="placeholder" />
-                <h6>{instrument.instrumentName}</h6>
+                <h6>{instrument.name}</h6>
               </Link>
             </div>
           ))

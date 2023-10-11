@@ -22,10 +22,8 @@ public class LessonService : ILessonService
     // Get All Lessons
     public async Task<List<Lesson>> AllLessons()
     {
-        List<Lesson> allLessons = _context.Lessons.ToList();
-
-        await Task.Delay(1);//This is here until we do something "awaitable"
-
+        List<Lesson> allLessons = await _context.Lessons.ToListAsync();
+        
         return allLessons;
     }
 
@@ -33,7 +31,7 @@ public class LessonService : ILessonService
     // Get One Lesson
     public async Task<Lesson?> OneLesson()
     {
-      Lesson? oneLesson = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == 1);
+      Lesson? oneLesson = await _context.Lessons.FirstOrDefaultAsync(l => l.LessonId == 1);
 
       if(oneLesson == null)
       {

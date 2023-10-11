@@ -1,17 +1,16 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TeamFive.Models;
 public class Instrument : BaseEntity
 {
-    // Specific Name of the instrument
-    [Required]
-    public string InstrumentName { get; set; }
+    [Key]
+    public int InstrumentId { get; set; }
+    public string Name { get; set; }
 
-    // Category for instruments to be searched under.
-    // String, Brass, Woodwind, Percussion, Keyboard, Vocal
-    [Required]
-    public string Category { get; set; }
+    public string Family { get; set; }
 
+    // Associations
+    public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
+    public virtual ICollection<UserInstrument> UserInstruments { get; set; } = new List<UserInstrument>();
 }

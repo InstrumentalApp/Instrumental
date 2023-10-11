@@ -1,5 +1,5 @@
 #pragma warning disable 8618
-using MyApp.Models;
+using TeamFive.Models;
 
 namespace TeamFive.DataTransfer.Tokens;
 public class TokensDto
