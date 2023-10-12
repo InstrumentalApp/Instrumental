@@ -9,6 +9,8 @@ using TeamFive.Services.Tokens;
 using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using TeamFive.DataTransfer.Lessons;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -16,10 +18,12 @@ namespace TeamFive.Controllers;
 public class LessonController : ControllerBase
 {
     private readonly ILessonService _lessonService;
+    private readonly ILogger<LessonController> _logger;
 
-    public LessonController(ILessonService LessonServ)
+    public LessonController(ILessonService LessonServ, ILogger<LessonController> logger)
     {
         _lessonService = LessonServ;
+        _logger = logger;
     }
 
 
@@ -40,8 +44,28 @@ public class LessonController : ControllerBase
     public async Task<ActionResult<Lesson?>> OneLesson()
     {
         Lesson? oneLesson = await _lessonService.OneLesson();
-        
+
         return oneLesson;
     }
 
+    [HttpPost("create-lesson")]
+    public async Task<ActionResult<Lesson>> CreateLessonAsync([FromForm] Lesson lesson)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            lesson.LessonId = await _lessonService.CreateLessonAsync(lesson);
+            return CreatedAtAction(nameof(OneLesson), new LessonDto(lesson));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+
+    }
 }

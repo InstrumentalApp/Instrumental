@@ -8,6 +8,8 @@ using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Diagnostics;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
@@ -41,4 +43,19 @@ public class LessonService : ILessonService
       return oneLesson;
     }
 
+    public async Task<int> CreateLessonAsync(Lesson lesson)
+    {
+      _context.Lessons.Add(lesson);
+
+      int creationResult = await _context.SaveChangesAsync();
+      
+      if(creationResult > 0)
+      {
+        return lesson.LessonId;
+      }
+      else
+      {
+        throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
+      }
+    }
 }
