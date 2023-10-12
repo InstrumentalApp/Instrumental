@@ -9,6 +9,7 @@ using TeamFive.Services.Tokens;
 using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using TeamFive.DataTransfer.Lessons;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -44,4 +45,12 @@ public class LessonController : ControllerBase
         return oneLesson;
     }
 
+    [HttpPost("create-lesson")]
+    public async Task<ActionResult<Lesson>> CreateLessonAsync([FromForm] Lesson lesson)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(3));
+        lesson.LessonId = int.MaxValue;
+        
+        return CreatedAtAction(nameof(OneLesson), new LessonDto(lesson));
+    }
 }
