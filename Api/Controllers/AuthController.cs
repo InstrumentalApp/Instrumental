@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        UserDto? newUser = await _userService.CreateStudentAsync(user);
+        UserDto? newUser = await _userService.CreateTeacherAsync(user);
 
         if (newUser == null)
         {

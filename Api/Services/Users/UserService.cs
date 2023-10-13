@@ -63,7 +63,7 @@ public class UserService : IUserService
 
             // Define student/teacher roles from Role Service, saves to DB
             Role studentRole = await _roleService.CreateStudentRoleAsync();
-            Role teacherRole = await _roleService.CreateStudentRoleAsync();
+            Role teacherRole = await _roleService.CreateTeacherRoleAsync();
 
             // Creates association, saves to DB
             await _roleService.CreateUserRoleAsync(user, studentRole);
