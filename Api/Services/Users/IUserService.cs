@@ -4,6 +4,7 @@ using TeamFive.Models;
 namespace TeamFive.Services.Users;
 public interface IUserService
 {
-    Task<UserDto?> CreateAsync(User user);
+    Task<UserDto?> CreateStudentAsync(User user);
+    Task<UserDto?> CreateTeacherAsync(User user);
     Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser);
 }
