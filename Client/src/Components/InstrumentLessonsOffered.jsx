@@ -55,7 +55,8 @@ const InstrumentLessonsOffered = () => {
         {
           instrumentList.map((instrument, index) => (
             <div key={index} className="instrument-card">
-              <Link to="#">
+              {/* Not sure if we want to keep links routing to IDs or to instrument names */}
+              <Link to={"/instruments/" + instrument.instrumentId}> 
                 <img className="instrument-image" src="https://placehold.co/100" alt="placeholder" />
                 <h6>{instrument.name}</h6>
               </Link>

@@ -17,8 +17,9 @@
 }
 
 .instrument-card {
-    flex: 1 0 16%;
+    flex: 1 0 14%;
     text-align: center;
+    margin: 1em;
 }
 
 .instrument-image {
