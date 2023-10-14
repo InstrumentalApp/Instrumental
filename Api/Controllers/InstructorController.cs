@@ -48,4 +48,11 @@ public class InstructorController : ControllerBase
   // } 
 
 
+    [HttpGet("{instrumentId}/instructors")]
+    public async Task<ActionResult<List<User>>> GetTeachersWithInstrument(int instrumentId)
+    {
+      List<User> teachersPerInstrument = await _InstructorService.TeachersPerInstrument(instrumentId);
+
+      return teachersPerInstrument;
+    }
 }
