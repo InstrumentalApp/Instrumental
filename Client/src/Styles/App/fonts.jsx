@@ -1,4 +1,4 @@
-export const BODY_FONT = "Roboto";
+export const BODY_FONT = '"Roboto", sans-serif';
 export const HEADER_FONT = '"Noto Serif", serif';
 
 const fonts = {
