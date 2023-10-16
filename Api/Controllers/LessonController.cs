@@ -68,4 +68,23 @@ public class LessonController : ControllerBase
         }
 
     }
+        // Get Lesson by TeacherId
+    [HttpGet("{teacherId}/lessons")]
+    public async Task<List<Lesson>> GetAllTeacherLessons(int teacherId)
+    {
+        List<Lesson> teacherLessonsList = await _lessonService.GetTeacherLessons(teacherId);
+        
+        if(teacherLessonsList != null)
+        {
+            return teacherLessonsList;
+        }
+        else
+        {
+            throw new Exception("Lesson's not found in DB");
+
+        }
+    }
+    // Book a Lesson Get Route
+
+    // Book a Lesson Post Route
 }

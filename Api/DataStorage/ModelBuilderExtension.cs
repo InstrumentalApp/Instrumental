@@ -34,15 +34,22 @@ public static class ModelBuilderExtensions
         t.Password = hasher.HashPassword(t, t.Password);
         Role role = new() { RoleId = x, RoleType = Enums.RoleType.TEACHER };
         UserRole userRole = new(){ UserId = t.UserId, RoleId = role.RoleId};
-        Instrument instrument = instrumentList[x-1];
-        UserInstrument userInstrument = new() {InstrumentId = instrument.InstrumentId, UserId = t.UserId};
+        Instrument instrument1 = instrumentList[x-1];
+        Instrument instrument2 = instrumentList[instrumentList.Count - x];
+
+        List<UserInstrument> userInstrumentsList = new List<UserInstrument>()
+        {
+            new UserInstrument { UserId = t.UserId, InstrumentId = instrument1.InstrumentId },
+            new UserInstrument { UserId = t.UserId, InstrumentId = instrument2.InstrumentId }
+        };
 
         modelBuilder.Entity<User>().HasData(t);
         modelBuilder.Entity<Role>().HasData(role);
         modelBuilder.Entity<UserRole>().HasData(userRole);
-        modelBuilder.Entity<Instrument>().HasData(instrument);
-        modelBuilder.Entity<UserInstrument>().HasData(userInstrument);
+        modelBuilder.Entity<Instrument>().HasData(instrument1);
+        modelBuilder.Entity<UserInstrument>().HasData(userInstrumentsList);
     }
+
     //create students
     int y = 50;
     while (y > 0)
@@ -64,6 +71,34 @@ public static class ModelBuilderExtensions
         modelBuilder.Entity<UserRole>().HasData(userRole);
         y--;
     }
+
+    // Lesson Builder
+
+    int z = 0;
+    while(z < 10)
+    {
+        z++;
+        Lesson lesson = new Lesson()
+        {
+            LessonId  = z, 
+            BookingDate = DateTime.Now.AddDays(30), 
+            DurationMinutes = 30,  
+            TeacherId = z, 
+            StudentId = z + 30, 
+            InstrumentId = z
+        };
+
+        modelBuilder.Entity<Lesson>().HasData(lesson);
+
+        // Test to see if Lessons are inserting
+        Console.WriteLine("++++ LessonId " + lesson.LessonId + " ++++++++++++++" );
+        Console.WriteLine("++++ BookingDate " + lesson.BookingDate + " ++++++++++++++" );
+        Console.WriteLine("++++ DurationMinutes " + lesson.DurationMinutes + " ++++++++++++++" );
+        Console.WriteLine("++++ TeacherId " + lesson.TeacherId + " ++++++++++++++" );
+        Console.WriteLine("++++ StudentId " + lesson.StudentId + " ++++++++++++++" );
+        Console.WriteLine("++++ InstrumentId " + lesson.InstrumentId + " +++++++++++++" );
+    }
+
   }
 
 }

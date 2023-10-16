@@ -8,5 +8,6 @@ public interface ILessonService
     Task<List<Lesson>> AllLessons();
     Task<Lesson?> OneLesson();
     Task<int> CreateLessonAsync(Lesson lesson);
+    Task<List<Lesson>> GetTeacherLessons(int teacherId);
     
 }

@@ -43,6 +43,7 @@ public class LessonService : ILessonService
       return oneLesson;
     }
 
+
     public async Task<int> CreateLessonAsync(Lesson lesson)
     {
       _context.Lessons.Add(lesson);
@@ -58,4 +59,34 @@ public class LessonService : ILessonService
         throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
       }
     }
+
+    // Return Lessons searched by Teacher Route
+    public async Task<List<Lesson>> GetTeacherLessons(int teacherId)
+    {
+      List<Lesson> lessonsOffered = await _context.Lessons.Where(t => t.TeacherId == teacherId).ToListAsync();
+
+      if(lessonsOffered != null)
+      {
+        return lessonsOffered;
+      }
+      else
+      {
+        throw new Exception("Lesson's not found in DB");
+      }
+
+    }
+
+
+    
+
+    // When a User signs up to be a teacher and wants to display availability
+      // Times of the week available?
+      // Should times be available in a block, or should lessons be preloaded on creation
+        // Most sense to have available times blocks
+
+      // Availability is displayed on Calendar
+        // Student create/request a lesson within an available block
+
+      
+
 }
