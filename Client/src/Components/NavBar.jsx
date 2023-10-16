@@ -73,7 +73,7 @@ const NavBar = () => {
   return (
     <AppBar position="static" style={navStyle}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ mt: {xs: .7, md: 0} }}>
           <Typography
             variant="h6"
             noWrap
