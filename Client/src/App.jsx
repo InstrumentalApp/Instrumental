@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Styles/App/App.css'
+import style from "./Styles/App";
 import axios from 'axios';
 import { Route, Routes, useParams } from 'react-router-dom';
 import style from "./Styles/App";
