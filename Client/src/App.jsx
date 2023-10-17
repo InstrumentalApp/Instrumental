@@ -3,7 +3,6 @@ import './Styles/App/App.css'
 import style from "./Styles/App";
 import axios from 'axios';
 import { Route, Routes, useParams } from 'react-router-dom';
-import style from "./Styles/App";
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import LandingPage from './Components/LandingPage';
