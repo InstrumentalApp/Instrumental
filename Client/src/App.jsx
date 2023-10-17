@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './Styles/App/App.css'
 import axios from 'axios';
 import { Route, Routes, useParams } from 'react-router-dom';
-
+import style from "./Styles/App";
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import LandingPage from './Components/LandingPage';
@@ -26,7 +26,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div style={{ backgroundColor: style.colors.TERTIARY, height: "100vh" }}>
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Routes>
       <Footer/>
-    </>
+    </div>
   )
 }
 
