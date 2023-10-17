@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 const navStyle = {
   display: 'flex',            // Use Flexbox
   alignItems: 'center',      // Vertically center items
-  backgroundColor: style.colors.SAGE_GREEN,  // Background color
+  backgroundColor: style.colors.SECONDARY,  // Background color
   width: "100%",
   height: style.spacing.HEADER_HEIGHT,
   color: style.colors.BLACK,
@@ -31,13 +31,13 @@ const NavButton = styled(Button)(() => ({
   paddingTop: 12,
   marginLeft: 15,
   color: style.colors.BLACK,
-  backgroundColor: style.colors.SAGE_GREEN,
+  backgroundColor: style.colors.SECONDARY,
   height: style.spacing.HEADER_HEIGHT,
   borderRadius: 0,
-  borderBottom: `5px solid ${style.colors.SAGE_GREEN}`,
+  borderBottom: `5px solid ${style.colors.SECONDARY}`,
   '&:hover': {
-    backgroundColor: style.colors.SAGE_GREEN,
-    borderBottom: `5px solid ${style.colors.TEAL}`
+    backgroundColor: style.colors.SECONDARY,
+    borderBottom: `5px solid ${style.colors.PRIMARY}`
   },
 }));
 
@@ -124,13 +124,13 @@ const NavBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none', "& .MuiMenu-paper": 
-                { backgroundColor: style.colors.SAGE_GREEN }
+                { backgroundColor: style.colors.SECONDARY }
               },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} 
-                sx = {{ backgroundColor: style.colors.SAGE_GREEN }}
+                sx = {{ backgroundColor: style.colors.SECONDARY }}
                 onClick={() => {
                   handleCloseNavMenu(); 
                   navigate(page[1]);
@@ -218,15 +218,15 @@ const NavBar = () => {
               }}
               sx={{ 
                 ml: 3,
-                px: 1.5,
+                px: { sm:1.5 },
+                fontSize: { xs: 11, sm: 13 },
                 color:"white", 
                 display: 'block', 
-                mr:-1,
-                backgroundColor: style.colors.TEAL,
-                border: `2px solid ${style.colors.TEAL}`,
+                backgroundColor: style.colors.PRIMARY,
+                border: `2px solid ${style.colors.PRIMARY}`,
                 '&:hover': {
-                  backgroundColor: style.colors.SAGE_GREEN,
-                  color: style.colors.TEAL, 
+                  backgroundColor: style.colors.SECONDARY,
+                  color: style.colors.PRIMARY, 
                 },
               }}
             >

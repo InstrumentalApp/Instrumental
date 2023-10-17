@@ -3,7 +3,6 @@ import './Styles/App/App.css'
 import style from "./Styles/App";
 import axios from 'axios';
 import { Route, Routes, useParams } from 'react-router-dom';
-
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import LandingPage from './Components/LandingPage';
@@ -27,7 +26,7 @@ function App() {
   }, [])
 
   return (
-    <div style={{ backgroundColor: style.colors.CREAM_YELLOW, height: "100vh" }}>
+    <div style={{ backgroundColor: style.colors.TERTIARY, height: "100vh" }}>
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
