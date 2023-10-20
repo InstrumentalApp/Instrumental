@@ -10,6 +10,7 @@ import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import Account from './Components/Account';
 
 function App() {
 
@@ -34,6 +35,14 @@ function App() {
         <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* 
+        Implement logic to allow access to this route when a user is logged in.
+        We would also need to conditionally render a Sign In or View Account button
+        in the Navbar component depending on if a user is currently logged in.
+        */}
+        <Route path="/account" element={<Account />} />
+
       </Routes>
       <Footer/>
     </div>
