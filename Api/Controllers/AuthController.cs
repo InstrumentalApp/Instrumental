@@ -51,7 +51,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginUser>> LoginAsync(LoginUser loginUser)
+    public async Task<ActionResult<UserWithTokens>> LoginAsync(LoginUser loginUser)
     {
         if (!ModelState.IsValid)
         {
@@ -79,7 +79,11 @@ public class AuthController : ControllerBase
         {
             return StatusCode(500, "Error saving new refreshtoken to database, try again.");
         }
-        return Ok(tokens);
+        
+        UserWithTokens userWithTokens = new (validUser, tokens);
+        
+        return Ok(userWithTokens);
+
     }
 
     [HttpPost("refresh")]
