@@ -1,94 +1,142 @@
-import instrumentalImage from '../Assets/Images/instrumentalImage.jpg'
+import style from "../Styles/App";
+import { useNavigate } from 'react-router-dom';
+import Logo from "../Assets/Images/Logos/InstrumentalLogoWhite.svg"
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 
 const Footer = () => {
-  const footerStyle = {
-    borderTop: '1px solid #ccc',  // Top border
-    padding: '20px 0',           // Uniform padding for content top and bottom
-    backgroundColor: '#f0f0f0',  // Background color
-    color: '#555',               // Text color
-    fontSize: '14px',            // Font size
-    display: 'flex',
-    flexDirection: 'column',    // Arrange children vertically
-    alignItems: 'center',       // Center children horizontally
-    textAlign: 'center',        // Center text within the footer
+  const links = {
+    "About":{
+      "Lessons": "/instruments",
+      // "Rentals": "/rentals",
+      "How it works": "/how-it-works",
+      "Teach with us": "/teach-with-us",
+      "Contact": "/contact",
+    },
+    "Legal":{
+      "Terms of service": "/terms-of-service",
+      "Privacy policy": "/privacy-policy",
+    },
+    "Account":{
+      "Sign in": "/sign-in",
+    },
   };
 
-  const missionContainerStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '20px 20px',  // Uniform padding for Mission Section left and right
-    width: '80%'
-  };
-
-  const missionLeftStyle = {
-    flex: 1,
-    margin: '10px',       // Uniform margin for the mission div
-  };
-
-  const missionRightStyle = {
-    flex: 2,
-    display: 'flex',
-    justifyContent: 'space-between',
-  };
-
-  const subDivStyle = {
-    flex: 1,
-    textAlign: 'center',
-  };
-
-  const copyrightStyle = {
-    display: 'flex',
-    flexDirection: 'row',    // Arrange children vertically
-    alignItems: 'center',       // Center children horizontally
-    borderTop: '1px solid #ccc',  // Top border for copyright div
-    padding: '20px 20px 0',     // Uniform padding for the copyright div
-    marginTop: '20px',           // Uniform margin at the top
-    justifyContent: 'space-between', // Add space between divs
-    width: '80%'
-  };
+  const navigate = useNavigate();
 
   return (
-    <div style={footerStyle}>
-      {/* Mission Section */}
-      <div style={missionContainerStyle}>
-        <div style={missionLeftStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
-                <img src={instrumentalImage} alt="Musical Instrument" style={{ height: '55px', width: '55px' }} />
-                <h1 style={{ marginLeft: '10px' }}>Instrumental</h1>
-            </div>
-            <p>Our mission is to provide quality music lessons to learners of all ages.</p>
-        </div>
-        <div style={missionRightStyle}>
-          {/* Sub Div 1 */}
-          <div style={subDivStyle}>
-            <h4>What we offer</h4>
-            <a href="/what-we-offer">Learn More</a>
+    <Paper 
+    sx={{ marginTop: 'calc(10% + 60px)', p: 2, pt: 5,
+    width: '100%',
+    minWidth: "min-content",
+    height: "min-content",
+    minHeight: style.spacing.HEADER_HEIGHT * 3,
+    position: 'fixed',
+    bottom: 0,
+    backgroundColor: style.colors.PRIMARY,
+    color: "white",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "end"
+    }} component="footer" square>
+      <Container maxWidth="xl" 
+      sx={{ 
+        display: "flex", 
+        flexDirection: { xs: "column", md: "row"},
+        justifyContent: "space-between",
+      }}>
+        <Box mb={4}
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+          }}
+        >
+          <Typography
+            variant="h4"
+            noWrap
+            onClick={() => navigate('/')}
+            component="a"
+            sx={{
+              mb: 2,
+              display: 'flex',
+              fontWeight: 700,
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              alignItems: "center",
+              fontFamily: 'Noto Serif',
+              gap: 1.5,
+              '&:hover': {
+                cursor: "pointer",
+              }
+            }}
+          >
+            <img src={Logo} alt="Logo" width={60} />
+            instrumental
+          </Typography>
+          <Typography variant="body1" 
+          sx={{ width: {xs: 350, sm:450, md:350},
+            lineHeight: 1.7 }}>
+            Our mission is to empower teachers and 
+            students alike as they each navigate their 
+            individual journeys through music.
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            flexGrow: 1,
+            justifyContent: {xs:"start", sm:"space-between", md: "end"},
+            display: "flex",
+            flexWrap: {  xs: "wrap", md: "nowrap"},
+            gap: { xs:4, md:8 },
+            px: { md:3 }
+          }}
+        >
+          {Object.entries(links).map(([heading, subheadings]) => 
+          <div key={heading} 
+          style={{ display: "flex", 
+          flexDirection: "column",
+          gap: 1
+          }}>
+            <Typography noWrap variant="subtitle1" mb={1}
+            sx={{ opacity:.7, letterSpacing:2, 
+            fontWeight: 600 }}>
+              {heading}
+            </Typography>
+            {Object.entries(subheadings).map(([subheading, link]) => 
+              <Typography  key={subheading} noWrap variant="subtitle1" sx={{ opacity:1 }}>
+                <Link href={link} noWrap color="inherit" underline="hover">
+                  {subheading}
+                </Link>
+              </Typography>
+            )}
           </div>
-          {/* Sub Div 2 */}
-          <div style={subDivStyle}>
-            <h4>Who we are</h4>
-            <a href="/who-we-are">Learn More</a>
-          </div>
-          {/* Sub Div 3 */}
-          <div style={subDivStyle}>
-            <h4>Account</h4>
-            <a href="/account">Sign In</a>
-          </div>
-          {/* Sub Div 4 */}
-          <div style={subDivStyle}>
-            <h4>Legal</h4>
-            <a href="/legal">Terms & Conditions</a>
-          </div>
-        </div>
-      </div>
+          )}
+        </Box>
 
-      {/* Copyright Section */}
-      <div style={copyrightStyle}>
-        <div style={{ margin: '10px 0' }}>© 2023 Instrumental, Inc. All Rights Reserved</div>
-        <div style={{ margin: '10px 0' }}>999-999-9999 | team@instrumental.com</div>
-      </div>
-    </div>
+      </Container>
+      <Divider variant="middle" sx={{ backgroundColor: "white", height: 2, opacity: .7, my:2 }}/>
+      <Container maxWidth="xl" 
+      sx={{ display: "flex",
+        flexDirection: { xs: "column", md: "row"},
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 1
+      }}>
+        <Typography variant="subtitle1" noWrap >
+          © 2023 Instrumental, Inc. All rights reserved
+        </Typography>
+        <Typography variant="subtitle1" noWrap >
+          (012) 345-6789 &nbsp; | &nbsp; team@instrumental.com
+        </Typography>
+      </Container>
+    </Paper>
   );
 }
 

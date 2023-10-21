@@ -42,10 +42,10 @@ const NavButton = styled(Button)(() => ({
 }));
 
 const pages = [
-  ['Lessons', '/instruments'],
-  ['Rentals', '/rentals'],
-  ['How it Works', '/how-it-works'],
-  ['Teach with Us', '/teach-with-us'],
+  ['Lessons', '/instruments'], 
+  // ['Rentals', '/rentals'], 
+  ['How it Works', '/how-it-works'], 
+  ['Teach with Us', '/teach-with-us'], 
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
