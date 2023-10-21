@@ -10,13 +10,15 @@ import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import useApi from './Hooks/useApi';
 
 function App() {
 
   const [hello, setHello] = useState("");
+  const { handleSubmit } = useApi();
 
   const fetchData = async () => {
-    const result = await axios.get("/api/auth/hello")
+    const result = handleSubmit("/api/auth/hello", {}, "GET")
     setHello(result.data);
   }
 

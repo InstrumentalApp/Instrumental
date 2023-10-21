@@ -47,7 +47,7 @@ public class TokenService : ITokenService
             }),
             Audience = _config["Jwt:Audience"],
             Issuer = _config["Jwt:Issuer"],
-            Expires = DateTime.UtcNow.AddHours(2),
+            Expires = DateTime.UtcNow.AddMinutes(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
             SecurityAlgorithms.HmacSha256Signature)
         };
@@ -112,7 +112,7 @@ public class TokenService : ITokenService
     {
         RefreshToken? check = await _context.RefreshTokens
             .Include(t=>t.User)
-            .Where(t => t.Value == refreshRequest.Value)
+            .Where(t => t.Value == refreshRequest.Token)
             .FirstOrDefaultAsync();
         if (check == null || check.User == null)
         {

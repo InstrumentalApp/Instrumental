@@ -36,7 +36,7 @@ public class InstrumentController : ControllerBase
     List<Instrument> instrumentList = await _instrumentService.AllInstruments();
 
     return instrumentList;
-  } 
+  }
 
 
   [HttpGet("one")]
@@ -45,7 +45,7 @@ public class InstrumentController : ControllerBase
     Instrument? oneInstrument = await _instrumentService.OneInstrument();
 
     return oneInstrument;
-  } 
+  }
 
 
 }

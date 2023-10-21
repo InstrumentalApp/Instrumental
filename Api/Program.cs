@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TeamFive.DataStorage;
-using TeamFive.Services;
 using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.Services.Instruments;
@@ -27,7 +26,8 @@ builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, re
 string connectionString;
 if (builder.Environment.IsProduction())
 {
-    connectionString = builder.Configuration.GetConnectionString("AwsConnection")!;
+    // connectionString = builder.Configuration.GetConnectionString("AwsConnection")!;
+    connectionString = builder.Configuration["ConnectionStrings:LocalConnection"]!;
 }
 else
 {
@@ -83,15 +83,25 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors("AllowOrigins");
 
 app.UseStaticFiles();
 
-// app.UseAuthentication();
+app.UseAuthentication();
 
-// app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -42,10 +42,10 @@ const NavButton = styled(Button)(() => ({
 }));
 
 const pages = [
-  ['Lessons', '/instruments'], 
-  ['Rentals', '/rentals'], 
-  ['How it Works', '/how-it-works'], 
-  ['Teach with Us', '/teach-with-us'], 
+  ['Lessons', '/instruments'],
+  ['Rentals', '/rentals'],
+  ['How it Works', '/how-it-works'],
+  ['Teach with Us', '/teach-with-us'],
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -111,10 +111,10 @@ const NavBar = () => {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorElOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
+              // anchorElOrigin={{
+              //   vertical: 'top',
+              //   horizontal: 'left',
+              // }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
@@ -123,16 +123,16 @@ const NavBar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none', "& .MuiMenu-paper": 
+                display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
                 { backgroundColor: style.colors.SECONDARY }
               },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} 
+                <MenuItem key={page}
                 sx = {{ backgroundColor: style.colors.SECONDARY }}
                 onClick={() => {
-                  handleCloseNavMenu(); 
+                  handleCloseNavMenu();
                   navigate(page[1]);
                   }}>
                   <Typography textAlign="center">{page[0]}</Typography>
@@ -141,7 +141,7 @@ const NavBar = () => {
             </Menu>
           </Box>
           <IconButton sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-          </IconButton> 
+          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -180,7 +180,7 @@ const NavBar = () => {
               </NavButton>
             ))}
           </Box>
-          {auth ? 
+          {auth ?
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -191,10 +191,10 @@ const NavBar = () => {
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
-              anchorElOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
+              // anchorElOrigin={{
+              //   vertical: 'top',
+              //   horizontal: 'right',
+              // }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
@@ -216,17 +216,17 @@ const NavBar = () => {
                 handleCloseNavMenu();
                 navigate('/sign-in');
               }}
-              sx={{ 
+              sx={{
                 ml: 3,
                 px: { sm:1.5 },
                 fontSize: { xs: 11, sm: 13 },
-                color:"white", 
-                display: 'block', 
+                color:"white",
+                display: 'block',
                 backgroundColor: style.colors.PRIMARY,
                 border: `2px solid ${style.colors.PRIMARY}`,
                 '&:hover': {
                   backgroundColor: style.colors.SECONDARY,
-                  color: style.colors.PRIMARY, 
+                  color: style.colors.PRIMARY,
                 },
               }}
             >
