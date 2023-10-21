@@ -31,7 +31,7 @@ const useApi = () => {
     });
     const accessToken = refreshResponse.data.accessToken;
     const newRefreshToken = refreshResponse.data.refreshToken
-    setCredentials({"accessToken":accessToken, "refreshToken":newRefreshToken});
+    setCredentials({...credentials,"accessToken":accessToken, "refreshToken":newRefreshToken});
     originalConfig.headers["Authorization"] = `Bearer ${accessToken}`;
 
     return axios(originalConfig);
