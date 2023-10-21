@@ -15,6 +15,7 @@ public class DBContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<UserInstrument> UserInstruments { get; set; }
+
     public DBContext(DbContextOptions options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

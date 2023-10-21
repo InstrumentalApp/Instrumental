@@ -11,8 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using TeamFive.DataTransfer.Lessons;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeamFive.Controllers;
+[Authorize]
 [ApiController]
 [Route("api/lesson")]
 public class LessonController : ControllerBase
@@ -38,7 +40,6 @@ public class LessonController : ControllerBase
         return allLessons;
     }
 
-
     // Get One Lesson
     [HttpGet("one")]
     public async Task<ActionResult<Lesson?>> OneLesson()
@@ -48,11 +49,12 @@ public class LessonController : ControllerBase
         return oneLesson;
     }
 
-    [HttpPost("create-lesson")]
-    public async Task<ActionResult<Lesson>> CreateLessonAsync([FromForm] Lesson lesson)
+    [HttpPost]
+    public async Task<ActionResult<Lesson>> CreateLessonAsync(Lesson lesson)
     {
         if (!ModelState.IsValid)
         {
+            Console.WriteLine("Modelstate invalid");
             return BadRequest(ModelState);
         }
 

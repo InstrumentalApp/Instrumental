@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeamFive.DataStorage;
+using TeamFive.DataTransfer;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 using TeamFive.Services.Roles;
@@ -19,23 +20,31 @@ public class UserService : IUserService
     }
 
 
-    public async Task<UserDto?> CreateStudentAsync(User user)
+    public async Task<UserDto?> CreateStudentAsync(CreateUser user)
     {
+        User newUser = new()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Confirm = user.Confirm
+            };
         try
         {
             PasswordHasher<User> hasher = new();
-            user.Password = hasher.HashPassword(user, user.Password);
+            newUser.Password = hasher.HashPassword(newUser, newUser.Password);
 
-            await _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(newUser);
 
             // Define new role from Role Service, saves to DB
             Role studentRole = await _roleService.CreateStudentRoleAsync();
 
             // Creates association, saves to DB
-            await _roleService.CreateUserRoleAsync(user, studentRole);
+            await _roleService.CreateUserRoleAsync(newUser, studentRole);
 
             await _context.SaveChangesAsync();
-            return new UserDto(user);
+            return new UserDto(newUser);
         }
         catch(DbUpdateException ex)
         {
@@ -52,25 +61,33 @@ public class UserService : IUserService
     // Create Teacher Method
     // Creates and associates Teacher and Student Roles to UserRoles
 
-    public async Task<UserDto?> CreateTeacherAsync(User user)
+    public async Task<UserDto?> CreateTeacherAsync(CreateUser user)
     {
         try
         {
+            User newUser = new()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Confirm = user.Confirm
+            };
             PasswordHasher<User> hasher = new();
-            user.Password = hasher.HashPassword(user, user.Password);
+            user.Password = hasher.HashPassword(newUser, newUser.Password);
 
-            await _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(newUser);
 
             // Define student/teacher roles from Role Service, saves to DB
             Role studentRole = await _roleService.CreateStudentRoleAsync();
             Role teacherRole = await _roleService.CreateTeacherRoleAsync();
 
             // Creates association, saves to DB
-            await _roleService.CreateUserRoleAsync(user, studentRole);
-            await _roleService.CreateUserRoleAsync(user, teacherRole);
+            await _roleService.CreateUserRoleAsync(newUser, studentRole);
+            await _roleService.CreateUserRoleAsync(newUser, teacherRole);
 
             await _context.SaveChangesAsync();
-            return new UserDto(user);
+            return new UserDto(newUser);
         }
         catch(DbUpdateException ex)
         {

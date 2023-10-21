@@ -1,71 +1,74 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from 'react';
+import axios from 'axios';
 import useLocalStorage from "./useLocalStorage";
 
-const useApi = (initialUrl, initialJwt, method = "GET", body = null) => {
+const useApi = () => {
   const [data, setData] = useState(null);
-  const [url, setUrl] = useState(initialUrl);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+  const getHeaders = (accessToken) => ({
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  });
 
-      const headers = {
-        Authorization: `Bearer ${initialJwt}`,
-        "Content-Type": "application/json",
-      };
-
-      const config = {
-        method: method,
-        url: url,
-        headers: headers,
-        data: body,
-      };
-      try {
-        const result = await axios(config);
-        setData(result.data);
-      } catch (err) {
-        // Assume 401 is the unauthorized status code.
-        if (err.response && err.response.status === 401) {
-          try {
-            const refreshToken = localStorage.getItem("refreshToken");
-            const refreshResponse = await axios.post("/api/auth/refresh", {
-              token: refreshToken,
-            });
-            const accessToken = refreshResponse.data.accessToken;
-            const newRefreshToken = refreshResponse.data.refreshToken;
-            // Store the new access token for future requests
-            setCredentials({
-              "accessToken": accessToken,
-              "refreshToken": newRefreshToken
-            })
-
-            // Retry the original request with the new token
-            headers["Authorization"] = `Bearer ${accessToken}`;
-            const retryResult = await axios.get(url, { headers });
-            setData(retryResult.data);
-          } catch (refreshErr) {
-            setError(refreshErr);
-            // Redirect to login or handle logout
-          }
-        } else {
-          setError(err);
-        }
-      }
-
-      setLoading(false);
+  const fetchData = async (givenUrl, bodyData, givenMethod, accessToken) => {
+    const headers = getHeaders(accessToken);
+    const config = {
+      method: givenMethod,
+      url: givenUrl,
+      headers: headers,
+      data: bodyData,
     };
+    return await axios(config);
+  };
 
-    if (url) {
-      fetchData();
+  const refreshTokenAndRetry = async (originalConfig) => {
+    const refreshToken = credentials["refreshToken"];
+    const refreshResponse = await axios.post("/api/auth/refresh", {
+        token: refreshToken,
+    });
+    const accessToken = refreshResponse.data.accessToken;
+    const newRefreshToken = refreshResponse.data.refreshToken
+    setCredentials({"accessToken":accessToken, "refreshToken":newRefreshToken});
+    originalConfig.headers["Authorization"] = `Bearer ${accessToken}`;
+
+    return axios(originalConfig);
+  };
+
+  const fetchDataWrapper = async (givenUrl, bodyData, givenMethod) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await fetchData(givenUrl, bodyData, givenMethod, credentials["accessToken"]);
+      setData(result.data);
+    } catch (err) {
+        if (err.response && err.response.status === 401) {
+            try {
+                const retryResult = await refreshTokenAndRetry({
+                    method: givenMethod,
+                    url: givenUrl,
+                    headers: getHeaders(credentials["accessToken"]),
+                    data: bodyData
+                });
+                setData(retryResult.data);
+            } catch (refreshErr) {
+                setError(refreshErr);
+            }
+        } else {
+            setError(err);
+        }
     }
-  }, [url, initialJwt]);
+    setLoading(false);
+  };
 
-  return { data, loading, error, setUrl };
+  const handleSubmit = (givenUrl, givenData, givenMethod) => {
+    fetchDataWrapper(givenUrl, givenData, givenMethod);
+  };
+
+  return { data, loading, error, handleSubmit };
 };
 
 export default useApi;

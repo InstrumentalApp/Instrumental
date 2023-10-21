@@ -24,7 +24,7 @@ const InstrumentDetail = () => {
 			console.error("Error fetching teacher list:", error);
 		  }
 		};
-	
+
 		fetchTeachers();
 	  }, []);
 
@@ -57,7 +57,7 @@ const InstrumentDetail = () => {
 		<div className="teacher-cards">
 			{
 				teacherList.map((teacher, index) => (
-					<div className="teacher-card">
+					<div key={index} className="teacher-card">
 						<p>{teacher.firstName} {teacher.lastName}</p>
 						<button onClick={() => openModal(teacher)}>Book a Lesson</button>
 					</div>
@@ -73,6 +73,7 @@ const InstrumentDetail = () => {
           // It can include booking a lesson with the selected teacher
           // and closing the modal
         }}
+        instrumentId={instrumentId}
       />
 
 		</div>

@@ -8,6 +8,7 @@ using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using TeamFive.DataTransfer;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -32,21 +33,21 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> RegisterAsync(User user)
+    public async Task<ActionResult<UserDto>> RegisterAsync(CreateUser user)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        UserDto? newUser = await _userService.CreateTeacherAsync(user);
+        UserDto? returnUser = await _userService.CreateStudentAsync(user);
 
-        if (newUser == null)
+        if (returnUser == null)
         {
             return StatusCode(500, "Unknown error occured. Please try again.");
         }
 
-        return newUser;
+        return returnUser;
     }
 
     [HttpPost("login")]
