@@ -15,8 +15,6 @@ public class UserDto
         LastName = user.LastName;
         Email = user.Email;
 
-        
-
     }
 
 
