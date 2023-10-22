@@ -47,7 +47,7 @@ public class TokenService : ITokenService
             }),
             Audience = _config["Jwt:Audience"],
             Issuer = _config["Jwt:Issuer"],
-            Expires = DateTime.UtcNow.AddMinutes(1),
+            Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
             SecurityAlgorithms.HmacSha256Signature)
         };
