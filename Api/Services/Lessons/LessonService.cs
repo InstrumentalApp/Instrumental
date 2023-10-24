@@ -11,7 +11,6 @@ using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
-using TeamFive.Migrations;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService

@@ -26,7 +26,7 @@ public class RoleService : IRoleService
     // Student Role Creation Service
     public async Task<Role> CreateStudentRoleAsync()
     {
-      
+
       // Create a new Role role for the DB
       Role studentRole = new Role()
       {
@@ -40,7 +40,7 @@ public class RoleService : IRoleService
       // Saves changes to the DB
       // returns an int for each state entity written to DB
       int creationResult = await _context.SaveChangesAsync();
-      
+
       if(creationResult > 0)
       {
         return studentRole;
@@ -70,7 +70,7 @@ public class RoleService : IRoleService
       // Saves changes to the DB
       // returns an int for each state entity written to DB
       int creationResult = await _context.SaveChangesAsync();
-      
+
       if(creationResult > 0)
       {
         return teacherRole;
@@ -99,7 +99,7 @@ public class RoleService : IRoleService
       // Saves changes to the DB
       // returns an int for each state entity written to DB
       int creationResult = await _context.SaveChangesAsync();
-      
+
       if(creationResult > 0)
       {
         return superUserRole;
@@ -123,7 +123,7 @@ public class RoleService : IRoleService
       _context.UserRoles.Add(userRole);
 
       int creationResult = await _context.SaveChangesAsync();
-      
+
       if(creationResult > 0)
       {
         return userRole;
@@ -132,6 +132,20 @@ public class RoleService : IRoleService
       {
         throw new Exception("CreateUserRoleAsync - Failed to Persist UserRole object to DB");
       }
+    }
+
+    public async Task<List<Role>> RolesByUserIdAsync(int userId)
+    {
+        User? user = await _context.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .Where(u => u.UserId == userId)
+            .FirstOrDefaultAsync();
+        if (user == null)
+        {
+            throw new Exception("User does not exist.");
+        }
+        return user.UserRoles.Select(r => r.Role).ToList()!;
     }
 
 
