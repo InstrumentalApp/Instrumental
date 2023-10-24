@@ -24,6 +24,12 @@ body {
   color: "inherit !important";
 }
 
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 :root {
   --bs-body-font-weight: 300;
 }

@@ -50,28 +50,28 @@ const pages = [
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorNav, setAnchorNav] = useState(null);
+  const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
   const [auth, setAuth] = useState(false);
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorUser(null);
   };
 
   return (
-    <AppBar position="static" style={navStyle}>
+    <AppBar position="sticky" style={navStyle}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ mt: {xs: .7, md: 0} }}>
           <Typography
@@ -110,17 +110,17 @@ const NavBar = () => {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
-              // anchorElOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'left',
-              // }}
+              anchor={anchorNav}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
@@ -190,8 +190,8 @@ const NavBar = () => {
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
-              // anchorElOrigin={{
+              anchor={anchorUser}
+              // anchorOrigin={{
               //   vertical: 'top',
               //   horizontal: 'right',
               // }}
@@ -200,7 +200,7 @@ const NavBar = () => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(anchorUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (

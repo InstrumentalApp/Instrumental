@@ -28,7 +28,12 @@ function App() {
   }, [])
 
   return (
-    <div style={{ backgroundColor: style.colors.TERTIARY, height: "100vh" }}>
+    <div className='flex-col-center' style={{ 
+      backgroundColor: style.colors.TERTIARY, 
+      minHeight:"100vh",
+      height: "fit-content",
+      justifyContent: "space-between"
+    }}>
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
