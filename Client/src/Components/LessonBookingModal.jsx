@@ -16,8 +16,13 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
-    handleSubmit(url, lesson, "POST");
-  }
+    if (lesson.durationMinutes <= 0) {
+      alert("Duration should be a positive number");
+    }
+      else {
+        handleSubmit(url, lesson, "POST");
+      }
+  };
 
   const handleChange = (e) => {
     setLesson({ ...lesson, [e.target.name]: e.target.value });
@@ -28,7 +33,8 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
       <div className="modal" style={{ display: 'block' }}>
         <div className="modal-content">
           <button onClick={closeModal}>Close</button>
-          <h2>{teacher.name}</h2>
+          <h2>{teacher.firstName}</h2>
+          <h2>{teacher.lastName}</h2>
           {/* Lesson booking form */}
           <form onSubmit={(e)=>handleManualSubmit(e)}>
             <div>
