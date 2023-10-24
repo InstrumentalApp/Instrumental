@@ -35,7 +35,7 @@ const Footer = () => {
     minWidth: "min-content",
     height: "min-content",
     minHeight: style.spacing.HEADER_HEIGHT * 3,
-    position: 'fixed',
+    position: 'static',
     bottom: 0,
     backgroundColor: style.colors.PRIMARY,
     color: "white",
@@ -81,7 +81,7 @@ const Footer = () => {
             instrumental
           </Typography>
           <Typography variant="body1" 
-          sx={{ width: {xs: 350, sm:450, md:350},
+          sx={{ width: {xs: 300, sm:450, md:300},
             lineHeight: 1.7 }}>
             Our mission is to empower teachers and 
             students alike as they each navigate their 
