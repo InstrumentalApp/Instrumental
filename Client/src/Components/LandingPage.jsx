@@ -1,23 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
+import AboutUs from './AboutUs';
 
-const Example = () => {
-  const [hello, setHello] = useState("");
+const LandingPage = () => {
 
-  const fetchData = async () => {
-    const result = await axios.get("/api/auth/hello")
-    setHello(result.data);
-  }
-
-  useEffect(() => {
-    fetchData()
-    console.log(hello)
-  }, [])
   return (
-    <><h1>{hello}</h1></>
+    <AboutUs />
   )
 }
 
-export default Example
+export default LandingPage;
 
 
