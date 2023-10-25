@@ -25,19 +25,15 @@ public class InstrumentService : IInstrumentService
     List<Instrument> instrumentList = await _context.Instruments.ToListAsync();
 
     return instrumentList;
-  } 
+  }
 
 
   // Get one Instrument
   public async Task<Instrument?> OneInstrument()
   {
-
-    // Return full list of all instruments, unsorted
     Instrument? oneInstrument = await _context.Instruments.FirstOrDefaultAsync();
 
-    await Task.Delay(1);
-
     return oneInstrument;
-  } 
+  }
 
 }

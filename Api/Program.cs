@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TeamFive.DataStorage;
-using TeamFive.Services;
 using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.Services.Instruments;
 using TeamFive.Services.Instructors;
 using TeamFive.Services.Lessons;
 using TeamFive.Services.Roles;
+using TeamFive.Enums;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,8 @@ builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, re
 string connectionString;
 if (builder.Environment.IsProduction())
 {
-    connectionString = builder.Configuration.GetConnectionString("AwsConnection")!;
+    // connectionString = builder.Configuration.GetConnectionString("AwsConnection")!;
+    connectionString = builder.Configuration["ConnectionStrings:LocalConnection"]!;
 }
 else
 {
@@ -51,7 +53,7 @@ builder.Services.AddAuthentication(options =>
 	.AddJwtBearer("Bearer", options =>
 	{
 
-		options.RequireHttpsMetadata = true;
+		options.RequireHttpsMetadata = false;
 		options.SaveToken = false;
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
@@ -66,6 +68,13 @@ builder.Services.AddAuthentication(options =>
 		};
 	}
 );
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("TEACHER", policy => policy.RequireClaim(ClaimTypes.Role, ((int)RoleType.TEACHER).ToString()));
+    options.AddPolicy("STUDENT", policy => policy.RequireClaim(ClaimTypes.Role, ((int)RoleType.STUDENT).ToString()));
+    options.AddPolicy("SUPERUSER", policy => policy.RequireClaim(ClaimTypes.Role, ((int)RoleType.SUPERUSER).ToString()));
+});
 
 builder.Services.AddDbContext<DBContext>(options =>
 {
@@ -83,15 +92,25 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors("AllowOrigins");
 
 app.UseStaticFiles();
 
-// app.UseAuthentication();
+app.UseAuthentication();
 
-// app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

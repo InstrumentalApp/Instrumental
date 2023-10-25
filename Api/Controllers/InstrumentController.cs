@@ -36,16 +36,19 @@ public class InstrumentController : ControllerBase
     List<Instrument> instrumentList = await _instrumentService.AllInstruments();
 
     return instrumentList;
-  } 
+  }
 
 
   [HttpGet("one")]
   public async Task<ActionResult<Instrument>> OneInstrument()
   {
     Instrument? oneInstrument = await _instrumentService.OneInstrument();
-
+    if (oneInstrument == null)
+    {
+        return BadRequest("Resource not found");
+    }
     return oneInstrument;
-  } 
+  }
 
 
 }

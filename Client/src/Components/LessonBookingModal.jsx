@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
+import useApi from '../Hooks/useApi';
+import axios from 'axios';
 
-const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson }) => {
-  const [lessonDate, setLessonDate] = useState('');
-  const [lessonTime, setLessonTime] = useState('');
-  const [additionalInfo, setAdditionalInfo] = useState('');
+const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, instrumentId }) => {
+  const [lesson, setLesson] = useState({
+    teacherId: 1,
+    studentId: 1,
+    instrumentId: instrumentId,
+    durationMinutes: 0,
+    bookingDate: ""
+  })
+  const url = "/api/lesson"
 
-  const handleBookLesson = () => {
-    // Implement the booking logic here
-    // You can use lessonDate, lessonTime, additionalInfo, and teacher data
-    // If booking is successful, call the bookLesson function to close the modal
+  const { handleSubmit } = useApi();
+
+  const handleManualSubmit = async (e) => {
+    e.preventDefault();
+    if (lesson.durationMinutes <= 0) {
+      alert("Duration should be a positive number");
+    }
+      else {
+        handleSubmit(url, lesson, "POST");
+      }
+  };
+
+  const handleChange = (e) => {
+    setLesson({ ...lesson, [e.target.name]: e.target.value });
   };
 
   return (
@@ -16,34 +33,28 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson })
       <div className="modal" style={{ display: 'block' }}>
         <div className="modal-content">
           <button onClick={closeModal}>Close</button>
-          <h2>{teacher.name}</h2>
-
+          <h2>{teacher.firstName}</h2>
+          <h2>{teacher.lastName}</h2>
           {/* Lesson booking form */}
-          <form onSubmit={handleBookLesson}>
+          <form onSubmit={(e)=>handleManualSubmit(e)}>
             <div>
               <label htmlFor="lessonDate">Lesson Date:</label>
               <input
-                type="date"
+                type="datetime-local"
                 id="lessonDate"
-                value={lessonDate}
-                onChange={(e) => setLessonDate(e.target.value)}
+                name="bookingDate"
+                value={lesson.bookingDate}
+                onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="lessonTime">Lesson Time:</label>
+              <label htmlFor="durationMinutes">Duration: </label>
               <input
-                type="time"
-                id="lessonTime"
-                value={lessonTime}
-                onChange={(e) => setLessonTime(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="additionalInfo">Additional Information:</label>
-              <textarea
-                id="additionalInfo"
-                value={additionalInfo}
-                onChange={(e) => setAdditionalInfo(e.target.value)}
+                type="number"
+                id="durationMinutes"
+                name="durationMinutes"
+                value={lesson.durationMinutes}
+                onChange={handleChange}
               />
             </div>
             <button type="submit">Book Lesson</button>

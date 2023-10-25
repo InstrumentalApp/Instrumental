@@ -14,8 +14,9 @@ using System.Diagnostics;
 namespace TeamFive.Services.Roles;
 public interface IRoleService
 {
-  Task<Role> CreateStudentRoleAsync();
-  Task<Role> CreateTeacherRoleAsync();
-  Task<Role> CreateSuperUserRoleAsync();
-  Task<UserRole> CreateUserRoleAsync(User user, Role role);
+    Task<Role> CreateStudentRoleAsync();
+    Task<Role> CreateTeacherRoleAsync();
+    Task<Role> CreateSuperUserRoleAsync();
+    Task<UserRole> CreateUserRoleAsync(User user, Role role);
+    Task<List<Role>> RolesByUserIdAsync(int userId);
 }

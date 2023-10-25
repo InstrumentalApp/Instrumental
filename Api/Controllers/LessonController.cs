@@ -11,8 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using TeamFive.DataTransfer.Lessons;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Serialization;
 
 namespace TeamFive.Controllers;
+[Authorize]
 [ApiController]
 [Route("api/lesson")]
 public class LessonController : ControllerBase
@@ -38,34 +41,42 @@ public class LessonController : ControllerBase
         return allLessons;
     }
 
-
     // Get One Lesson
-    [HttpGet("one")]
-    public async Task<ActionResult<Lesson?>> OneLesson()
+    [HttpGet("{id}")]
+    public async Task<ActionResult<LessonDto?>> OneLesson(int id)
     {
-        Lesson? oneLesson = await _lessonService.OneLesson();
-
-        return oneLesson;
-    }
-
-    [HttpPost("create-lesson")]
-    public async Task<ActionResult<Lesson>> CreateLessonAsync([FromForm] Lesson lesson)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         try
         {
-            lesson.LessonId = await _lessonService.CreateLessonAsync(lesson);
-            return CreatedAtAction(nameof(OneLesson), new LessonDto(lesson));
+            LessonDto? oneLesson = await _lessonService.OneLessonAsync(id);
+            return oneLesson;
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex.Message);
-            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            return BadRequest("Resource not found.");
         }
-
     }
+
+
+
+    // [HttpPost]
+    // public async Task<ActionResult<Lesson>> CreateLessonAsync(Lesson lesson)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         Console.WriteLine("Modelstate invalid");
+    //         return BadRequest(ModelState);
+    //     }
+
+    //     try
+    //     {
+    //         lesson.LessonId = await _lessonService.CreateLessonAsync(lesson);
+    //         return CreatedAtAction(nameof(OneLesson), new LessonDto(lesson, teacher, student, instrument));
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _logger.LogError(ex.Message);
+    //         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+    //     }
+
+    // }
 }

@@ -2,12 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
-using TeamFive.Services;
 using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using TeamFive.DataTransfer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -32,25 +30,25 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> RegisterAsync(User user)
+    public async Task<ActionResult<UserDto>> RegisterAsync(CreateUser user)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        UserDto? newUser = await _userService.CreateTeacherAsync(user);
+        UserDto? returnUser = await _userService.CreateStudentAsync(user);
 
-        if (newUser == null)
+        if (returnUser == null)
         {
             return StatusCode(500, "Unknown error occured. Please try again.");
         }
 
-        return newUser;
+        return returnUser;
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginUser>> LoginAsync(LoginUser loginUser)
+    public async Task<ActionResult<UserWithTokens>> LoginAsync(LoginUser loginUser)
     {
         if (!ModelState.IsValid)
         {
@@ -78,7 +76,10 @@ public class AuthController : ControllerBase
         {
             return StatusCode(500, "Error saving new refreshtoken to database, try again.");
         }
-        return Ok(tokens);
+
+        UserWithTokens userWithTokens = new (validUser, tokens);
+
+        return Ok(userWithTokens);
     }
 
     [HttpPost("refresh")]
@@ -91,8 +92,15 @@ public class AuthController : ControllerBase
         TokensDto? tokens = await _tokenService.DoRefreshActionAsync(refreshRequest);
         if (tokens == null)
         {
-            return BadRequest("Something went wrong, try again.");
+            return StatusCode(500, "Something went wrong, try again.");
         }
         return tokens;
+    }
+
+    [HttpGet("claims")]
+    [Authorize]
+    public IActionResult GetClaims()
+    {
+        return Ok(User.Claims.Select(c => new { c.Type, c.Value }).ToList());
     }
 }

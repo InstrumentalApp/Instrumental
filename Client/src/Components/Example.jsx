@@ -1,23 +1,23 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'
+// import axios from 'axios';
+// import { useEffect, useState } from 'react'
 
-const Example = () => {
-  const [hello, setHello] = useState("");
+// const Example = () => {
+//   const [hello, setHello] = useState("");
 
-  const fetchData = async () => {
-    const result = await axios.get("/api/auth/hello")
-    setHello(result.data);
-  }
+//   const fetchData = async () => {
+//     const result = await axios.get("/api/auth/hello")
+//     setHello(result.data);
+//   }
 
-  useEffect(() => {
-    fetchData()
-    console.log(hello)
-  }, [])
-  return (
-    <><h1>{hello}</h1></>
-  )
-}
+//   useEffect(() => {
+//     fetchData()
+//     console.log(hello)
+//   }, [])
+//   return (
+//     <><h1>{hello}</h1></>
+//   )
+// }
 
-export default Example
+// export default Example
 
 

@@ -11,13 +11,15 @@ import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
 import Account from './Components/Account';
+import useApi from './Hooks/useApi';
 
 function App() {
 
   const [hello, setHello] = useState("");
+  const { handleSubmit } = useApi();
 
   const fetchData = async () => {
-    const result = await axios.get("/api/auth/hello")
+    const result = handleSubmit("/api/auth/hello", {}, "GET")
     setHello(result.data);
   }
 
@@ -27,7 +29,12 @@ function App() {
   }, [])
 
   return (
-    <div style={{ backgroundColor: style.colors.TERTIARY, height: "100vh" }}>
+    <div className='flex-col-center' style={{ 
+      backgroundColor: style.colors.TERTIARY, 
+      minHeight:"100vh",
+      height: "fit-content",
+      justifyContent: "space-between"
+    }}>
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />

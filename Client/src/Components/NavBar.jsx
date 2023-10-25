@@ -46,32 +46,33 @@ const pages = [
   // ['Rentals', '/rentals'], 
   ['How it Works', '/how-it-works'], 
   ['Teach with Us', '/teach-with-us'], 
+  ['Register', '/register'],
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorNav, setAnchorNav] = useState(null);
+  const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
   const [auth, setAuth] = useState(false);
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorUser(null);
   };
 
   return (
-    <AppBar position="static" style={navStyle}>
+    <AppBar position="sticky" style={navStyle}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ mt: {xs: .7, md: 0} }}>
           <Typography
@@ -110,8 +111,8 @@ const NavBar = () => {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorElOrigin={{
+              anchor={anchorNav}
+              anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
               }}
@@ -120,19 +121,19 @@ const NavBar = () => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none', "& .MuiMenu-paper": 
+                display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
                 { backgroundColor: style.colors.SECONDARY }
               },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} 
+                <MenuItem key={page}
                 sx = {{ backgroundColor: style.colors.SECONDARY }}
                 onClick={() => {
-                  handleCloseNavMenu(); 
+                  handleCloseNavMenu();
                   navigate(page[1]);
                   }}>
                   <Typography textAlign="center">{page[0]}</Typography>
@@ -141,7 +142,7 @@ const NavBar = () => {
             </Menu>
           </Box>
           <IconButton sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-          </IconButton> 
+          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -180,7 +181,7 @@ const NavBar = () => {
               </NavButton>
             ))}
           </Box>
-          {auth ? 
+          {auth ?
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -190,17 +191,17 @@ const NavBar = () => {
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorElOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
+              anchor={anchorUser}
+              // anchorOrigin={{
+              //   vertical: 'top',
+              //   horizontal: 'right',
+              // }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(anchorUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
@@ -216,17 +217,17 @@ const NavBar = () => {
                 handleCloseNavMenu();
                 navigate('/sign-in');
               }}
-              sx={{ 
+              sx={{
                 ml: 3,
                 px: { sm:1.5 },
                 fontSize: { xs: 11, sm: 13 },
-                color:"white", 
-                display: 'block', 
+                color:"white",
+                display: 'block',
                 backgroundColor: style.colors.PRIMARY,
                 border: `2px solid ${style.colors.PRIMARY}`,
                 '&:hover': {
                   backgroundColor: style.colors.SECONDARY,
-                  color: style.colors.PRIMARY, 
+                  color: style.colors.PRIMARY,
                 },
               }}
             >
