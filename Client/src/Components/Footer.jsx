@@ -23,6 +23,7 @@ const Footer = () => {
     },
     "Account":{
       "Sign in": "/sign-in",
+      "Register": "/register"
     },
   };
 

@@ -46,6 +46,7 @@ const pages = [
   // ['Rentals', '/rentals'], 
   ['How it Works', '/how-it-works'], 
   ['Teach with Us', '/teach-with-us'], 
+  ['Register', '/register'],
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
