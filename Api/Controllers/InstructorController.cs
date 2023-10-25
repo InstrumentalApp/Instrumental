@@ -8,6 +8,8 @@ using TeamFive.Models;
 using TeamFive.Services;
 using TeamFive.Services.Tokens;
 using TeamFive.Services.Instructors;
+using Microsoft.AspNetCore.Authorization;
+using TeamFive.DataTransfer;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -36,7 +38,7 @@ public class InstructorController : ControllerBase
   //   List<Instructor> InstructorList = await _InstructorService.AllInstructors();
 
   //   return InstructorList;
-  // } 
+  // }
 
 
   // [HttpGet("one")]
@@ -45,8 +47,7 @@ public class InstructorController : ControllerBase
   //   Instructor? oneInstructor = await _InstructorService.OneInstructor();
 
   //   return oneInstructor;
-  // } 
-
+  // }
 
     [HttpGet("{instrumentId}/instructors")]
     public async Task<ActionResult<List<User>>> GetTeachersWithInstrument(int instrumentId)
@@ -54,5 +55,14 @@ public class InstructorController : ControllerBase
       List<User> teachersPerInstrument = await _InstructorService.TeachersPerInstrument(instrumentId);
 
       return teachersPerInstrument;
+    }
+
+    [Authorize(Policy = "SUPERUSER")]
+    [HttpPost("create")]
+    public async Task<ActionResult<UserWithTokens>> CreateAsync()
+    {
+        await Task.Delay(1);
+        Console.WriteLine("WE IN THIS");
+        return Ok();
     }
 }

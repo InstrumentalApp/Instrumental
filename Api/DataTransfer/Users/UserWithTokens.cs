@@ -19,7 +19,6 @@ public class UserWithTokens
         Email = user.Email;
         RefreshToken = tokens.RefreshToken;
         AccessToken = tokens.AccessToken;
-        
     }
 
 

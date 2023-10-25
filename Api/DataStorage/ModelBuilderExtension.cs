@@ -64,6 +64,21 @@ public static class ModelBuilderExtensions
         modelBuilder.Entity<UserRole>().HasData(userRole);
         y--;
     }
-  }
 
+    User superUser = new()
+    {
+        UserId = ++x,
+        FirstName = "super",
+        LastName = "user",
+        Email = "superuser@mail.com",
+        Password = "99999999",
+    };
+
+    superUser.Password = hasher.HashPassword(superUser, superUser.Password);
+    Role superRole = new() { RoleId = ++x, RoleType = Enums.RoleType.SUPERUSER };
+    UserRole superUserRole = new(){ UserId = superUser.UserId, RoleId = superRole.RoleId};
+    modelBuilder.Entity<User>().HasData(superUser);
+    modelBuilder.Entity<Role>().HasData(superRole);
+    modelBuilder.Entity<UserRole>().HasData(superUserRole);
+  }
 }
