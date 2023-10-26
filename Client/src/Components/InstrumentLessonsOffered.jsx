@@ -67,7 +67,7 @@ const InstrumentLessonsOffered = () => {
       <div className="instrument-cards">
         {loading ?
         placeholders.map((placeholder, index) => (
-          <Card key={index} className="instrument-card" sx={{ 
+          <Card key={index} elevation={0} className="instrument-card" sx={{ 
           maxWidth: 345, 
           backgroundColor: style.colors.SECONDARY, 
           paddingBottom: 2,
@@ -85,7 +85,7 @@ const InstrumentLessonsOffered = () => {
           </Card>
         )) :
         instrumentList.map((instrument, index) => (
-          <Card key={index} className="instrument-card" sx={{ 
+          <Card key={index} elevation={0} className="instrument-card" sx={{ 
           maxWidth: 345, 
           backgroundColor: style.colors.SECONDARY, 
           paddingBottom: 2,
