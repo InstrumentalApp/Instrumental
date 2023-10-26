@@ -53,15 +53,51 @@ public class LessonService : ILessonService
         return oneLessonDto;
     }
 
-    public async Task<int> CreateLessonAsync(Lesson lesson)
+
+  // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
+
+    public async Task<LessonDto> CreateLessonAsync(Lesson lesson)
     {
       _context.Lessons.Add(lesson);
 
       int creationResult = await _context.SaveChangesAsync();
 
+      UserDto? lessonTeacherDto = new UserDto(lesson.Teacher)
+      {
+        UserId = lesson.Teacher.UserId,
+        FirstName = lesson.Teacher.FirstName, 
+        LastName = lesson.Teacher.LastName, 
+        Email = lesson.Teacher.Email 
+      };
+
+      UserDto? lessonStudentDto = new UserDto(lesson.Student)
+      {
+        UserId = lesson.Student.UserId,
+        FirstName = lesson.Student.FirstName, 
+        LastName = lesson.Student.LastName, 
+        Email = lesson.Student.Email 
+      };
+
+      InstrumentDto? lessonInstrumentDto = new InstrumentDto(lesson.Instrument)
+      {
+        InstrumentId = lesson.InstrumentId,
+        Name = lesson.Instrument.Name,
+        Family = lesson.Instrument.Family
+      };
+
+      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto)
+      {
+        LessonId = lesson.LessonId,
+        BookingDate = lesson.BookingDate,
+        DurationMinutes = lesson.DurationMinutes,
+        Teacher = lessonTeacherDto,
+        Student = lessonStudentDto,
+        Instrument = lessonInstrumentDto
+      };
+
       if(creationResult > 0)
       {
-        return lesson.LessonId;
+        return createdLessonDto;
       }
       else
       {
