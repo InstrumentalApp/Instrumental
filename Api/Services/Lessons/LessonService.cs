@@ -105,4 +105,13 @@ public class LessonService : ILessonService
       }
     }
 
+    public async Task<List<Lesson>> AllLessonsForUserIdAsync(int userId) 
+    {
+      List<Lesson> lessonsForUser = await _context.Lessons
+        .Where(l => l.TeacherId == userId || l.StudentId == userId)
+        .ToListAsync();
+
+      return lessonsForUser;
+    }
+
 }
