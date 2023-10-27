@@ -57,26 +57,32 @@ public class LessonController : ControllerBase
     }
 
 
+    // Update Lesson Service to Include Updated UserDto so Lessons can be created and return lesson info on React to be Displayed
 
-    // [HttpPost]
-    // public async Task<ActionResult<Lesson>> CreateLessonAsync(Lesson lesson)
-    // {
-    //     if (!ModelState.IsValid)
-    //     {
-    //         Console.WriteLine("Modelstate invalid");
-    //         return BadRequest(ModelState);
-    //     }
+    [HttpPost]
+    public async Task<ActionResult<Lesson>> CreateLessonAsync(Lesson lesson)
+    {
+        if (!ModelState.IsValid)
+        {
+            Console.WriteLine("Modelstate invalid");
+            return BadRequest(ModelState);
+        }
 
-    //     try
-    //     {
-    //         lesson.LessonId = await _lessonService.CreateLessonAsync(lesson);
-    //         return CreatedAtAction(nameof(OneLesson), new LessonDto(lesson, teacher, student, instrument));
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         _logger.LogError(ex.Message);
-    //         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-    //     }
+        LessonDto? createdLesson = await _lessonService.CreateLessonAsync(lesson);
 
-    // }
+        Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
+
+        try
+        {
+            Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
+
+            return CreatedAtAction(nameof(OneLesson), createdLesson);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+
+    }
 }
