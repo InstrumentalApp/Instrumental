@@ -42,7 +42,7 @@ const useApi = () => {
     setError(null);
 
     try {
-      const result = await fetchData(givenUrl, bodyData, givenMethod, credentials["accessToken"]);
+      const result = await fetchData(givenUrl, bodyData, givenMethod, credentials["accessToken"] || "");
       setData(result.data);
     } catch (err) {
         if (err.response && err.response.status === 401) {

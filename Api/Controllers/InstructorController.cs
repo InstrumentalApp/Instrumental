@@ -10,6 +10,7 @@ using TeamFive.Services.Tokens;
 using TeamFive.Services.Instructors;
 using Microsoft.AspNetCore.Authorization;
 using TeamFive.DataTransfer;
+using TeamFive.Services.Users;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -17,12 +18,14 @@ namespace TeamFive.Controllers;
 public class InstructorController : ControllerBase
 {
   // Calls on IInstructorService
-  private readonly IInstructorService _InstructorService;
+    private readonly IInstructorService _instructorService;
+    private readonly IUserService _userService;
 
   // Imports Context and _isntrumentService
-  public InstructorController(IInstructorService InstService)
+  public InstructorController(IInstructorService InstService, IUserService userServ)
   {
-    _InstructorService = InstService;
+        _instructorService = InstService;
+        _userService = userServ;
   }
 
   // First Call to Database to return full Instructor list stored in DB.
@@ -52,17 +55,25 @@ public class InstructorController : ControllerBase
     [HttpGet("{instrumentId}/instructors")]
     public async Task<ActionResult<List<User>>> GetTeachersWithInstrument(int instrumentId)
     {
-      List<User> teachersPerInstrument = await _InstructorService.TeachersPerInstrument(instrumentId);
+      List<User> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
 
       return teachersPerInstrument;
     }
 
     [Authorize(Policy = "SUPERUSER")]
     [HttpPost("create")]
-    public async Task<ActionResult<UserWithTokens>> CreateAsync()
+    public async Task<ActionResult<UserWithRoleDto?>> CreateAsync(User user)
     {
-        await Task.Delay(1);
-        Console.WriteLine("WE IN THIS");
-        return Ok();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        //TODO: deal with creating a user and emailing them a temp password or token.
+        UserWithRoleDto? newUser = await _userService.CreateTeacherAsync(user);
+        if (newUser == null)
+        {
+            return BadRequest();
+        }
+        return newUser;
     }
 }

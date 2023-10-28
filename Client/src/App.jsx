@@ -10,26 +10,19 @@ import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import SuperUserDashboard from './Components/SuperUserDashboard';
 import useApi from './Hooks/useApi';
+import useLocalStorage from './Hooks/useLocalStorage';
 
 function App() {
 
   const [hello, setHello] = useState("");
-  const { handleSubmit } = useApi();
-
-  const fetchData = async () => {
-    const result = handleSubmit("/api/auth/hello", {}, "GET")
-    setHello(result.data);
-  }
-
-  useEffect(() => {
-    fetchData()
-    console.log(hello)
-  }, [])
+  const { handleSubmit, data } = useApi();
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
   return (
-    <div className='flex-col-center' style={{ 
-      backgroundColor: style.colors.TERTIARY, 
+    <div className='flex-col-center' style={{
+      backgroundColor: style.colors.TERTIARY,
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
@@ -41,6 +34,9 @@ function App() {
         <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        {credentials && Object.keys(credentials).length > 0 ? (
+          <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+        ) : null}
       </Routes>
       <Footer/>
     </div>

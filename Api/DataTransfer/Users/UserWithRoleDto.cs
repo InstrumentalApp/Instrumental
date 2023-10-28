@@ -1,3 +1,4 @@
+using TeamFive.DataTransfer.Roles;
 using TeamFive.Models;
 
 namespace TeamFive.DataTransfer.Users;
@@ -7,7 +8,7 @@ public class UserWithRoleDto
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public Role Role { get; set; }
+    public RoleDto Role { get; set; }
 
     public UserWithRoleDto(User user)
     {
@@ -15,8 +16,6 @@ public class UserWithRoleDto
         FirstName = user.FirstName;
         LastName = user.LastName;
         Email = user.Email;
-        Role = user.Role!;
+        Role = new(user.Role!);
     }
-
-
 }
