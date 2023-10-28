@@ -1,29 +1,54 @@
+import { useState } from 'react';
 import List from '@mui/material/List';
 import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import styles from '../Styles/App';
+import AnimatedPic from "../Assets/strum.gif"
+import StaticPic from "../Assets/strum_static.png"
+import HoverButton from './HoverButton';
 
 const AboutUs = () => {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <Container maxWidth="xl">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h4" component="h2">
-            {"Welcome to Instrumental – Your Music Education Hub!"}
-          </Typography>
-          <Typography variant="body1">
-            Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
-          </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} className='d-flex '>
+          <div>
+            <Typography variant="h4" component="h2" mt={5} mb={2} maxWidth={500} sx={{
+              fontFamily: styles.fonts.HEADER_FONT,
+              color: styles.colors.PRIMARY,
+              fontWeight: 'bold',
+              letterSpacing: 2,
+              }}
+            >
+              {"Welcome to Instrumental – Your Music Education Hub!"}
+            </Typography>
+            <Typography variant="body1" width="80%">
+              Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
+            </Typography>
+            {/* <HoverButton link='/instruments' text="Browse Instruments"/> */}
+            <HoverButton link='/instruments' margin="2rem 0 0 0">Explore Lessons</HoverButton>
+          </div>
+          <img src={hovered ? AnimatedPic : StaticPic} alt="guitar-animation" style={{ borderRadius: "7%", marginTop: "3rem"}} width={400} height={400}
+          onMouseOver={() => {setHovered(true)}} onMouseOut={() => {setHovered(false)}}/>
         </Grid>
         {aboutSections.map((section, index) => (
           <Grid item container xs={12} key={index}>
             <Grid item xs={8}> {/* Text is on the left (8 columns) */}
-              <Typography variant="h5" component="h3">
+              <Typography variant="h5" component="h3" mb={1} sx={{ 
+                fontFamily: styles.fonts.HEADER_FONT,
+                color: styles.colors.PRIMARY,
+                fontWeight: 'bold',
+                letterSpacing: 2,
+                }}
+              >
                 {section.title}
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" width="70%" maxWidth={600}>
                 {section.description}
               </Typography>
             </Grid>
@@ -45,7 +70,7 @@ const aboutSections = [
   },
   {
     title: "The Teacher's Corner",
-    description: 'Teachers create personalized profiles, highlighting their credentials, specialties, and teaching style. Easily manage lesson schedules, prices, and locations.',
+    description: 'Teachers create personalized profiles, highlighting their credentials, specialties, and teaching styles. Easily manage lesson schedules, prices, and locations.',
     image: '/path/to/teachers-corner-image.jpg',
   },
   {
@@ -54,12 +79,12 @@ const aboutSections = [
     image: '/path/to/students-oasis-image.jpg',
   },
   {
-    title: 'Seamless Booking and Communication',
+    title: 'Seamless Booking & Communication',
     description: 'Our user-friendly booking system simplifies scheduling. Find available slots and book lessons with ease. Integrated messaging ensures clear communication.',
     image: '/path/to/seamless-booking-image.jpg',
   },
   {
-    title: 'Secure Payment and Reviews',
+    title: 'Secure Payment & Reviews',
     description: 'Trust is essential. We provide a secure payment gateway, with reviews and ratings after lessons for transparency.',
     image: '/path/to/secure-payment-image.jpg',
   },
