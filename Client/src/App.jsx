@@ -25,7 +25,18 @@ function App() {
   useEffect(() => {
     fetchData()
     console.log(hello)
+    const handleScroll = () => {
+      setScrollTop(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [])
+
+  const [scrollTop, setScrollTop] = useState(0);
 
   return (
     <div className='flex-col-center' style={{ 
@@ -33,8 +44,9 @@ function App() {
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
-    }}>
-      <NavBar />
+    }}
+    >
+      <NavBar scrollPosition={scrollTop}/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styles from "../Styles/App";
 import { useNavigate } from 'react-router-dom';
 import Logo from "../Assets/Logos/InstrumentalLogo.svg"
@@ -15,6 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import HoverButton from './HoverButton';
 
 const navStyle = {
   display: 'flex',            // Use Flexbox
@@ -44,13 +46,13 @@ const NavButton = styled(Button)(() => ({
 const pages = [
   ['Lessons', '/instruments'], 
   // ['Rentals', '/rentals'], 
-  ['How it Works', '/how-it-works'], 
-  ['Teach with Us', '/teach-with-us'], 
+  ['How it works', '/how-it-works'], 
+  ['Teach with us', '/teach-with-us'], 
   ['Register', '/register'],
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
   const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
@@ -72,9 +74,9 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="sticky" style={navStyle}>
+    <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 4}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ mt: {xs: .7, md: 0} }}>
+        <Toolbar disableGutters sx={{ mt: {xs: .3, md: 0} }}>
           <Typography
             variant="h6"
             noWrap
@@ -84,11 +86,10 @@ const NavBar = () => {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontWeight: 700,
-              letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
               '&:hover': {
                 cursor: "pointer",
@@ -153,11 +154,10 @@ const NavBar = () => {
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontWeight: 700,
-              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
               '&:hover': {
                 cursor: "pointer",
@@ -175,7 +175,7 @@ const NavBar = () => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
-                sx={{ color: styles.colors.BLACK, display: 'block' }}
+                sx={{ color: styles.colors.BLACK, display: 'block', fontSize: 14}}
               >
                 <nobr>{page[0]}</nobr>
               </NavButton>
@@ -192,10 +192,6 @@ const NavBar = () => {
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchor={anchorUser}
-              // anchorOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'right',
-              // }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
@@ -212,27 +208,17 @@ const NavBar = () => {
             </Menu>
           </Box>:
           <Box sx={{ flexGrow: 0 }}>
-            <Button
+            <HoverButton
               onClick={ () => {
                 handleCloseNavMenu();
                 navigate('/sign-in');
               }}
-              sx={{
-                ml: 3,
-                px: { sm:1.5 },
-                fontSize: { xs: 11, sm: 13 },
-                color:"white",
-                display: 'block',
-                backgroundColor: styles.colors.PRIMARY,
-                border: `2px solid ${styles.colors.PRIMARY}`,
-                '&:hover': {
-                  backgroundColor: styles.colors.SECONDARY,
-                  color: styles.colors.PRIMARY,
-                },
-              }}
+              padding="5px 15px"
+              margin="0 0 8px 0"
+              fontSize="14px"
             >
-              <nobr>Sign In</nobr>
-            </Button>
+              <nobr>Sign in</nobr>
+            </HoverButton>
           </Box>
           }
         </Toolbar>

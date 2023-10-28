@@ -71,7 +71,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.5,
               '&:hover': {
                 cursor: "pointer",

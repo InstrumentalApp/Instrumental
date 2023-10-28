@@ -53,7 +53,7 @@ const InstrumentLessonsOffered = () => {
   return (
     <Container maxWidth="xl" className="instrument-lessons-offered">
       <div className="d-flex justify-content-center flex-wrap">
-        <h2 className="heading">Instruments Lessons Offered</h2>
+        <h2 className="heading" style={{ fontFamily: styles.fonts.HEADER_FONT }}>Instruments Lessons Offered</h2>
         <TextField
           sx={{
             mb: 4,
@@ -96,7 +96,7 @@ const InstrumentLessonsOffered = () => {
             title={instrument.name}
             />
             <CardContent>
-              <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: "Noto Serif" }}>
+              <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
                 {instrument.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
