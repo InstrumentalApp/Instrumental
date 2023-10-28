@@ -2,10 +2,10 @@ import colors from "./colors";
 import spacing from "./spacing";
 import fonts from "./fonts";
 
-const style = {
+const styles = {
   colors,
   spacing,
   fonts,
 };
 
-export default style;
+export default styles;
