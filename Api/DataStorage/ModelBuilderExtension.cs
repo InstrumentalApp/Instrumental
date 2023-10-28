@@ -32,14 +32,12 @@ public static class ModelBuilderExtensions
             .RuleFor(u=> u.Password, f=> "99999999");
         User t = faker.Generate();
         t.Password = hasher.HashPassword(t, t.Password);
-        Role role = new() { RoleId = x, RoleType = Enums.RoleType.TEACHER };
-        UserRole userRole = new(){ UserId = t.UserId, RoleId = role.RoleId};
+        Role role = new() { UserId = t.UserId, RoleId = x, RoleType = Enums.RoleType.TEACHER };
         Instrument instrument = instrumentList[x-1];
         UserInstrument userInstrument = new() {InstrumentId = instrument.InstrumentId, UserId = t.UserId};
 
         modelBuilder.Entity<User>().HasData(t);
         modelBuilder.Entity<Role>().HasData(role);
-        modelBuilder.Entity<UserRole>().HasData(userRole);
         modelBuilder.Entity<Instrument>().HasData(instrument);
         modelBuilder.Entity<UserInstrument>().HasData(userInstrument);
     }
@@ -56,12 +54,10 @@ public static class ModelBuilderExtensions
             .RuleFor(u=> u.Password, f=> "99999999");
         User t = faker.Generate();
         t.Password = hasher.HashPassword(t, t.Password);
-        Role role = new() { RoleId = x, RoleType = Enums.RoleType.STUDENT };
-        UserRole userRole = new(){ UserId = t.UserId, RoleId = role.RoleId};
+        Role role = new() {UserId =t.UserId, RoleId = x, RoleType = Enums.RoleType.STUDENT };
 
         modelBuilder.Entity<User>().HasData(t);
         modelBuilder.Entity<Role>().HasData(role);
-        modelBuilder.Entity<UserRole>().HasData(userRole);
         y--;
     }
 
@@ -75,10 +71,8 @@ public static class ModelBuilderExtensions
     };
 
     superUser.Password = hasher.HashPassword(superUser, superUser.Password);
-    Role superRole = new() { RoleId = ++x, RoleType = Enums.RoleType.SUPERUSER };
-    UserRole superUserRole = new(){ UserId = superUser.UserId, RoleId = superRole.RoleId};
+    Role superRole = new() {UserId=superUser.UserId, RoleId = ++x, RoleType = Enums.RoleType.SUPERUSER };
     modelBuilder.Entity<User>().HasData(superUser);
     modelBuilder.Entity<Role>().HasData(superRole);
-    modelBuilder.Entity<UserRole>().HasData(superUserRole);
   }
 }

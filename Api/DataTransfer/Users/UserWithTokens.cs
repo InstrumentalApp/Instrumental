@@ -1,5 +1,4 @@
 using TeamFive.DataTransfer.Tokens;
-using TeamFive.Models;
 
 namespace TeamFive.DataTransfer.Users;
 public class UserWithTokens
@@ -10,8 +9,9 @@ public class UserWithTokens
     public string Email { get; set; }
     public string RefreshToken { get; set; }
     public string AccessToken { get; set; }
+    public string Role { get; set; }
 
-    public UserWithTokens(UserDto user, TokensDto tokens)
+    public UserWithTokens(UserWithRoleDto user, TokensDto tokens)
     {
         UserId = user.UserId;
         FirstName = user.FirstName;
@@ -19,6 +19,7 @@ public class UserWithTokens
         Email = user.Email;
         RefreshToken = tokens.RefreshToken;
         AccessToken = tokens.AccessToken;
+        Role = user.Role.RoleType.ToString();
     }
 
 

@@ -62,23 +62,23 @@ public class LessonService : ILessonService
 
       int creationResult = await _context.SaveChangesAsync();
 
-      UserDto? lessonTeacherDto = new UserDto(lesson.Teacher)
+      UserDto? lessonTeacherDto = new(lesson.Teacher)
       {
         UserId = lesson.Teacher.UserId,
-        FirstName = lesson.Teacher.FirstName, 
-        LastName = lesson.Teacher.LastName, 
-        Email = lesson.Teacher.Email 
+        FirstName = lesson.Teacher.FirstName,
+        LastName = lesson.Teacher.LastName,
+        Email = lesson.Teacher.Email
       };
 
-      UserDto? lessonStudentDto = new UserDto(lesson.Student)
+      UserDto? lessonStudentDto = new(lesson.Student)
       {
         UserId = lesson.Student.UserId,
-        FirstName = lesson.Student.FirstName, 
-        LastName = lesson.Student.LastName, 
-        Email = lesson.Student.Email 
+        FirstName = lesson.Student.FirstName,
+        LastName = lesson.Student.LastName,
+        Email = lesson.Student.Email
       };
 
-      InstrumentDto? lessonInstrumentDto = new InstrumentDto(lesson.Instrument)
+      InstrumentDto? lessonInstrumentDto = new(lesson.Instrument)
       {
         InstrumentId = lesson.InstrumentId,
         Name = lesson.Instrument.Name,

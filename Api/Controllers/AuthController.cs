@@ -6,6 +6,7 @@ using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.DataTransfer;
 using Microsoft.AspNetCore.Authorization;
+using TeamFive.Models;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -30,7 +31,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> RegisterAsync(CreateUser user)
+    public async Task<ActionResult<UserDto>> RegisterAsync(User user)
     {
         if (!ModelState.IsValid)
         {
@@ -55,8 +56,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        UserDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
-
+        UserWithRoleDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
+        Console.WriteLine(validUser.Role);
         if (validUser == null)
         {
             ModelState.AddModelError("email", "Invalid email or password");

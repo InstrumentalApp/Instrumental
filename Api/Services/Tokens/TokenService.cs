@@ -8,20 +8,17 @@ using Microsoft.IdentityModel.Tokens;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer.Tokens;
 using TeamFive.Models;
-using TeamFive.Services.Roles;
 
 namespace TeamFive.Services.Tokens;
 public class TokenService : ITokenService
 {
     private readonly DBContext _context;
     private readonly IConfiguration _config;
-    private readonly IRoleService _roleService;
 
-    public TokenService(DBContext context, IConfiguration config, IRoleService roleServ)
+    public TokenService(DBContext context, IConfiguration config)
     {
         _context = context;
         _config = config;
-        _roleService = roleServ;
     }
 
     static string GenerateRefreshToken()
@@ -32,7 +29,7 @@ public class TokenService : ITokenService
         return Convert.ToBase64String(byteToken);
     }
 
-    public string GenerateAccessToken(int id, List<Role> roles)
+    public string GenerateAccessToken(User user)
     {
         string? encKey = _config["Jwt:SecretKey"];
         if (string.IsNullOrEmpty(encKey) || encKey.Length < 32)
@@ -44,10 +41,9 @@ public class TokenService : ITokenService
 
         List<Claim> claims = new()
         {
-            new(ClaimTypes.Name, Convert.ToString(id))
+            new(ClaimTypes.Name, Convert.ToString(user.UserId)),
+            new Claim("roles", Convert.ToString((int)user.Role!.RoleType)!)
         };
-
-        claims.AddRange(roles.Select(role => new Claim("roles", Convert.ToString((int)role.RoleType)!)));
 
         JwtSecurityTokenHandler handler = new();
         SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
@@ -71,10 +67,18 @@ public class TokenService : ITokenService
             UserId = userId
         };
 
-        List<Role> roles = await _roleService.RolesByUserIdAsync(userId);
+        User? user = await _context.Users
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.UserId == userId);
+
+        if (user == null || user.Role == null)
+        {
+            return null;
+        }
+
         try
         {
-            string jwt = GenerateAccessToken(userId, roles);
+            string jwt = GenerateAccessToken(user);
             await DeactivateTokensForUserAsync(userId);
             await _context.RefreshTokens.AddAsync(rft);
             await _context.SaveChangesAsync();

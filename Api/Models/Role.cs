@@ -9,6 +9,7 @@ public class Role : BaseEntity
     public RoleType RoleType { get; set; } = RoleType.STUDENT;
 
     public string? Bio { get; set; }
-    //Associations
-    public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+    public int UserId { get; set; }
+    public User? User { get; set; }
 }
