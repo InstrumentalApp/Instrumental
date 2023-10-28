@@ -6,6 +6,6 @@ namespace TeamFive.Services.Users;
 public interface IUserService
 {
     Task<UserDto?> CreateStudentAsync(User user);
-    Task<UserDto?> CreateTeacherAsync(User user);
+    Task<UserWithRoleDto?> CreateTeacherAsync(User user);
     Task<UserWithRoleDto?> ValidateUserPasswordAsync(LoginUser loginUser);
 }

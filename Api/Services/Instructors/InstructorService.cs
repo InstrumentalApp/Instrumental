@@ -30,8 +30,6 @@ public class InstructorService : IInstructorService
     }
 
 
-
-
     // // Get All Lessons
     // public async Task<List<Instructor>> AllInstructors()
     // {

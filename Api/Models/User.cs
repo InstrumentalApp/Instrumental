@@ -17,6 +17,7 @@ public class User : BaseEntity
 
     [Required]
     [EmailAddress]
+    [UniqueEmail]
     public string Email { get; set; }
 
     [Required]

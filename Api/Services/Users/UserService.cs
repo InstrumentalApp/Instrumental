@@ -42,7 +42,7 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<UserDto?> CreateTeacherAsync(User user)
+    public async Task<UserWithRoleDto?> CreateTeacherAsync(User user)
     {
         try
         {
@@ -54,7 +54,7 @@ public class UserService : IUserService
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            return new UserDto(user);
+            return new UserWithRoleDto(user);
         }
         catch(DbUpdateException ex)
         {
