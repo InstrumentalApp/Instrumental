@@ -188,46 +188,6 @@ const NavBar = (props) => {
               </NavButton>
             ))}
           </Box>
-          {auth ?
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchor={anchorUser}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>:
-          <Box sx={{ flexGrow: 0 }}>
-            <HoverButton
-              onClick={ () => {
-                handleCloseNavMenu();
-                navigate('/sign-in');
-              }}
-              padding="5px 15px"
-              margin="0 0 8px 0"
-              fontSize="14px"
-            >
-              <nobr>Sign in</nobr>
-            </HoverButton>
-          </Box>
-          }
           {credentials && Object.keys(credentials).length > 0 ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -272,38 +232,28 @@ const NavBar = (props) => {
                     fontSize: { xs: 11, sm: 13 },
                     color: "white",
                     display: "block",
-                    backgroundColor: style.colors.PRIMARY,
-                    border: `2px solid ${style.colors.PRIMARY}`,
+                    backgroundColor: styles.colors.PRIMARY,
+                    border: `2px solid ${styles.colors.PRIMARY}`,
                     "&:hover": {
-                      backgroundColor: style.colors.SECONDARY,
-                      color: style.colors.PRIMARY,
+                      backgroundColor: styles.colors.SECONDARY,
+                      color: styles.colors.PRIMARY,
                     },
                   }}
                 >
                   <nobr>Sign Out</nobr>
                 </Button>
               ) : (
-                <Button
-                  onClick={() => {
+                <HoverButton
+                  onClick={ () => {
                     handleCloseNavMenu();
-                    navigate("/sign-in");
+                    navigate('/sign-in');
                   }}
-                  sx={{
-                    ml: 3,
-                    px: { sm: 1.5 },
-                    fontSize: { xs: 11, sm: 13 },
-                    color: "white",
-                    display: "block",
-                    backgroundColor: style.colors.PRIMARY,
-                    border: `2px solid ${style.colors.PRIMARY}`,
-                    "&:hover": {
-                      backgroundColor: style.colors.SECONDARY,
-                      color: style.colors.PRIMARY,
-                    },
-                  }}
+                  padding="5px 15px"
+                  margin="0 0 8px 0"
+                  fontSize="14px"
                 >
-                  <nobr>Sign In</nobr>
-                </Button>
+                  <nobr>Sign in</nobr>
+                </HoverButton>
               )}
             </Box>
           )}

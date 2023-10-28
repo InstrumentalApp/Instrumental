@@ -17,7 +17,6 @@ import useLocalStorage from './Hooks/useLocalStorage';
 function App() {
 
   const [hello, setHello] = useState("");
-  const { handleSubmit } = useApi();
 
   const fetchData = async () => {
     const result = handleSubmit("/api/auth/hello", {}, "GET")
