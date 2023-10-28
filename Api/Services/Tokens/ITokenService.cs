@@ -8,7 +8,7 @@ public interface ITokenService
 {
     Task<bool> DeactivateTokensForUserAsync(int userId);
     Task<TokensDto?> CreateTokensDtoAsync(int userId);
-    string GenerateAccessToken(int id, List<Role> roles);
+    string GenerateAccessToken(User user);
     Task<TokensDto?> DoRefreshActionAsync(RefreshRequestDto refreshRequest);
     int GetIdClaimFromHeaderValue(HttpRequest request);
 }

@@ -11,12 +11,13 @@ import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
 import Account from './Components/Account';
+import SuperUserDashboard from './Components/SuperUserDashboard';
 import useApi from './Hooks/useApi';
+import useLocalStorage from './Hooks/useLocalStorage';
 
 function App() {
 
   const [hello, setHello] = useState("");
-  const { handleSubmit } = useApi();
 
   const fetchData = async () => {
     const result = handleSubmit("/api/auth/hello", {}, "GET")
@@ -26,16 +27,30 @@ function App() {
   useEffect(() => {
     fetchData()
     console.log(hello)
+    const handleScroll = () => {
+      setScrollTop(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [])
 
+  const [scrollTop, setScrollTop] = useState(0);
+  const { handleSubmit, data } = useApi();
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
+
   return (
-    <div className='flex-col-center' style={{ 
-      backgroundColor: style.colors.TERTIARY, 
+    <div className='flex-col-center' style={{
+      backgroundColor: style.colors.TERTIARY,
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
-    }}>
-      <NavBar />
+    }}
+    >
+      <NavBar scrollPosition={scrollTop}/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />
@@ -50,6 +65,9 @@ function App() {
         */}
         <Route path="/account" element={<Account />} />
 
+        {credentials && Object.keys(credentials).length > 0 ? (
+          <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+        ) : null}
       </Routes>
       <Footer/>
     </div>

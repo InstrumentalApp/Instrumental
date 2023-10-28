@@ -1,28 +1,31 @@
-import style from "../Styles/App";
-import { useNavigate } from 'react-router-dom';
-import Logo from "../Assets/Images/Logos/InstrumentalLogo.svg"
-import { useState } from 'react'
-import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+/* eslint-disable react/prop-types */
+import styles from "../Styles/App";
+import { useNavigate } from "react-router-dom";
+import Logo from "../Assets/Logos/InstrumentalLogo.svg";
+import { useState } from "react";
+import { styled } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import useLocalStorage from '../Hooks/useLocalStorage';
+import HoverButton from './HoverButton';
 
 const navStyle = {
   display: 'flex',            // Use Flexbox
   alignItems: 'center',      // Vertically center items
-  backgroundColor: style.colors.SECONDARY,  // Background color
+  backgroundColor: styles.colors.SECONDARY,  // Background color
   width: "100%",
-  height: style.spacing.HEADER_HEIGHT,
-  color: style.colors.BLACK,
+  height: styles.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
 };
 
 const NavButton = styled(Button)(() => ({
@@ -30,31 +33,31 @@ const NavButton = styled(Button)(() => ({
   fontSize: 16,
   paddingTop: 12,
   marginLeft: 15,
-  color: style.colors.BLACK,
-  backgroundColor: style.colors.SECONDARY,
-  height: style.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
+  backgroundColor: styles.colors.SECONDARY,
+  height: styles.spacing.HEADER_HEIGHT,
   borderRadius: 0,
-  borderBottom: `5px solid ${style.colors.SECONDARY}`,
+  borderBottom: `5px solid ${styles.colors.SECONDARY}`,
   '&:hover': {
-    backgroundColor: style.colors.SECONDARY,
-    borderBottom: `5px solid ${style.colors.PRIMARY}`
+    backgroundColor: styles.colors.SECONDARY,
+    borderBottom: `5px solid ${styles.colors.PRIMARY}`
   },
 }));
 
 const pages = [
   ['Lessons', '/instruments'], 
   // ['Rentals', '/rentals'], 
-  ['How it Works', '/how-it-works'], 
-  ['Teach with Us', '/teach-with-us'], 
+  ['How it works', '/how-it-works'], 
+  ['Teach with us', '/teach-with-us'], 
   ['Register', '/register'],
   ['Contact', '/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
   const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
-  const [auth, setAuth] = useState(false);
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
   const handleOpenNavMenu = (event) => {
     setAnchorNav(event.currentTarget);
@@ -71,35 +74,39 @@ const NavBar = () => {
     setAnchorUser(null);
   };
 
+  const handleLogout = () => {
+    setCredentials({});
+    navigate("/");
+  }
+
   return (
-    <AppBar position="sticky" style={navStyle}>
+    <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 4}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ mt: {xs: .7, md: 0} }}>
+        <Toolbar disableGutters sx={{ mt: {xs: .3, md: 0} }}>
           <Typography
             variant="h6"
             noWrap
             component="a"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
-              '&:hover': {
+              "&:hover": {
                 cursor: "pointer",
-              }
+              },
             }}
           >
-            <img src={Logo} alt="Logo" height={style.spacing.HEADER_HEIGHT - 40} />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-controls="menu-appbar"
@@ -113,25 +120,25 @@ const NavBar = () => {
               id="menu-appbar"
               anchor={anchorNav}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
-                { backgroundColor: style.colors.SECONDARY }
+                { backgroundColor: styles.colors.SECONDARY }
               },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page}
-                sx = {{ backgroundColor: style.colors.SECONDARY }}
+                sx = {{ backgroundColor: styles.colors.SECONDARY }}
                 onClick={() => {
                   handleCloseNavMenu();
                   navigate(page[1]);
@@ -141,103 +148,118 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
-          <IconButton sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-          </IconButton>
+          <IconButton
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          ></IconButton>
           <Typography
             variant="h6"
             noWrap
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             component="a"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontWeight: 700,
-              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
-              '&:hover': {
+              "&:hover": {
                 cursor: "pointer",
-              }
+              },
             }}
           >
-            <img src={Logo} alt="Logo" height={style.spacing.HEADER_HEIGHT - 40} />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavButton
                 key={page}
-                onClick={ () => {
+                onClick={() => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
-                sx={{ color: style.colors.BLACK, display: 'block' }}
+                sx={{ color: styles.colors.BLACK, display: 'block', fontSize: 14}}
               >
                 <nobr>{page[0]}</nobr>
               </NavButton>
             ))}
           </Box>
-          {auth ?
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchor={anchorUser}
-              // anchorOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'right',
-              // }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+          {credentials && Object.keys(credentials).length > 0 ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="" src="" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchor={anchorUser}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+
+                ))}
+                <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
+                  <Typography onClick={handleLogout} textAlign="center">Logout</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>:
-          <Box sx={{ flexGrow: 0 }}>
-            <Button
-              onClick={ () => {
-                handleCloseNavMenu();
-                navigate('/sign-in');
-              }}
-              sx={{
-                ml: 3,
-                px: { sm:1.5 },
-                fontSize: { xs: 11, sm: 13 },
-                color:"white",
-                display: 'block',
-                backgroundColor: style.colors.PRIMARY,
-                border: `2px solid ${style.colors.PRIMARY}`,
-                '&:hover': {
-                  backgroundColor: style.colors.SECONDARY,
-                  color: style.colors.PRIMARY,
-                },
-              }}
-            >
-              <nobr>Sign In</nobr>
-            </Button>
-          </Box>
-          }
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{ flexGrow: 0 }}>
+              {credentials && Object.keys(credentials).length > 0 ? (
+                <Button
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleLogout();
+                  }}
+                  sx={{
+                    ml: 3,
+                    px: { sm: 1.5 },
+                    fontSize: { xs: 11, sm: 13 },
+                    color: "white",
+                    display: "block",
+                    backgroundColor: styles.colors.PRIMARY,
+                    border: `2px solid ${styles.colors.PRIMARY}`,
+                    "&:hover": {
+                      backgroundColor: styles.colors.SECONDARY,
+                      color: styles.colors.PRIMARY,
+                    },
+                  }}
+                >
+                  <nobr>Sign Out</nobr>
+                </Button>
+              ) : (
+                <HoverButton
+                  onClick={ () => {
+                    handleCloseNavMenu();
+                    navigate('/sign-in');
+                  }}
+                  padding="5px 15px"
+                  margin="0 0 8px 0"
+                  fontSize="14px"
+                >
+                  <nobr>Sign in</nobr>
+                </HoverButton>
+              )}
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 export default NavBar;

@@ -9,6 +9,7 @@ public class Instrument : BaseEntity
     public string Name { get; set; }
 
     public string Family { get; set; }
+    public string? ImageUrl { get; set; }
 
     // Associations
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
