@@ -1,37 +1,39 @@
-import React from 'react';
 import List from '@mui/material/List';
 import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 const AboutUs = () => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography variant="h4" component="h2">
-          Welcome to "Instrumental" – Your Music Education Hub!
-        </Typography>
-        <Typography variant="body1">
-          Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
-        </Typography>
-      </Grid>
-      {aboutSections.map((section, index) => (
-        <Grid item container xs={12} key={index}>
-          <Grid item xs={8}> {/* Text is on the left (8 columns) */}
-            <Typography variant="h5" component="h3">
-              {section.title}
-            </Typography>
-            <Typography variant="body1">
-              {section.description}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}> {/* Image is on the right (4 columns) */}
-            <img src={section.image} alt={section.title} style={{ maxWidth: '100%' }} />
-          </Grid>
+    <Container maxWidth="xl">
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h4" component="h2">
+            {"Welcome to Instrumental – Your Music Education Hub!"}
+          </Typography>
+          <Typography variant="body1">
+            Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
+          </Typography>
         </Grid>
-      ))}
-    </Grid>
+        {aboutSections.map((section, index) => (
+          <Grid item container xs={12} key={index}>
+            <Grid item xs={8}> {/* Text is on the left (8 columns) */}
+              <Typography variant="h5" component="h3">
+                {section.title}
+              </Typography>
+              <Typography variant="body1">
+                {section.description}
+              </Typography>
+            </Grid>
+            <Grid item xs={4}> {/* Image is on the right (4 columns) */}
+              <img src={section.image} alt={section.title} style={{ maxWidth: '100%' }} />
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

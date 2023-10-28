@@ -14,10 +14,11 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-bottom: 2em;
+    gap: 1em;
 }
 
 .instrument-card {
-    flex: 1 0 14%;
+    width: 12em;
     text-align: center;
     margin: 1em;
 }
