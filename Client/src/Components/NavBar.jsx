@@ -1,6 +1,7 @@
-import style from "../Styles/App";
+/* eslint-disable react/prop-types */
+import styles from "../Styles/App";
 import { useNavigate } from "react-router-dom";
-import Logo from "../Assets/Images/Logos/InstrumentalLogo.svg";
+import Logo from "../Assets/Logos/InstrumentalLogo.svg";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -16,14 +17,15 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import useLocalStorage from '../Hooks/useLocalStorage';
+import HoverButton from './HoverButton';
 
 const navStyle = {
-  display: "flex", // Use Flexbox
-  alignItems: "center", // Vertically center items
-  backgroundColor: style.colors.SECONDARY, // Background color
+  display: 'flex',            // Use Flexbox
+  alignItems: 'center',      // Vertically center items
+  backgroundColor: styles.colors.SECONDARY,  // Background color
   width: "100%",
-  height: style.spacing.HEADER_HEIGHT,
-  color: style.colors.BLACK,
+  height: styles.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
 };
 
 const NavButton = styled(Button)(() => ({
@@ -31,28 +33,27 @@ const NavButton = styled(Button)(() => ({
   fontSize: 16,
   paddingTop: 12,
   marginLeft: 15,
-  color: style.colors.BLACK,
-  backgroundColor: style.colors.SECONDARY,
-  height: style.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
+  backgroundColor: styles.colors.SECONDARY,
+  height: styles.spacing.HEADER_HEIGHT,
   borderRadius: 0,
-  borderBottom: `5px solid ${style.colors.SECONDARY}`,
-  "&:hover": {
-    backgroundColor: style.colors.SECONDARY,
-    borderBottom: `5px solid ${style.colors.PRIMARY}`,
+  borderBottom: `5px solid ${styles.colors.SECONDARY}`,
+  '&:hover': {
+    backgroundColor: styles.colors.SECONDARY,
+    borderBottom: `5px solid ${styles.colors.PRIMARY}`
   },
 }));
 
 const pages = [
-  ["Lessons", "/instruments"],
-  // ['Rentals', '/rentals'],
-  ["How it Works", "/how-it-works"],
-  ["Teach with Us", "/teach-with-us"],
-  ["Register", "/register"],
-  ["Contact", "/contact"]
-];
-const settings = ["Profile", "Account", "Dashboard"];
+  ['Lessons', '/instruments'], 
+  // ['Rentals', '/rentals'], 
+  ['How it works', '/how-it-works'], 
+  ['Teach with us', '/teach-with-us'], 
+  ['Register', '/register'],
+  ['Contact', '/contact']];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
   const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
@@ -79,9 +80,9 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position="sticky" style={navStyle}>
+    <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 4}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ mt: { xs: 0.7, md: 0 } }}>
+        <Toolbar disableGutters sx={{ mt: {xs: .3, md: 0} }}>
           <Typography
             variant="h6"
             noWrap
@@ -91,22 +92,17 @@ const NavBar = () => {
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              letterSpacing: ".2rem",
-              color: "inherit",
-              textDecoration: "none",
+              color: 'inherit',
+              textDecoration: 'none',
               alignItems: "center",
-              fontFamily: "Noto Serif",
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
               "&:hover": {
                 cursor: "pointer",
               },
             }}
           >
-            <img
-              src={Logo}
-              alt="Logo"
-              height={style.spacing.HEADER_HEIGHT - 40}
-            />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
 
@@ -135,24 +131,18 @@ const NavBar = () => {
               open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: {
-                  xs: "block",
-                  md: "none",
-                  "& .MuiMenu-paper": {
-                    backgroundColor: style.colors.SECONDARY,
-                  },
-                },
+                display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
+                { backgroundColor: styles.colors.SECONDARY }
+              },
               }}
             >
               {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  sx={{ backgroundColor: style.colors.SECONDARY }}
-                  onClick={() => {
-                    handleCloseNavMenu();
-                    navigate(page[1]);
-                  }}
-                >
+                <MenuItem key={page}
+                sx = {{ backgroundColor: styles.colors.SECONDARY }}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigate(page[1]);
+                  }}>
                   <Typography textAlign="center">{page[0]}</Typography>
                 </MenuItem>
               ))}
@@ -171,22 +161,17 @@ const NavBar = () => {
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontWeight: 700,
-              letterSpacing: ".1rem",
-              color: "inherit",
-              textDecoration: "none",
+              color: 'inherit',
+              textDecoration: 'none',
               alignItems: "center",
-              fontFamily: "Noto Serif",
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
               "&:hover": {
                 cursor: "pointer",
               },
             }}
           >
-            <img
-              src={Logo}
-              alt="Logo"
-              height={style.spacing.HEADER_HEIGHT - 40}
-            />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -197,7 +182,7 @@ const NavBar = () => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
-                sx={{ color: style.colors.BLACK, display: "block" }}
+                sx={{ color: styles.colors.BLACK, display: 'block', fontSize: 14}}
               >
                 <nobr>{page[0]}</nobr>
               </NavButton>
@@ -247,38 +232,28 @@ const NavBar = () => {
                     fontSize: { xs: 11, sm: 13 },
                     color: "white",
                     display: "block",
-                    backgroundColor: style.colors.PRIMARY,
-                    border: `2px solid ${style.colors.PRIMARY}`,
+                    backgroundColor: styles.colors.PRIMARY,
+                    border: `2px solid ${styles.colors.PRIMARY}`,
                     "&:hover": {
-                      backgroundColor: style.colors.SECONDARY,
-                      color: style.colors.PRIMARY,
+                      backgroundColor: styles.colors.SECONDARY,
+                      color: styles.colors.PRIMARY,
                     },
                   }}
                 >
                   <nobr>Sign Out</nobr>
                 </Button>
               ) : (
-                <Button
-                  onClick={() => {
+                <HoverButton
+                  onClick={ () => {
                     handleCloseNavMenu();
-                    navigate("/sign-in");
+                    navigate('/sign-in');
                   }}
-                  sx={{
-                    ml: 3,
-                    px: { sm: 1.5 },
-                    fontSize: { xs: 11, sm: 13 },
-                    color: "white",
-                    display: "block",
-                    backgroundColor: style.colors.PRIMARY,
-                    border: `2px solid ${style.colors.PRIMARY}`,
-                    "&:hover": {
-                      backgroundColor: style.colors.SECONDARY,
-                      color: style.colors.PRIMARY,
-                    },
-                  }}
+                  padding="5px 15px"
+                  margin="0 0 8px 0"
+                  fontSize="14px"
                 >
-                  <nobr>Sign In</nobr>
-                </Button>
+                  <nobr>Sign in</nobr>
+                </HoverButton>
               )}
             </Box>
           )}

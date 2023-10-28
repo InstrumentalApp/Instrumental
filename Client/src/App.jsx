@@ -17,6 +17,27 @@ import useLocalStorage from './Hooks/useLocalStorage';
 function App() {
 
   const [hello, setHello] = useState("");
+
+  const fetchData = async () => {
+    const result = handleSubmit("/api/auth/hello", {}, "GET")
+    setHello(result.data);
+  }
+
+  useEffect(() => {
+    fetchData()
+    console.log(hello)
+    const handleScroll = () => {
+      setScrollTop(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
+
+  const [scrollTop, setScrollTop] = useState(0);
   const { handleSubmit, data } = useApi();
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
@@ -26,8 +47,9 @@ function App() {
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
-    }}>
-      <NavBar />
+    }}
+    >
+      <NavBar scrollPosition={scrollTop}/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />

@@ -1,6 +1,6 @@
-import style from "../Styles/App";
+import styles from "../Styles/App";
 import { useNavigate } from 'react-router-dom';
-import Logo from "../Assets/Images/Logos/InstrumentalLogoWhite.svg"
+import Logo from "../Assets/Logos/InstrumentalLogoWhite.svg"
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
@@ -35,10 +35,10 @@ const Footer = () => {
     width: '100%',
     minWidth: "min-content",
     height: "min-content",
-    minHeight: style.spacing.HEADER_HEIGHT * 3,
+    minHeight: styles.spacing.HEADER_HEIGHT * 3,
     position: 'static',
     bottom: 0,
-    backgroundColor: style.colors.PRIMARY,
+    backgroundColor: styles.colors.PRIMARY,
     color: "white",
     display: "flex",
     flexDirection: "column",
@@ -71,7 +71,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
-              fontFamily: 'Noto Serif',
+              fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.5,
               '&:hover': {
                 cursor: "pointer",

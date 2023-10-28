@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import style from "../Styles/App";
+import styles from "../Styles/App";
 import Skeleton from '@mui/material/Skeleton';
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,7 @@ const InstrumentLessonsOffered = () => {
   return (
     <Container maxWidth="xl" className="instrument-lessons-offered">
       <div className="d-flex justify-content-center flex-wrap">
-        <h2 className="heading">Instruments Lessons Offered</h2>
+        <h2 className="heading" style={{ fontFamily: styles.fonts.HEADER_FONT }}>Instruments Lessons Offered</h2>
         <TextField
           sx={{
             mb: 4,
@@ -73,12 +73,12 @@ const InstrumentLessonsOffered = () => {
       <div className="instrument-cards">
         {loading ?
         placeholders.map((placeholder, index) => (
-          <Card key={index} elevation={0} className="instrument-card" sx={{
-          maxWidth: 345,
-          backgroundColor: style.colors.SECONDARY,
+          <Card key={index} elevation={0} className="instrument-card" sx={{ 
+          maxWidth: 345, 
+          backgroundColor: styles.colors.SECONDARY, 
           paddingBottom: 2,
           }}>
-            <Skeleton sx={{ height: 160, backgroundColor: style.colors.FORM }} animation="wave" variant="rectangular"/>
+            <Skeleton sx={{ height: 160, backgroundColor: styles.colors.FORM }} animation="wave" variant="rectangular"/>
             <CardContent>
               <div className="d-flex flex-column align-items-center gap-2">
                 <Skeleton height={30} width="80%" animation="wave" />
@@ -91,9 +91,9 @@ const InstrumentLessonsOffered = () => {
           </Card>
         )) :
         instrumentList.map((instrument, index) => (
-          <Card key={index} elevation={0} className="instrument-card" sx={{
-          maxWidth: 345,
-          backgroundColor: style.colors.SECONDARY,
+          <Card key={index} elevation={0} className="instrument-card" sx={{ 
+          maxWidth: 345, 
+          backgroundColor: styles.colors.SECONDARY, 
           paddingBottom: 2,
           }}>
             <CardMedia
@@ -102,7 +102,7 @@ const InstrumentLessonsOffered = () => {
             title={instrument.name}
             />
             <CardContent>
-              <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: "Noto Serif" }}>
+              <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
                 {instrument.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
