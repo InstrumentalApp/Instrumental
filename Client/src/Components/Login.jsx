@@ -30,7 +30,7 @@ const Login = () => {
     try {
       const result = await axios.post("/api/auth/login", loginUser)
       setCredentials(result.data);
-      navigate('/hello');
+      navigate('/');
     } catch (err) {
       const errorData = err.response.data.errors || err.response.data
       const errorMessages = Object.values(errorData).flat();
@@ -53,11 +53,11 @@ const Login = () => {
         {
           errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
         }
-        <Box component="form" onSubmit={handleSubmit} 
+        <Box component="form" onSubmit={handleSubmit}
           sx={{
-            mt: 2, 
-            display: "flex", 
-            flexWrap: "wrap", 
+            mt: 2,
+            display: "flex",
+            flexWrap: "wrap",
             justifyContent: "center"
           }}>
           <TextField

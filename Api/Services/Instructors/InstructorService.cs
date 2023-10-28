@@ -17,9 +17,8 @@ public class InstructorService : IInstructorService
     {
         List<User> teacherInstrumentList = await _context.Users
             .Where(u => u.UserInstruments.Any(i => i.InstrumentId == instrumentId))  // Filter by the instrument
-            .Where(u => u.UserRoles.Any(r => r.Role.RoleType == RoleType.TEACHER))  // Filter by the role
+            .Where(u => u.Role.RoleType == RoleType.TEACHER)  // Filter by the role
             .ToListAsync();
-            // .ThenInclude
 
         if(teacherInstrumentList != null) {
             return teacherInstrumentList;
@@ -29,8 +28,6 @@ public class InstructorService : IInstructorService
             throw new Exception("Could not find teachers for instrument");
         }
     }
-
-
 
 
     // // Get All Lessons

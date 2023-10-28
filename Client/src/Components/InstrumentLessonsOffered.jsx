@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from "../Styles/App";
 import Skeleton from '@mui/material/Skeleton';
+import { useNavigate } from "react-router-dom";
 
 const InstrumentLessonsOffered = () => {
   // API Call to Back-End When Data Gets Updated
@@ -20,6 +21,7 @@ const InstrumentLessonsOffered = () => {
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
   const placeholders = Array.from({ length: 18 }, (_, i) => i + 1);
+  const navigate = useNavigate();
 
   const fetchInstrumentList = async () => {
     try {
@@ -49,6 +51,10 @@ const InstrumentLessonsOffered = () => {
     );
     setInstrumentList(filteredOptions);
   }, [searchInput]);
+
+  const navigateToInstrumentDetal = (instrumentId) => {
+    navigate("/instruments/" + instrumentId);
+  }
 
   return (
     <Container maxWidth="xl" className="instrument-lessons-offered">
@@ -104,12 +110,12 @@ const InstrumentLessonsOffered = () => {
               </Typography>
             </CardContent>
             <CardActions className="d-flex justify-content-center">
-              <Button size="small" 
-              variant="outlined" 
-              href={"/instruments/" + instrument.instrumentId}
-              disableElevation
-              color="success"
-              sx={{ textTransform: "none" }}
+              <Button size="small"
+                variant="outlined"
+                onClick={()=>navigateToInstrumentDetal(instrument.instrumentId)}
+                disableElevation
+                color="success"
+                sx={{ textTransform: "none" }}
               >
                 Learn More
               </Button>

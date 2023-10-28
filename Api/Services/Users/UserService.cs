@@ -5,46 +5,30 @@ using TeamFive.DataStorage;
 using TeamFive.DataTransfer;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
-using TeamFive.Services.Roles;
 
 namespace TeamFive.Services.Users;
 public class UserService : IUserService
 {
     private readonly DBContext _context;
-    private readonly IRoleService _roleService;
 
-    public UserService(DBContext context, IRoleService roleService)
+    public UserService(DBContext context)
     {
         _context = context;
-        _roleService = roleService;
     }
 
-
-    public async Task<UserDto?> CreateStudentAsync(CreateUser user)
+    public async Task<UserDto?> CreateStudentAsync(User user)
     {
-        User newUser = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                Confirm = user.Confirm
-            };
         try
         {
             PasswordHasher<User> hasher = new();
-            newUser.Password = hasher.HashPassword(newUser, newUser.Password);
+            user.Password = hasher.HashPassword(user, user.Password);
 
-            await _context.Users.AddAsync(newUser);
+            user.Role = new();
 
-            // Define new role from Role Service, saves to DB
-            Role studentRole = await _roleService.CreateStudentRoleAsync();
-
-            // Creates association, saves to DB
-            await _roleService.CreateUserRoleAsync(newUser, studentRole);
-
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return new UserDto(newUser);
+
+            return new UserDto(user);
         }
         catch(DbUpdateException ex)
         {
@@ -53,41 +37,24 @@ public class UserService : IUserService
         }
         catch
         {
-            Console.WriteLine("Unkown error in UserService.CreateAsync");
+            Console.WriteLine("Unkown error in UserService.CreateStudentAsync");
             return null;
         }
     }
 
-    // Create Teacher Method
-    // Creates and associates Teacher and Student Roles to UserRoles
-
-    public async Task<UserDto?> CreateTeacherAsync(CreateUser user)
+    public async Task<UserWithRoleDto?> CreateTeacherAsync(User user)
     {
         try
         {
-            User newUser = new()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                Confirm = user.Confirm
-            };
             PasswordHasher<User> hasher = new();
-            user.Password = hasher.HashPassword(newUser, newUser.Password);
+            user.Password = hasher.HashPassword(user, user.Password);
 
-            await _context.Users.AddAsync(newUser);
+            user.Role = new() { RoleType = Enums.RoleType.TEACHER };
 
-            // Define student/teacher roles from Role Service, saves to DB
-            Role studentRole = await _roleService.CreateStudentRoleAsync();
-            Role teacherRole = await _roleService.CreateTeacherRoleAsync();
-
-            // Creates association, saves to DB
-            await _roleService.CreateUserRoleAsync(newUser, studentRole);
-            await _roleService.CreateUserRoleAsync(newUser, teacherRole);
-
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return new UserDto(newUser);
+
+            return new UserWithRoleDto(user);
         }
         catch(DbUpdateException ex)
         {
@@ -96,15 +63,18 @@ public class UserService : IUserService
         }
         catch
         {
-            Console.WriteLine("Unkown error in UserService.CreateAsync");
+            Console.WriteLine("Unkown error in UserService.CreateTeacherAsync");
             return null;
         }
     }
 
 
-    public async Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser)
+    public async Task<UserWithRoleDto?> ValidateUserPasswordAsync(LoginUser loginUser)
     {
-        User? check = await _context.Users.Where(u => u.Email == loginUser.Email).FirstOrDefaultAsync();
+        User? check = await _context.Users
+            .Include(u=>u.Role)
+            .Where(u => u.Email == loginUser.Email)
+            .FirstOrDefaultAsync();
 
         if (check == null) return null;
 
@@ -112,7 +82,6 @@ public class UserService : IUserService
 
         if (hasher.VerifyHashedPassword(loginUser, check.Password, loginUser.Password) == 0) return null;
 
-        return new UserDto(check);
+        return new UserWithRoleDto(check);
     }
-
 }

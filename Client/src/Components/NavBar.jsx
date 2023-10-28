@@ -1,21 +1,22 @@
 /* eslint-disable react/prop-types */
 import styles from "../Styles/App";
-import { useNavigate } from 'react-router-dom';
-import Logo from "../Assets/Logos/InstrumentalLogo.svg"
-import { useState } from 'react'
-import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
+import Logo from "../Assets/Logos/InstrumentalLogo.svg";
+import { useState } from "react";
+import { styled } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import useLocalStorage from '../Hooks/useLocalStorage';
 import HoverButton from './HoverButton';
 
 const navStyle = {
@@ -56,7 +57,7 @@ const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
   const [anchorUser, setAnchorUser] = useState(null);
   const navigate = useNavigate();
-  const [auth, setAuth] = useState(false);
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
   const handleOpenNavMenu = (event) => {
     setAnchorNav(event.currentTarget);
@@ -73,6 +74,11 @@ const NavBar = (props) => {
     setAnchorUser(null);
   };
 
+  const handleLogout = () => {
+    setCredentials({});
+    navigate("/");
+  }
+
   return (
     <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 4}>
       <Container maxWidth="xl">
@@ -81,26 +87,26 @@ const NavBar = (props) => {
             variant="h6"
             noWrap
             component="a"
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: "none", md: "flex" },
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
               alignItems: "center",
               fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
-              '&:hover': {
+              "&:hover": {
                 cursor: "pointer",
-              }
+              },
             }}
           >
             <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-controls="menu-appbar"
@@ -114,13 +120,13 @@ const NavBar = (props) => {
               id="menu-appbar"
               anchor={anchorNav}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
@@ -142,16 +148,17 @@ const NavBar = (props) => {
               ))}
             </Menu>
           </Box>
-          <IconButton sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-          </IconButton>
+          <IconButton
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          ></IconButton>
           <Typography
             variant="h6"
             noWrap
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             component="a"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontWeight: 700,
               color: 'inherit',
@@ -159,19 +166,19 @@ const NavBar = (props) => {
               alignItems: "center",
               fontFamily: styles.fonts.LOGO_FONT,
               gap: 1.2,
-              '&:hover': {
+              "&:hover": {
                 cursor: "pointer",
-              }
+              },
             }}
           >
             <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavButton
                 key={page}
-                onClick={ () => {
+                onClick={() => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
@@ -221,9 +228,88 @@ const NavBar = (props) => {
             </HoverButton>
           </Box>
           }
+          {credentials && Object.keys(credentials).length > 0 ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="" src="" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchor={anchorUser}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+
+                ))}
+                <MenuItem key={"logout"} onClick={handleCloseUserMenu}>
+                  <Typography onClick={handleLogout} textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{ flexGrow: 0 }}>
+              {credentials && Object.keys(credentials).length > 0 ? (
+                <Button
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    handleLogout();
+                  }}
+                  sx={{
+                    ml: 3,
+                    px: { sm: 1.5 },
+                    fontSize: { xs: 11, sm: 13 },
+                    color: "white",
+                    display: "block",
+                    backgroundColor: style.colors.PRIMARY,
+                    border: `2px solid ${style.colors.PRIMARY}`,
+                    "&:hover": {
+                      backgroundColor: style.colors.SECONDARY,
+                      color: style.colors.PRIMARY,
+                    },
+                  }}
+                >
+                  <nobr>Sign Out</nobr>
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate("/sign-in");
+                  }}
+                  sx={{
+                    ml: 3,
+                    px: { sm: 1.5 },
+                    fontSize: { xs: 11, sm: 13 },
+                    color: "white",
+                    display: "block",
+                    backgroundColor: style.colors.PRIMARY,
+                    border: `2px solid ${style.colors.PRIMARY}`,
+                    "&:hover": {
+                      backgroundColor: style.colors.SECONDARY,
+                      color: style.colors.PRIMARY,
+                    },
+                  }}
+                >
+                  <nobr>Sign In</nobr>
+                </Button>
+              )}
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 export default NavBar;
