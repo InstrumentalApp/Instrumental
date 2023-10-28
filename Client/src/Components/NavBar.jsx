@@ -1,6 +1,6 @@
-import style from "../Styles/App";
+import styles from "../Styles/App";
 import { useNavigate } from 'react-router-dom';
-import Logo from "../Assets/Images/Logos/InstrumentalLogo.svg"
+import Logo from "../Assets/Logos/InstrumentalLogo.svg"
 import { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -19,10 +19,10 @@ import MenuItem from '@mui/material/MenuItem';
 const navStyle = {
   display: 'flex',            // Use Flexbox
   alignItems: 'center',      // Vertically center items
-  backgroundColor: style.colors.SECONDARY,  // Background color
+  backgroundColor: styles.colors.SECONDARY,  // Background color
   width: "100%",
-  height: style.spacing.HEADER_HEIGHT,
-  color: style.colors.BLACK,
+  height: styles.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
 };
 
 const NavButton = styled(Button)(() => ({
@@ -30,14 +30,14 @@ const NavButton = styled(Button)(() => ({
   fontSize: 16,
   paddingTop: 12,
   marginLeft: 15,
-  color: style.colors.BLACK,
-  backgroundColor: style.colors.SECONDARY,
-  height: style.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
+  backgroundColor: styles.colors.SECONDARY,
+  height: styles.spacing.HEADER_HEIGHT,
   borderRadius: 0,
-  borderBottom: `5px solid ${style.colors.SECONDARY}`,
+  borderBottom: `5px solid ${styles.colors.SECONDARY}`,
   '&:hover': {
-    backgroundColor: style.colors.SECONDARY,
-    borderBottom: `5px solid ${style.colors.PRIMARY}`
+    backgroundColor: styles.colors.SECONDARY,
+    borderBottom: `5px solid ${styles.colors.PRIMARY}`
   },
 }));
 
@@ -95,7 +95,7 @@ const NavBar = () => {
               }
             }}
           >
-            <img src={Logo} alt="Logo" height={style.spacing.HEADER_HEIGHT - 40} />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
 
@@ -125,13 +125,13 @@ const NavBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
-                { backgroundColor: style.colors.SECONDARY }
+                { backgroundColor: styles.colors.SECONDARY }
               },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page}
-                sx = {{ backgroundColor: style.colors.SECONDARY }}
+                sx = {{ backgroundColor: styles.colors.SECONDARY }}
                 onClick={() => {
                   handleCloseNavMenu();
                   navigate(page[1]);
@@ -164,7 +164,7 @@ const NavBar = () => {
               }
             }}
           >
-            <img src={Logo} alt="Logo" height={style.spacing.HEADER_HEIGHT - 40} />
+            <img src={Logo} alt="Logo" height={styles.spacing.HEADER_HEIGHT - 40} />
             instrumental
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -175,7 +175,7 @@ const NavBar = () => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
-                sx={{ color: style.colors.BLACK, display: 'block' }}
+                sx={{ color: styles.colors.BLACK, display: 'block' }}
               >
                 <nobr>{page[0]}</nobr>
               </NavButton>
@@ -223,11 +223,11 @@ const NavBar = () => {
                 fontSize: { xs: 11, sm: 13 },
                 color:"white",
                 display: 'block',
-                backgroundColor: style.colors.PRIMARY,
-                border: `2px solid ${style.colors.PRIMARY}`,
+                backgroundColor: styles.colors.PRIMARY,
+                border: `2px solid ${styles.colors.PRIMARY}`,
                 '&:hover': {
-                  backgroundColor: style.colors.SECONDARY,
-                  color: style.colors.PRIMARY,
+                  backgroundColor: styles.colors.SECONDARY,
+                  color: styles.colors.PRIMARY,
                 },
               }}
             >

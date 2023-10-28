@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import style from "../Styles/App";
+import styles from "../Styles/App";
 import Skeleton from '@mui/material/Skeleton';
 
 const InstrumentLessonsOffered = () => {
@@ -69,10 +69,10 @@ const InstrumentLessonsOffered = () => {
         placeholders.map((placeholder, index) => (
           <Card key={index} elevation={0} className="instrument-card" sx={{ 
           maxWidth: 345, 
-          backgroundColor: style.colors.SECONDARY, 
+          backgroundColor: styles.colors.SECONDARY, 
           paddingBottom: 2,
           }}>
-            <Skeleton sx={{ height: 160, backgroundColor: style.colors.FORM }} animation="wave" variant="rectangular"/>
+            <Skeleton sx={{ height: 160, backgroundColor: styles.colors.FORM }} animation="wave" variant="rectangular"/>
             <CardContent>
               <div className="d-flex flex-column align-items-center gap-2">
                 <Skeleton height={30} width="80%" animation="wave" />
@@ -87,7 +87,7 @@ const InstrumentLessonsOffered = () => {
         instrumentList.map((instrument, index) => (
           <Card key={index} elevation={0} className="instrument-card" sx={{ 
           maxWidth: 345, 
-          backgroundColor: style.colors.SECONDARY, 
+          backgroundColor: styles.colors.SECONDARY, 
           paddingBottom: 2,
           }}>
             <CardMedia
