@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import styles from "../Styles/App";
+import { Link } from "react-router-dom";
 
 const HoverButton = ({
   children,
-  onClick,
+  onClick = null,
   link = "/",
   backgroundColor = styles.colors.PRIMARY,
   fontSize = "15px",
@@ -44,24 +45,21 @@ const HoverButton = ({
   }
 
   return (
-    <button
-      {...rest}
-      style={{ ...buttonStyle, ...(style || {}) }}
-      onMouseOver={(e) =>
-        handleMouseOver(e)
-      }
-      onMouseOut={(e) =>
-        handleMouseOut(e)
-      }
-      onClick={ onClick ||
-        (link &&
-          (() => {
-            window.open(link, "_self");
-          }))
-      }
-    >
-      {children}
-    </button>
+    <Link to={link}>
+      <button
+        {...rest}
+        style={{ ...buttonStyle, ...(style || {}) }}
+        onMouseOver={(e) =>
+          handleMouseOver(e)
+        }
+        onMouseOut={(e) =>
+          handleMouseOut(e)
+        }
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </Link>
   )
 }
 
