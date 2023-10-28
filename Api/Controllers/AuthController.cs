@@ -56,7 +56,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        UserDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
+        UserWithRoleDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
 
         if (validUser == null)
         {

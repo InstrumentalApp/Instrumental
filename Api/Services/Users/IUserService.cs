@@ -7,5 +7,5 @@ public interface IUserService
 {
     Task<UserDto?> CreateStudentAsync(User user);
     Task<UserDto?> CreateTeacherAsync(User user);
-    Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser);
+    Task<UserWithRoleDto?> ValidateUserPasswordAsync(LoginUser loginUser);
 }

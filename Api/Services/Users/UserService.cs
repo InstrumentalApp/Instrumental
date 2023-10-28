@@ -69,9 +69,12 @@ public class UserService : IUserService
     }
 
 
-    public async Task<UserDto?> ValidateUserPasswordAsync(LoginUser loginUser)
+    public async Task<UserWithRoleDto?> ValidateUserPasswordAsync(LoginUser loginUser)
     {
-        User? check = await _context.Users.Where(u => u.Email == loginUser.Email).FirstOrDefaultAsync();
+        User? check = await _context.Users
+            .Include(u=>u.Role)
+            .Where(u => u.Email == loginUser.Email)
+            .FirstOrDefaultAsync();
 
         if (check == null) return null;
 
@@ -79,7 +82,6 @@ public class UserService : IUserService
 
         if (hasher.VerifyHashedPassword(loginUser, check.Password, loginUser.Password) == 0) return null;
 
-        return new UserDto(check);
+        return new UserWithRoleDto(check);
     }
-
 }
