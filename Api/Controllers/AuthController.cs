@@ -6,6 +6,7 @@ using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.DataTransfer;
 using Microsoft.AspNetCore.Authorization;
+using TeamFive.Models;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -30,7 +31,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> RegisterAsync(CreateUser user)
+    public async Task<ActionResult<UserDto>> RegisterAsync(User user)
     {
         if (!ModelState.IsValid)
         {
