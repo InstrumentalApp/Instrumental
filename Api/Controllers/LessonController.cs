@@ -90,7 +90,7 @@ public class LessonController : ControllerBase
     }
 
     [HttpGet("user")]
-    public async Task<ActionResult<List<Lesson>>> LessonsForUser()
+    public async Task<ActionResult<List<LessonDto>>> LessonsForUser()
     {
         int claim = _tokenService.GetIdClaimFromHeaderValue(Request);
 
@@ -102,7 +102,9 @@ public class LessonController : ControllerBase
         try
         {
             List<Lesson> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
-            return allLessonsForUserId;
+            
+            List<LessonDto> lessonDtos = _lessonService.LessonsToLessonDtos(allLessonsForUserId);
+            return lessonDtos;
         }
         catch
         {

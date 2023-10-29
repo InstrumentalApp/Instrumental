@@ -114,4 +114,13 @@ public class LessonService : ILessonService
       return lessonsForUser;
     }
 
+    public List<LessonDto> LessonsToLessonDtos(List<Lesson> lessons)
+    {
+        // Making a list of LessonDto objects by mapping each Lesson using .Select()
+        List<LessonDto> lessonDtos = lessons
+          .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Teacher), new UserDto(lesson.Student), new InstrumentDto(lesson.Instrument)))
+          .ToList();
+
+        return lessonDtos;
+    }
 }
