@@ -31,7 +31,7 @@ const AboutUs = () => {
               Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
             </Typography>
             {/* <HoverButton link='/instruments' text="Browse Instruments"/> */}
-            <HoverButton link='/instruments' margin="2rem 0 0 0">Explore Lessons</HoverButton>
+            <HoverButton link='/instruments' margin="2rem 0 0 0">Explore lessons</HoverButton>
           </div>
           <img src={hovered ? AnimatedPic : StaticPic} alt="guitar-animation" style={{ borderRadius: "7%", marginTop: "3rem"}} width={400} height={400}
           onMouseOver={() => {setHovered(true)}} onMouseOut={() => {setHovered(false)}}/>

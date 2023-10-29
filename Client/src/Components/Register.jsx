@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import styles from '../Styles/App';
 import useLocalStorage from '../Hooks/useLocalStorage';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import '../Styles/LoginReg.css';
-import Button from '@mui/material/Button';
+import HoverButton from './HoverButton';
 import TextField from '@mui/material/TextField';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
@@ -66,6 +67,7 @@ const Register = () => {
 					<TextField
 						className="mb-3"
 						required
+						color='success'
 						fullWidth
 						label="First Name"
 						type="text"
@@ -78,6 +80,7 @@ const Register = () => {
 					<TextField
 						className="mb-3"
 						required
+						color='success'
 						fullWidth
 						label="Last Name"
 						type="text"
@@ -89,6 +92,7 @@ const Register = () => {
 					<TextField
 						className="mb-3"
 						required
+						color='success'
 						fullWidth
 						label="Email"
 						type="text"
@@ -100,6 +104,7 @@ const Register = () => {
 					<TextField
 						className="mb-3"
 						required
+						color='success'
 						fullWidth
 						label="Password"
 						type="password"
@@ -111,6 +116,7 @@ const Register = () => {
 					<TextField
 						className="mb-3"
 						required
+						color='success'
 						fullWidth
 						label="Confirm Password"
 						type="password"
@@ -119,15 +125,17 @@ const Register = () => {
 						value={registerUser.confirm}
 						onChange={handleChange}
 					/>
-					<Button
+					<HoverButton
 						type="submit"
+						backgroundColor={styles.colors.ACTION}
+						color={styles.colors.BLACK}
 						variant="contained"
 						sx={{
 							my: 2
 						}}
 					>
 						Register
-					</Button>
+					</HoverButton>
 					<Grid container direction="column" alignItems="center">
 						<Grid item xs>
 							<Link component={RouterLink} to={"/sign-in"} variant="body2">
