@@ -62,7 +62,7 @@ public class InstructorController : ControllerBase
 
     [Authorize(Policy = "SUPERUSER")]
     [HttpPost("create")]
-    public async Task<ActionResult<UserWithRoleDto?>> CreateAsync(User user)
+    public async Task<ActionResult<UserWithRoleDto?>> CreateAsync(CreateTeacher user)
     {
         if (!ModelState.IsValid)
         {
