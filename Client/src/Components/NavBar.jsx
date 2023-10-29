@@ -49,9 +49,8 @@ const pages = [
   // ['Rentals', '/rentals'], 
   ['How it works', '/how-it-works'], 
   ['Teach with us', '/teach-with-us'], 
-  ['Register', '/register'],
   ['Contact', '/contact']];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
@@ -134,6 +133,8 @@ const NavBar = (props) => {
                 display: { xs: 'block', md: 'none', "& .MuiMenu-paper":
                 { backgroundColor: styles.colors.SECONDARY }
               },
+              mt: 5.5,
+              ml: 1,
               }}
             >
               {pages.map((page) => (
@@ -182,7 +183,7 @@ const NavBar = (props) => {
                   handleCloseNavMenu();
                   navigate(page[1]);
                 }}
-                sx={{ color: styles.colors.BLACK, display: 'block', fontSize: 14}}
+                sx={{ color: styles.colors.PRIMARY, display: 'block', fontSize: 16, fontWeight: 700 }}
               >
                 <nobr>{page[0]}</nobr>
               </NavButton>
@@ -196,9 +197,12 @@ const NavBar = (props) => {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
                 id="menu-appbar"
-                anchor={anchorUser}
+                anchor={anchorNav}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
@@ -206,10 +210,17 @@ const NavBar = (props) => {
                 }}
                 open={Boolean(anchorUser)}
                 onClose={handleCloseUserMenu}
+                sx={{
+                  display: { 
+                    "& .MuiMenu-paper": { backgroundColor: styles.colors.SECONDARY }
+                  },
+                  mt: 5.5,
+                  ml:-1,
+                }}
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography textAlign="center" >{setting}</Typography>
                   </MenuItem>
 
                 ))}
@@ -244,9 +255,9 @@ const NavBar = (props) => {
                 </Button>
               ) : (
                 <HoverButton
+                  link="/sign-in"
                   onClick={ () => {
                     handleCloseNavMenu();
-                    navigate('/sign-in');
                   }}
                   padding="5px 15px"
                   margin="0 0 8px 0"
