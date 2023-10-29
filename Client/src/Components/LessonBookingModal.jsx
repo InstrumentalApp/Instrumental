@@ -21,7 +21,7 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
     }
   }, [teacher])
 
-  const { handleSubmit } = useApi();
+  const { data, handleSubmit } = useApi();
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +33,14 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
         handleSubmit(url, lesson, "POST");
       }
   };
+
+  // I'll likely be redirecting to a new component instead of using an alert,
+  // just wanted to display the data as it is returned somehow.
+  useEffect(() => {
+    if (data) {
+      alert(`${data.teacher.firstName}'s lesson with ${data.student.firstName} at ${data.bookingDate}`);
+    }
+  }, [data])
 
   const handleChange = (e) => {
     setLesson({ ...lesson, [e.target.name]: e.target.value });
