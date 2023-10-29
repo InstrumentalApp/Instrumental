@@ -56,44 +56,24 @@ public class LessonService : ILessonService
 
   // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
 
-    public async Task<LessonDto> CreateLessonAsync(Lesson lesson)
+    public async Task<LessonDto?> CreateLessonAsync(Lesson lesson)
     {
       _context.Lessons.Add(lesson);
 
       int creationResult = await _context.SaveChangesAsync();
+      User? teacher = await _context.Users.FirstOrDefaultAsync(u=>u.UserId == lesson.TeacherId);
+      User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
+      Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
 
-      UserDto? lessonTeacherDto = new(lesson.Teacher)
+      if(teacher == null || student == null || instrument == null)
       {
-        UserId = lesson.Teacher.UserId,
-        FirstName = lesson.Teacher.FirstName,
-        LastName = lesson.Teacher.LastName,
-        Email = lesson.Teacher.Email
-      };
+         return null;
+      }
 
-      UserDto? lessonStudentDto = new(lesson.Student)
-      {
-        UserId = lesson.Student.UserId,
-        FirstName = lesson.Student.FirstName,
-        LastName = lesson.Student.LastName,
-        Email = lesson.Student.Email
-      };
-
-      InstrumentDto? lessonInstrumentDto = new(lesson.Instrument)
-      {
-        InstrumentId = lesson.InstrumentId,
-        Name = lesson.Instrument.Name,
-        Family = lesson.Instrument.Family
-      };
-
-      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto)
-      {
-        LessonId = lesson.LessonId,
-        BookingDate = lesson.BookingDate,
-        DurationMinutes = lesson.DurationMinutes,
-        Teacher = lessonTeacherDto,
-        Student = lessonStudentDto,
-        Instrument = lessonInstrumentDto
-      };
+      UserDto? lessonTeacherDto = new(teacher);
+      UserDto? lessonStudentDto = new(student);
+      InstrumentDto? lessonInstrumentDto = new(instrument);
+      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
 
       if(creationResult > 0)
       {
