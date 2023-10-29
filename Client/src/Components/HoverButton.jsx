@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 const HoverButton = ({
   children,
   onClick = null,
-  link = "/",
+  link = null,
   backgroundColor = styles.colors.PRIMARY,
+  color = "white",
   fontSize = "15px",
+  fontWeight = "normal",
   borderRadius = "50px",
   shadow = "4px 4px 0",
   padding = "10px 20px",
@@ -20,11 +22,13 @@ const HoverButton = ({
     padding: padding,
     margin: margin,
     boxShadow: `${shadow} black`,
-    color: "white",
+    color: color,
     backgroundColor: backgroundColor,
     border: "2.5px solid black",
     borderRadius: borderRadius,
     fontSize: fontSize,
+    fontWeight: fontWeight,
+    letterSpacing: "1px",
     transition: "translate .2s, box-shadow .25s",
   };
 

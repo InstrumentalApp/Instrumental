@@ -3,13 +3,14 @@ import useLocalStorage from '../Hooks/useLocalStorage';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import '../Styles/LoginReg.css';
-import Button from '@mui/material/Button';
+import HoverButton from './HoverButton';
 import TextField from '@mui/material/TextField';
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import styles from '../Styles/App';
 
 const Login = () => {
   const [errors, setErrors] = useState([]);
@@ -40,7 +41,6 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -49,7 +49,7 @@ const Login = () => {
           alignItems: 'center',
         }}
       >
-        <h1>Sign in</h1>
+        <Typography variant='h5' sx={{ fontWeight: "bold", opacity: .5 }}>Sign into your Instrumental account</Typography>
         {
           errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
         }
@@ -63,6 +63,7 @@ const Login = () => {
           <TextField
             className="mb-3"
             required
+            color="success"
             fullWidth
             label="Email"
             type="text"
@@ -75,6 +76,7 @@ const Login = () => {
           <TextField
             className="mb-3"
             required
+            color="success"
             fullWidth
             label="Password"
             type="password"
@@ -83,23 +85,31 @@ const Login = () => {
             value={loginUser.password}
             onChange={handleChange}
           />
-          <Button
+          <HoverButton
             type="submit"
-            variant="contained"
-            sx={{
-              my: 2
-            }}
+            backgroundColor={styles.colors.ACTION}
+            margin="5px 0"
           >
             Sign In
-          </Button>
-          <Grid container direction="column" alignItems="center">
+          </HoverButton>
+          <Grid container direction="column" alignItems="center" pt={2}>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" underline="hover" variant="body2" 
+                sx={{ color: styles.colors.PRIMARY,
+                  fontWeight: "bold",
+                  opacity: .8
+                }} 
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link component={RouterLink} to={"/register"} variant="body2">
+              <Link component={RouterLink} to={"/register"} underline="hover" variant="body2" 
+                sx={{ color: styles.colors.PRIMARY,
+                  fontWeight: "bold",
+                  opacity: .7
+                }} 
+              >
                 Register as a new user
               </Link>
             </Grid>
