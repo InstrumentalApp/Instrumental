@@ -10,6 +10,7 @@ import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
 import useApi from './Hooks/useApi';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />
         <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
+        <Route path="/bookingsuccess" element={<LessonBookingSuccess />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
 

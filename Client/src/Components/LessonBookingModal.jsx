@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import useApi from '../Hooks/useApi';
 import axios from 'axios';
 import useLocalStorage from "../Hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, instrumentId }) => {
 
   const [lesson, setLesson] = useState({})
-  const [credentials, setCredentials] = useLocalStorage("credentials", {})
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
+  const navigate = useNavigate();
   const url = "/api/lesson"
 
   useEffect(() => {
@@ -33,12 +35,10 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
         handleSubmit(url, lesson, "POST");
       }
   };
-
-  // I'll likely be redirecting to a new component instead of using an alert,
-  // just wanted to display the data as it is returned somehow.
+  
   useEffect(() => {
     if (data) {
-      alert(`${data.teacher.firstName}'s lesson with ${data.student.firstName} at ${data.bookingDate}`);
+      navigate('/bookingsuccess', { state: data });
     }
   }, [data])
 
