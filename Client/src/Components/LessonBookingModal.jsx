@@ -1,21 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useApi from '../Hooks/useApi';
 import axios from 'axios';
+import useLocalStorage from "../Hooks/useLocalStorage";
 
 const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, instrumentId }) => {
-  const [lesson, setLesson] = useState({
-    teacherId: 1,
-    studentId: 1,
-    instrumentId: instrumentId,
-    durationMinutes: 0,
-    bookingDate: ""
-  })
+
+  const [lesson, setLesson] = useState({})
+  const [credentials, setCredentials] = useLocalStorage("credentials", {})
   const url = "/api/lesson"
+
+  useEffect(() => {
+    if (teacher && credentials) {
+      setLesson({
+        teacherId: teacher.userId,
+        studentId: credentials["userId"],
+        instrumentId: instrumentId,
+        durationMinutes: 0,
+        bookingDate: ""
+      })
+    }
+  }, [teacher])
 
   const { handleSubmit } = useApi();
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
+    console.log(lesson);
     if (lesson.durationMinutes <= 0) {
       alert("Duration should be a positive number");
     }
