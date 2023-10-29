@@ -42,14 +42,24 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<UserWithRoleDto?> CreateTeacherAsync(User user)
+    public async Task<UserWithRoleDto?> CreateTeacherAsync(CreateTeacher input)
     {
+        User user = new()
+        {
+            FirstName = input.FirstName,
+            LastName = input.LastName,
+            Email = input.Email,
+            Password = input.Password,
+            Confirm = input.Confirm,
+        };
         try
         {
             PasswordHasher<User> hasher = new();
             user.Password = hasher.HashPassword(user, user.Password);
 
             user.Role = new() { RoleType = Enums.RoleType.TEACHER };
+
+            user.UserInstruments.Add(new() { UserId = user.UserId, InstrumentId = input.InstrumentId });
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
