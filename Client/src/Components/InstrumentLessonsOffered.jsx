@@ -7,11 +7,10 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import HoverButton from "./HoverButton";
 import Typography from '@mui/material/Typography';
 import styles from "../Styles/App";
 import Skeleton from '@mui/material/Skeleton';
-import { useNavigate } from "react-router-dom";
 
 const InstrumentLessonsOffered = () => {
   // API Call to Back-End When Data Gets Updated
@@ -21,7 +20,6 @@ const InstrumentLessonsOffered = () => {
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
   const placeholders = Array.from({ length: 18 }, (_, i) => i + 1);
-  const navigate = useNavigate();
 
   const fetchInstrumentList = async () => {
     try {
@@ -52,10 +50,6 @@ const InstrumentLessonsOffered = () => {
     setInstrumentList(filteredOptions);
   }, [searchInput]);
 
-  const navigateToInstrumentDetal = (instrumentId) => {
-    navigate("/instruments/" + instrumentId);
-  }
-
   return (
     <Container maxWidth="xl" className="instrument-lessons-offered">
       <div className="d-flex justify-content-center flex-wrap">
@@ -64,6 +58,7 @@ const InstrumentLessonsOffered = () => {
           sx={{
             mb: 4,
           }}
+          variant="filled"
           size="small"
           label="Search Instruments"
           color="success"
@@ -91,34 +86,36 @@ const InstrumentLessonsOffered = () => {
           </Card>
         )) :
         instrumentList.map((instrument, index) => (
-          <Card key={index} elevation={0} className="instrument-card" sx={{ 
+          <Card key={index} elevation={3} className="instrument-card" sx={{ 
           maxWidth: 345, 
-          backgroundColor: styles.colors.SECONDARY, 
+          backgroundColor: styles.colors.PRIMARY, 
           paddingBottom: 2,
+          border: `2.7px solid ${styles.colors.BLACK}`,
+          borderRadius: "10px",
           }}>
             <CardMedia
             sx={{ height: 160 }}
             image="https://placehold.co/100"
             title={instrument.name}
             />
-            <CardContent>
+            <CardContent sx={{ color: "white" }}>
               <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
                 {instrument.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ opacity: .8 }}>
                 {instrument.family}
               </Typography>
             </CardContent>
             <CardActions className="d-flex justify-content-center">
-              <Button size="small"
-                variant="outlined"
-                onClick={()=>navigateToInstrumentDetal(instrument.instrumentId)}
-                disableElevation
-                color="success"
-                sx={{ textTransform: "none" }}
+              <HoverButton
+                link={`/instruments/${instrument.instrumentId}`}
+                backgroundColor={styles.colors.SECONDARY}
+                color={styles.colors.BLACK}
+                fontSize="12px"
+                padding="6px 20px"
               >
-                Learn More
-              </Button>
+                Learn more
+              </HoverButton>
             </CardActions>
           </Card>
         ))}

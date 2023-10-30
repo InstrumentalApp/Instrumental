@@ -9,11 +9,13 @@ const HoverButton = ({
   backgroundColor = styles.colors.PRIMARY,
   color = "white",
   fontSize = "15px",
-  fontWeight = "normal",
+  fontWeight = color == styles.colors.BLACK ? "bold" : "normal",
   borderRadius = "50px",
   shadow = "4px 4px 0",
-  padding = "10px 20px",
+  shadowColor = styles.colors.BLACK,
+  padding = "10px 25px",
   margin = "0",
+  type="button", // "button" or "submit
   style,
   ...rest}) =>
 {
@@ -21,10 +23,10 @@ const HoverButton = ({
   const buttonStyle = {
     padding: padding,
     margin: margin,
-    boxShadow: `${shadow} black`,
+    boxShadow: `${shadow} ${shadowColor}`,
     color: color,
     backgroundColor: backgroundColor,
-    border: "2.5px solid black",
+    border: `2.5px solid ${shadowColor}`,
     borderRadius: borderRadius,
     fontSize: fontSize,
     fontWeight: fontWeight,
@@ -45,13 +47,14 @@ const HoverButton = ({
 
   const handleMouseOut = (e) => {
     e.currentTarget.style.translate = "0 0 0";
-    e.currentTarget.style.boxShadow = `${shadow} black`;
+    e.currentTarget.style.boxShadow = `${shadow} ${shadowColor}`;
   }
 
   return (
     <Link to={link}>
       <button
         {...rest}
+        type={type}
         style={{ ...buttonStyle, ...(style || {}) }}
         onMouseOver={(e) =>
           handleMouseOver(e)
