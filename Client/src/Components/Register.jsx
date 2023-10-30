@@ -4,9 +4,10 @@ import useLocalStorage from '../Hooks/useLocalStorage';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import '../Styles/LoginReg.css';
-import HoverButton from './HoverButton';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
@@ -46,14 +47,26 @@ const Register = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<Box
-				sx={{
-					marginTop: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          backgroundColor: "white",
+          width: "360px",
+          padding: "40px 20px",
+          borderRadius: "10px",
+        }}
 			>
-				<h1>Register</h1>
+				<Typography variant='h5' sx={{ 
+					fontWeight: "bold", 
+					opacity: .8,
+					color: styles.colors.PRIMARY,
+					mb: 1,
+					}}
+				>
+					Time to sign up
+				</Typography>
 				{
 					errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
 				}
@@ -72,7 +85,7 @@ const Register = () => {
 						label="First Name"
 						type="text"
 						name="firstName"
-						placeholder="First Name"
+						placeholder="Insert your first name"
 						autoFocus
 						value={registerUser.firstName}
 						onChange={handleChange}
@@ -85,7 +98,7 @@ const Register = () => {
 						label="Last Name"
 						type="text"
 						name="lastName"
-						placeholder="Last Name"
+						placeholder="Insert your last name"
 						value={registerUser.lastName}
 						onChange={handleChange}
 					/>
@@ -97,7 +110,7 @@ const Register = () => {
 						label="Email"
 						type="text"
 						name="email"
-						placeholder="Email"
+						placeholder="yourname@mail.com"
 						value={registerUser.email}
 						onChange={handleChange}
 					/>
@@ -109,7 +122,7 @@ const Register = () => {
 						label="Password"
 						type="password"
 						name="password"
-						placeholder="Password"
+						placeholder="Create a password"
 						value={registerUser.password}
 						onChange={handleChange}
 					/>
@@ -121,25 +134,34 @@ const Register = () => {
 						label="Confirm Password"
 						type="password"
 						name="confirm"
-						placeholder="Confirm Password"
+						placeholder="Repeat your password"
 						value={registerUser.confirm}
 						onChange={handleChange}
 					/>
-					<HoverButton
-						type="submit"
-						backgroundColor={styles.colors.ACTION}
-						color={styles.colors.BLACK}
-						variant="contained"
-						sx={{
-							my: 2
-						}}
-					>
-						Register
-					</HoverButton>
-					<Grid container direction="column" alignItems="center">
+          <Button
+            type="submit"
+            color='warning'
+            disableElevation
+            variant="contained"
+            sx={{
+							width: "100%",
+              my: 1,
+							py: 1.1,
+							fontWeight: "bold",
+              textTransform: "none",
+            }}
+          >
+            Create account
+          </Button>
+					<Grid container direction="column" alignItems="center" pt={1}>
 						<Grid item xs>
-							<Link component={RouterLink} to={"/sign-in"} variant="body2">
-								Sign In
+							<Link component={RouterLink} to={"/sign-in"} underline="hover" variant="body2" 
+								sx={{ color: styles.colors.PRIMARY,
+									fontWeight: "bold",
+									opacity: .7
+								}} 
+							>
+								Already have an account? Sign in
 							</Link>
 						</Grid>
 					</Grid>

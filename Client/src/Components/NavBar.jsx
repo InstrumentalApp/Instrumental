@@ -253,6 +253,8 @@ const NavBar = (props) => {
                 >
                   <nobr>Sign Out</nobr>
                 </Button>
+              ) : window.location.pathname == "/sign-in" || window.location.pathname == "/register" ? (
+                <></>
               ) : (
                 <HoverButton
                   link="/sign-in"
