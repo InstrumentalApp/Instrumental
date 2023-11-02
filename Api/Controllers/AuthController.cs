@@ -57,7 +57,6 @@ public class AuthController : ControllerBase
         }
 
         UserWithRoleDto? validUser = await _userService.ValidateUserPasswordAsync(loginUser);
-        Console.WriteLine(validUser.Role);
         if (validUser == null)
         {
             ModelState.AddModelError("email", "Invalid email or password");

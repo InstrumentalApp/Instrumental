@@ -66,9 +66,9 @@ public class LessonService : ILessonService
       User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
       Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
 
-      UserDto? lessonTeacherDto = new(teacher);
-      UserDto? lessonStudentDto = new(student);
-      InstrumentDto? lessonInstrumentDto = new(instrument);
+      UserDto? lessonTeacherDto = new(teacher!);
+      UserDto? lessonStudentDto = new(student!);
+      InstrumentDto? lessonInstrumentDto = new(instrument!);
       LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
 
       if(creationResult > 0)
@@ -82,18 +82,18 @@ public class LessonService : ILessonService
       }
     }
 
-    public async Task<List<LessonDto>> AllLessonsForUserIdAsync(int userId)
+    public async Task<List<LessonWithStartEnd>> AllLessonsForUserIdAsync(int userId)
     {
 
         Console.WriteLine(userId);
       try
       {
-            List<LessonDto> lessonsForUser = await _context.Lessons
+            List<LessonWithStartEnd> lessonsForUser = await _context.Lessons
                 .Include(l => l.Instrument)
                 .Include(l => l.Teacher)
                 .Include(l => l.Student)
                 .Where(l => l.TeacherId == userId)
-                .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
                 .ToListAsync();
 
         return lessonsForUser;
