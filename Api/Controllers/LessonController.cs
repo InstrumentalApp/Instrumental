@@ -101,10 +101,10 @@ public class LessonController : ControllerBase
 
         try
         {
-            List<Lesson> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
-            
-            List<LessonDto> lessonDtos = _lessonService.LessonsToLessonDtos(allLessonsForUserId);
-            return lessonDtos;
+            List<LessonDto> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
+
+            // List<LessonDto> lessonDtos = _lessonService.LessonsToLessonDtos(allLessonsForUserId);
+            return allLessonsForUserId;
         }
         catch
         {

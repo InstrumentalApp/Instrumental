@@ -11,6 +11,7 @@ using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
@@ -65,17 +66,17 @@ public class LessonService : ILessonService
       UserDto? lessonTeacherDto = new UserDto(lesson.Teacher)
       {
         UserId = lesson.Teacher.UserId,
-        FirstName = lesson.Teacher.FirstName, 
-        LastName = lesson.Teacher.LastName, 
-        Email = lesson.Teacher.Email 
+        FirstName = lesson.Teacher.FirstName,
+        LastName = lesson.Teacher.LastName,
+        Email = lesson.Teacher.Email
       };
 
       UserDto? lessonStudentDto = new UserDto(lesson.Student)
       {
         UserId = lesson.Student.UserId,
-        FirstName = lesson.Student.FirstName, 
-        LastName = lesson.Student.LastName, 
-        Email = lesson.Student.Email 
+        FirstName = lesson.Student.FirstName,
+        LastName = lesson.Student.LastName,
+        Email = lesson.Student.Email
       };
 
       InstrumentDto? lessonInstrumentDto = new InstrumentDto(lesson.Instrument)
@@ -105,22 +106,37 @@ public class LessonService : ILessonService
       }
     }
 
-    public async Task<List<Lesson>> AllLessonsForUserIdAsync(int userId) 
+    public async Task<List<LessonDto>> AllLessonsForUserIdAsync(int userId)
     {
-      List<Lesson> lessonsForUser = await _context.Lessons
-        .Where(l => l.TeacherId == userId || l.StudentId == userId)
-        .ToListAsync();
 
-      return lessonsForUser;
+        Console.WriteLine(userId);
+      try
+      {
+            List<LessonDto> lessonsForUser = await _context.Lessons
+                .Include(l => l.Instrument)
+                .Include(l => l.Teacher)
+                .Include(l => l.Student)
+                .Where(l => l.TeacherId == userId)
+                .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .ToListAsync();
+
+        return lessonsForUser;
+      }
+      catch (Exception e)
+      {
+            Console.WriteLine(e.Message);
+            return new();
+      }
+
     }
 
-    public List<LessonDto> LessonsToLessonDtos(List<Lesson> lessons)
-    {
-        // Making a list of LessonDto objects by mapping each Lesson using .Select()
-        List<LessonDto> lessonDtos = lessons
-          .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Teacher), new UserDto(lesson.Student), new InstrumentDto(lesson.Instrument)))
-          .ToList();
+    // public List<LessonDto> LessonsToLessonDtos(List<Lesson> lessons)
+    // {
+    //     // Making a list of LessonDto objects by mapping each Lesson using .Select()
+    //     List<LessonDto> lessonDtos = lessons
+    //       .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+    //       .ToList();
 
-        return lessonDtos;
-    }
+    //     return lessonDtos;
+    // }
 }

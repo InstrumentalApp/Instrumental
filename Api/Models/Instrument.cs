@@ -1,5 +1,6 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TeamFive.Models;
 public class Instrument : BaseEntity
@@ -11,6 +12,7 @@ public class Instrument : BaseEntity
     public string Family { get; set; }
 
     // Associations
+    [JsonIgnore]
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
     public virtual ICollection<UserInstrument> UserInstruments { get; set; } = new List<UserInstrument>();
 }

@@ -9,6 +9,6 @@ public interface ILessonService
     Task<List<Lesson>> AllLessons();
     Task<LessonDto?> OneLessonAsync(int lessonId);
     Task<LessonDto?> CreateLessonAsync(Lesson lesson);
-    Task<List<Lesson>> AllLessonsForUserIdAsync(int userId);
-    List<LessonDto> LessonsToLessonDtos(List<Lesson> lessons);
+    Task<List<LessonDto>> AllLessonsForUserIdAsync(int userId);
+    // List<LessonDto> LessonsToLessonDtos(List<LessonDto> lessons);
 }
