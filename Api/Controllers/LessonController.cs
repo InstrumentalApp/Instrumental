@@ -22,11 +22,14 @@ public class LessonController : ControllerBase
 {
     private readonly ILessonService _lessonService;
     private readonly ILogger<LessonController> _logger;
+    private readonly ITokenService
+    _tokenService;
 
-    public LessonController(ILessonService LessonServ, ILogger<LessonController> logger)
+    public LessonController(ILessonService LessonServ, ILogger<LessonController> logger, ITokenService tokenService)
     {
         _lessonService = LessonServ;
         _logger = logger;
+        _tokenService = tokenService;
     }
 
 
@@ -89,5 +92,28 @@ public class LessonController : ControllerBase
             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
 
+    }
+
+    [HttpGet("user")]
+    public async Task<ActionResult<List<LessonDto>>> LessonsForUser()
+    {
+        int claim = _tokenService.GetIdClaimFromHeaderValue(Request);
+
+        if (claim < 0)
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            List<LessonDto> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
+
+            // List<LessonDto> lessonDtos = _lessonService.LessonsToLessonDtos(allLessonsForUserId);
+            return allLessonsForUserId;
+        }
+        catch
+        {
+            return BadRequest("Not found");
+        }
     }
 }

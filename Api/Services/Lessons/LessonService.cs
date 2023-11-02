@@ -11,6 +11,7 @@ using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
@@ -65,11 +66,6 @@ public class LessonService : ILessonService
       User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
       Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
 
-      if(teacher == null || student == null || instrument == null)
-      {
-         return null;
-      }
-
       UserDto? lessonTeacherDto = new(teacher);
       UserDto? lessonStudentDto = new(student);
       InstrumentDto? lessonInstrumentDto = new(instrument);
@@ -81,8 +77,32 @@ public class LessonService : ILessonService
       }
       else
       {
+        return null;
         throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
       }
     }
 
+    public async Task<List<LessonDto>> AllLessonsForUserIdAsync(int userId)
+    {
+
+        Console.WriteLine(userId);
+      try
+      {
+            List<LessonDto> lessonsForUser = await _context.Lessons
+                .Include(l => l.Instrument)
+                .Include(l => l.Teacher)
+                .Include(l => l.Student)
+                .Where(l => l.TeacherId == userId)
+                .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .ToListAsync();
+
+        return lessonsForUser;
+      }
+      catch (Exception e)
+      {
+            Console.WriteLine(e.Message);
+            return new();
+      }
+
+    }
 }
