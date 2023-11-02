@@ -13,7 +13,6 @@ public class Instrument : BaseEntity
     public string? ImageUrl { get; set; }
 
     // Associations
-    [JsonIgnore]
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
     public virtual ICollection<UserInstrument> UserInstruments { get; set; } = new List<UserInstrument>();
 }
