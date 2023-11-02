@@ -78,12 +78,8 @@ public class LessonController : ControllerBase
         {
             return BadRequest("Something went wrong when booking the lesson");
         }
-        Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
-
         try
         {
-            Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
-
             return CreatedAtAction(nameof(OneLesson),new {id= createdLesson.LessonId}, createdLesson);
         }
         catch (Exception ex)
@@ -95,7 +91,7 @@ public class LessonController : ControllerBase
     }
 
     [HttpGet("user")]
-    public async Task<ActionResult<List<LessonDto>>> LessonsForUser()
+    public async Task<ActionResult<List<LessonWithStartEnd>>> LessonsForUser()
     {
         int claim = _tokenService.GetIdClaimFromHeaderValue(Request);
 
@@ -103,17 +99,7 @@ public class LessonController : ControllerBase
         {
             return BadRequest();
         }
-
-        try
-        {
-            List<LessonDto> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
-
-            // List<LessonDto> lessonDtos = _lessonService.LessonsToLessonDtos(allLessonsForUserId);
-            return allLessonsForUserId;
-        }
-        catch
-        {
-            return BadRequest("Not found");
-        }
+        List<LessonWithStartEnd> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
+        return allLessonsForUserId;
     }
 }
