@@ -26,8 +26,7 @@ builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, re
 string connectionString;
 if (builder.Environment.IsProduction())
 {
-    // connectionString = builder.Configuration.GetConnectionString("AwsConnection")!;
-    connectionString = builder.Configuration["ConnectionStrings:LocalConnection"]!;
+    connectionString = builder.Configuration["ConnectionStrings:AwsConnection"]!;
 }
 else
 {
@@ -112,6 +111,15 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallbackToController("Index", "Public");
+
+if (app.Environment.IsProduction())
+{
+    app.MapFallbackToController("Production", "Public");
+}
+else
+{
+    app.MapFallbackToController("Index", "Public");
+}
+
 
 app.Run();
