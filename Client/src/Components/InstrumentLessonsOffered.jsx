@@ -68,9 +68,9 @@ const InstrumentLessonsOffered = () => {
       <div className="instrument-cards">
         {loading ?
         placeholders.map((placeholder, index) => (
-          <Card key={index} elevation={0} className="instrument-card" sx={{ 
-          maxWidth: 345, 
-          backgroundColor: styles.colors.SECONDARY, 
+          <Card key={index} elevation={0} className="instrument-card" sx={{
+          maxWidth: 345,
+          backgroundColor: styles.colors.SECONDARY,
           paddingBottom: 2,
           }}>
             <Skeleton sx={{ height: 160, backgroundColor: styles.colors.FORM }} animation="wave" variant="rectangular"/>
@@ -86,16 +86,16 @@ const InstrumentLessonsOffered = () => {
           </Card>
         )) :
         instrumentList.map((instrument, index) => (
-          <Card key={index} elevation={3} className="instrument-card" sx={{ 
-          maxWidth: 345, 
-          backgroundColor: styles.colors.PRIMARY, 
+          <Card key={index} elevation={3} className="instrument-card" sx={{
+          maxWidth: 345,
+          backgroundColor: styles.colors.PRIMARY,
           paddingBottom: 2,
           border: `2.7px solid ${styles.colors.BLACK}`,
           borderRadius: "10px",
           }}>
             <CardMedia
             sx={{ height: 160 }}
-            image="https://placehold.co/100"
+            image={instrument.imageUrl}
             title={instrument.name}
             />
             <CardContent sx={{ color: "white" }}>
