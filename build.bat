@@ -6,3 +6,4 @@ popd
 pushd Api
 call dotnet publish -c Release -o ../TeamFiveBuild --self-contained true -r linux-x64
 popd
+xcopy ".\instrument-pictures\*.*" ".\Api\wwwroot\client\assets\instrument-pictures\" /E /H /C /I

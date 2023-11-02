@@ -84,8 +84,6 @@ public class LessonService : ILessonService
 
     public async Task<List<LessonWithStartEnd>> AllLessonsForUserIdAsync(int userId)
     {
-
-        Console.WriteLine(userId);
       try
       {
             List<LessonWithStartEnd> lessonsForUser = await _context.Lessons
