@@ -1,5 +1,6 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TeamFive.Attributes;
 

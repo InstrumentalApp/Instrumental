@@ -11,6 +11,7 @@ using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
@@ -67,6 +68,27 @@ public class LessonService : ILessonService
 
       if(teacher == null || student == null || instrument == null)
       {
+        lessons-by-userId
+        UserId = lesson.Teacher.UserId,
+        FirstName = lesson.Teacher.FirstName,
+        LastName = lesson.Teacher.LastName,
+        Email = lesson.Teacher.Email
+      };
+
+      UserDto? lessonStudentDto = new UserDto(lesson.Student)
+      {
+        UserId = lesson.Student.UserId,
+        FirstName = lesson.Student.FirstName,
+        LastName = lesson.Student.LastName,
+        Email = lesson.Student.Email
+      };
+
+      InstrumentDto? lessonInstrumentDto = new InstrumentDto(lesson.Instrument)
+      {
+        InstrumentId = lesson.InstrumentId,
+        Name = lesson.Instrument.Name,
+        Family = lesson.Instrument.Family
+      };
          return null;
       }
 
@@ -85,4 +107,27 @@ public class LessonService : ILessonService
       }
     }
 
+    public async Task<List<LessonDto>> AllLessonsForUserIdAsync(int userId)
+    {
+
+        Console.WriteLine(userId);
+      try
+      {
+            List<LessonDto> lessonsForUser = await _context.Lessons
+                .Include(l => l.Instrument)
+                .Include(l => l.Teacher)
+                .Include(l => l.Student)
+                .Where(l => l.TeacherId == userId)
+                .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .ToListAsync();
+
+        return lessonsForUser;
+      }
+      catch (Exception e)
+      {
+            Console.WriteLine(e.Message);
+            return new();
+      }
+
+    }
 }
