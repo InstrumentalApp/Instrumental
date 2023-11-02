@@ -1,7 +1,6 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TeamFive.Attributes;
 
@@ -18,6 +17,7 @@ public class User : BaseEntity
 
     [Required]
     [EmailAddress]
+    [UniqueEmail]
     public string Email { get; set; }
 
     [Required]
@@ -30,8 +30,9 @@ public class User : BaseEntity
     public string Confirm { get; set; }
 
     //Associations
+    public Role? Role { get; set; }
+
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
-    public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     public virtual ICollection<Lesson> TaughtLessons { get; set; } = new List<Lesson>();
     public virtual ICollection<Lesson> AttendedLessons { get; set; } = new List<Lesson>();
     public virtual ICollection<UserInstrument> UserInstruments { get; set; } = new List<UserInstrument>();

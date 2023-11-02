@@ -13,7 +13,6 @@ public class DBContext : DbContext
     public DbSet<Instrument> Instruments { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<UserInstrument> UserInstruments { get; set; }
 
     public DBContext(DbContextOptions options) : base(options) { }
@@ -42,9 +41,6 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<UserInstrument>()
             .HasKey(ui => new { ui.UserId, ui.InstrumentId });
-
-        modelBuilder.Entity<UserRole>()
-            .HasKey(ur => new { ur.UserId, ur.RoleId });
 
     }
 }

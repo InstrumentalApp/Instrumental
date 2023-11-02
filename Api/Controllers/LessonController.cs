@@ -46,6 +46,7 @@ public class LessonController : ControllerBase
 
     // Get One Lesson
     [HttpGet("{id}")]
+    [ActionName(nameof(OneLesson))]
     public async Task<ActionResult<LessonDto?>> OneLesson(int id)
     {
         try
@@ -73,13 +74,17 @@ public class LessonController : ControllerBase
 
         LessonDto? createdLesson = await _lessonService.CreateLessonAsync(lesson);
 
+        if (createdLesson == null)
+        {
+            return BadRequest("Something went wrong when booking the lesson");
+        }
         Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
 
         try
         {
             Console.WriteLine("_+_+_+_+_+_" + createdLesson + "+_+_+_+_+_+_+_");
 
-            return CreatedAtAction(nameof(OneLesson), createdLesson);
+            return CreatedAtAction(nameof(OneLesson),new {id= createdLesson.LessonId}, createdLesson);
         }
         catch (Exception ex)
         {

@@ -10,9 +10,14 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import styles from '../Styles/App';
 
 const Login = () => {
   const [errors, setErrors] = useState([]);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const [loginUser, setLoginUser] = useState({
     email: "",
@@ -30,7 +35,7 @@ const Login = () => {
     try {
       const result = await axios.post("/api/auth/login", loginUser)
       setCredentials(result.data);
-      navigate('/hello');
+      navigate('/');
     } catch (err) {
       const errorData = err.response.data.errors || err.response.data
       const errorMessages = Object.values(errorData).flat();
@@ -40,34 +45,46 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+			<CssBaseline />
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: "white",
+          width: "360px",
+          padding: "40px 20px",
+          borderRadius: "10px",
         }}
       >
-        <h1>Sign in</h1>
+        <Typography variant='h5' sx={{ 
+					fontWeight: "bold", 
+					opacity: .8,
+					color: styles.colors.PRIMARY,
+					mb: 3,
+          }}
+        >
+          Sign into your account
+        </Typography>
         {
           errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
         }
-        <Box component="form" onSubmit={handleSubmit} 
+        <Box component="form" onSubmit={handleSubmit}
           sx={{
-            mt: 2, 
-            display: "flex", 
-            flexWrap: "wrap", 
+            display: "flex",
+            flexWrap: "wrap",
             justifyContent: "center"
           }}>
           <TextField
             className="mb-3"
             required
+            color="success"
             fullWidth
             label="Email"
             type="text"
             name="email"
-            placeholder="Email"
+            placeholder="yourname@mail.com"
             autoFocus
             value={loginUser.email}
             onChange={handleChange}
@@ -75,31 +92,75 @@ const Login = () => {
           <TextField
             className="mb-3"
             required
+            color="success"
             fullWidth
             label="Password"
-            type="password"
+            type={passwordVisible ? "text" : "password"}
             name="password"
-            placeholder="Password"
+            placeholder="Insert your password"
             value={loginUser.password}
             onChange={handleChange}
           />
+          { passwordVisible ? (
+            <VisibilityIcon
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              sx={{
+                position: "absolute",
+                translate: "135px 89px 0",
+                opacity: .5,
+                "&:hover": {
+                  cursor: "pointer",
+                  opacity: 1,
+                }
+              }}
+            /> 
+            ) : (
+            <VisibilityOffIcon
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              sx={{
+                position: "absolute",
+                translate: "135px 89px 0",
+                opacity: .5,
+                "&:hover": {
+                  cursor: "pointer",
+                  opacity: 1,
+                }
+              }}
+            />
+          )}
           <Button
             type="submit"
+            color='warning'
+            disableElevation
             variant="contained"
             sx={{
-              my: 2
+							width: "100%",
+              my: 1,
+							py: 1.1,
+							fontWeight: "bold",
+              textTransform: "none",
             }}
           >
-            Sign In
+            Sign in
           </Button>
-          <Grid container direction="column" alignItems="center">
+          <Grid container direction="column" alignItems="center" pt={1}>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" underline="hover" variant="body2" 
+                sx={{ color: styles.colors.PRIMARY,
+                  fontWeight: "bold",
+                  opacity: .8
+                }} 
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link component={RouterLink} to={"/register"} variant="body2">
+              <Link component={RouterLink} to={"/register"} underline="hover" variant="body2" 
+                sx={{ color: styles.colors.PRIMARY,
+                  fontWeight: "bold",
+                  opacity: .7
+                }} 
+              >
                 Register as a new user
               </Link>
             </Grid>

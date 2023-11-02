@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useApi from '../Hooks/useApi';
 import axios from 'axios';
+import useLocalStorage from "../Hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, instrumentId }) => {
-  const [lesson, setLesson] = useState({
-    teacherId: 1,
-    studentId: 1,
-    instrumentId: instrumentId,
-    durationMinutes: 0,
-    bookingDate: ""
-  })
+
+  const [lesson, setLesson] = useState({})
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
+  const navigate = useNavigate();
   const url = "/api/lesson"
 
-  const { handleSubmit } = useApi();
+  useEffect(() => {
+    if (teacher && credentials) {
+      setLesson({
+        teacherId: teacher.userId,
+        studentId: credentials["userId"],
+        instrumentId: instrumentId,
+        durationMinutes: 0,
+        bookingDate: ""
+      })
+    }
+  }, [teacher])
+
+  const { data, handleSubmit } = useApi();
 
   const handleManualSubmit = async (e) => {
     e.preventDefault();
+    console.log(lesson);
     if (lesson.durationMinutes <= 0) {
       alert("Duration should be a positive number");
     }
@@ -23,6 +35,12 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
         handleSubmit(url, lesson, "POST");
       }
   };
+  
+  useEffect(() => {
+    if (data) {
+      navigate('/bookingsuccess', { state: data });
+    }
+  }, [data])
 
   const handleChange = (e) => {
     setLesson({ ...lesson, [e.target.name]: e.target.value });

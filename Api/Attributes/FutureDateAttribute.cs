@@ -14,7 +14,6 @@ public class FutureDateAttribute : ValidationAttribute
             return new ValidationResult("Booking Date is required");
         }
 
-        
         if (value is DateTime)
         {
             DateTime bookingDate = (DateTime)value;

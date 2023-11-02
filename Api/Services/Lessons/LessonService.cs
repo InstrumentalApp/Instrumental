@@ -57,14 +57,18 @@ public class LessonService : ILessonService
 
   // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
 
-    public async Task<LessonDto> CreateLessonAsync(Lesson lesson)
+    public async Task<LessonDto?> CreateLessonAsync(Lesson lesson)
     {
       _context.Lessons.Add(lesson);
 
       int creationResult = await _context.SaveChangesAsync();
+      User? teacher = await _context.Users.FirstOrDefaultAsync(u=>u.UserId == lesson.TeacherId);
+      User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
+      Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
 
-      UserDto? lessonTeacherDto = new UserDto(lesson.Teacher)
+      if(teacher == null || student == null || instrument == null)
       {
+        lessons-by-userId
         UserId = lesson.Teacher.UserId,
         FirstName = lesson.Teacher.FirstName,
         LastName = lesson.Teacher.LastName,
@@ -85,16 +89,13 @@ public class LessonService : ILessonService
         Name = lesson.Instrument.Name,
         Family = lesson.Instrument.Family
       };
+         return null;
+      }
 
-      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto)
-      {
-        LessonId = lesson.LessonId,
-        BookingDate = lesson.BookingDate,
-        DurationMinutes = lesson.DurationMinutes,
-        Teacher = lessonTeacherDto,
-        Student = lessonStudentDto,
-        Instrument = lessonInstrumentDto
-      };
+      UserDto? lessonTeacherDto = new(teacher);
+      UserDto? lessonStudentDto = new(student);
+      InstrumentDto? lessonInstrumentDto = new(instrument);
+      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
 
       if(creationResult > 0)
       {
@@ -129,14 +130,4 @@ public class LessonService : ILessonService
       }
 
     }
-
-    // public List<LessonDto> LessonsToLessonDtos(List<Lesson> lessons)
-    // {
-    //     // Making a list of LessonDto objects by mapping each Lesson using .Select()
-    //     List<LessonDto> lessonDtos = lessons
-    //       .Select(lesson => new LessonDto(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
-    //       .ToList();
-
-    //     return lessonDtos;
-    // }
 }

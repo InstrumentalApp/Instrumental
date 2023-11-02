@@ -1,8 +1,8 @@
-const PRIMARY = "#186F65";
+const PRIMARY = "#196F65";
 const SECONDARY = "#B5CB99";
-const TERTIARY = "#FCE098";
-const ACTION = "#B2533E";
-const FORM = "#A9A9A9";
+const TERTIARY = "#FFE0C6";
+const ACTION = "#ED6C02";
+const FORM = "#DDDDDD";
 const BLACK = "#000000";
 
 const colors = {
