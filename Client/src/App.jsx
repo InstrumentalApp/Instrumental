@@ -13,21 +13,11 @@ import InstrumentDetail from './Components/InstrumentDetail';
 import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
-import useApi from './Hooks/useApi';
 import useLocalStorage from './Hooks/useLocalStorage';
 
 function App() {
 
-  const [hello, setHello] = useState("");
-
-  const fetchData = async () => {
-    const result = handleSubmit("/api/auth/hello", {}, "GET")
-    setHello(result.data);
-  }
-
   useEffect(() => {
-    fetchData()
-    console.log(hello)
     const handleScroll = () => {
       setScrollTop(window.scrollY);
     };
@@ -40,7 +30,6 @@ function App() {
   }, [])
 
   const [scrollTop, setScrollTop] = useState(0);
-  const { handleSubmit, data } = useApi();
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
   return (
@@ -60,7 +49,7 @@ function App() {
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 
+        {/*
         Implement logic to allow access to this route when a user is logged in.
         We would also need to conditionally render a Sign In or View Account button
         in the Navbar component depending on if a user is currently logged in.

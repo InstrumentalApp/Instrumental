@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react-swc'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/client/",
   server: {
-    base: "/",
     port: 8000,
     proxy: {
       '/api': {
@@ -29,6 +29,7 @@ export default defineConfig({
   },
   build: {
     outDir: "../Api/wwwroot/client",
-    emptyOutDir: true
+    emptyOutDir: true,
+    assetsDir: 'assets' // Sets the directory for assets inside the build folder
   }
 })
