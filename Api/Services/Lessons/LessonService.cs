@@ -66,32 +66,6 @@ public class LessonService : ILessonService
       User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
       Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
 
-      if(teacher == null || student == null || instrument == null)
-      {
-        lessons-by-userId
-        UserId = lesson.Teacher.UserId,
-        FirstName = lesson.Teacher.FirstName,
-        LastName = lesson.Teacher.LastName,
-        Email = lesson.Teacher.Email
-      };
-
-      UserDto? lessonStudentDto = new UserDto(lesson.Student)
-      {
-        UserId = lesson.Student.UserId,
-        FirstName = lesson.Student.FirstName,
-        LastName = lesson.Student.LastName,
-        Email = lesson.Student.Email
-      };
-
-      InstrumentDto? lessonInstrumentDto = new InstrumentDto(lesson.Instrument)
-      {
-        InstrumentId = lesson.InstrumentId,
-        Name = lesson.Instrument.Name,
-        Family = lesson.Instrument.Family
-      };
-         return null;
-      }
-
       UserDto? lessonTeacherDto = new(teacher);
       UserDto? lessonStudentDto = new(student);
       InstrumentDto? lessonInstrumentDto = new(instrument);
@@ -103,6 +77,7 @@ public class LessonService : ILessonService
       }
       else
       {
+        return null;
         throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
       }
     }
