@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import styles from '../Styles/App';
 import AnimatedPic from "../Assets/strum.gif"
 import StaticPic from "../Assets/strum_static.png"
@@ -14,18 +15,23 @@ const AboutUs = () => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <Grid container spacing={4}>
-        <Grid item xs={12} className='d-flex '>
+        <Grid item xs={12} mt={8} className='d-flex justify-content-center' sx={{ 
+          flexDirection: { xs: "column-reverse", sm: "row" },
+          alignItems: { xs:"center", sm:"start" }, 
+          }}
+        >
           <div>
-            <Typography variant="h4" component="h2" mt={5} mb={2} maxWidth={500} sx={{
+            <Typography variant="h4" component="h2" mb={2} maxWidth={600} sx={{
               fontFamily: styles.fonts.HEADER_FONT,
               color: styles.colors.PRIMARY,
               fontWeight: 'bold',
               letterSpacing: 2,
+              fontSize: { xs: 30, md: 35 },
               }}
             >
-              {"Welcome to Instrumental – Your Music Education Hub!"}
+              Receive quality music education, easier than ever before
             </Typography>
             <Typography variant="body1" width="80%">
               Are you an aspiring musician or a passionate music teacher? Instrumental is your one-stop destination, bridging the gap between music teachers and eager learners, making music education more accessible and enjoyable.
@@ -33,8 +39,18 @@ const AboutUs = () => {
             {/* <HoverButton link='/instruments' text="Browse Instruments"/> */}
             <HoverButton link='/instruments' margin="2rem 0 0 0">Explore lessons</HoverButton>
           </div>
-          <img src={hovered ? AnimatedPic : StaticPic} alt="guitar-animation" style={{ borderRadius: "7%", marginTop: "3rem"}} width={400} height={400}
-          onMouseOver={() => {setHovered(true)}} onMouseOut={() => {setHovered(false)}}/>
+          <Box sx={{ 
+              borderRadius: "7%",
+              width: {xs: 0, sm: 200, md: 400 },
+              height: {xs: 0, sm: 200, md: 400 },
+            }} >
+            <img src={hovered ? AnimatedPic : StaticPic} alt="guitar-animation" style={{ 
+              borderRadius: "7%",
+              width: "inherit",
+              height: "inherit",
+            }} 
+            onMouseOver={() => {setHovered(true)}} onMouseOut={() => {setHovered(false)}}/>
+          </Box>
         </Grid>
         {aboutSections.map((section, index) => (
           <Grid item container xs={12} key={index}>
@@ -64,9 +80,9 @@ const AboutUs = () => {
 
 const aboutSections = [
   {
-    title: 'Empowering Music Education',
-    description: 'We connect students with skilled teachers, fostering a harmonious community of learning. Teachers can showcase their expertise, while students can find their ideal instructors.',
-    image: '/path/to/empowering-music-education-image.jpg',
+    title: 'Connecting the World Through Music',
+    description: 'Instrumental offers online lessons, breaking geographical barriers. Connect with teachers worldwide and explore diverse musical styles.',
+    image: '/path/to/connecting-world-image.jpg',
   },
   {
     title: "The Teacher's Corner",
@@ -92,11 +108,6 @@ const aboutSections = [
     title: 'Educational Resources',
     description: 'Explore our rich collection of educational resources, from articles to video tutorials, enhancing your learning journey.',
     image: '/path/to/educational-resources-image.jpg',
-  },
-  {
-    title: 'Connecting the World Through Music',
-    description: 'Instrumental offers online lessons, breaking geographical barriers. Connect with teachers worldwide and explore diverse musical styles.',
-    image: '/path/to/connecting-world-image.jpg',
   },
   {
     title: 'Instrumental Community',

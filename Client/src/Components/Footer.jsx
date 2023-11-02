@@ -31,7 +31,7 @@ const Footer = () => {
 
   return (
     <Paper 
-    sx={{ marginTop: 'calc(10% + 60px)', p: 2, pt: 5,
+    sx={{ marginTop: 'calc(5%)', p: 2, pt: 5,
     width: '100%',
     minWidth: "min-content",
     height: "min-content",
@@ -42,9 +42,9 @@ const Footer = () => {
     color: "white",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "end"
+    justifyContent: "end",
     }} component="footer" square>
-      <Container maxWidth="xl" 
+      <Container maxWidth="lg" 
       sx={{ 
         display: "flex", 
         flexDirection: { xs: "column", md: "row"},
@@ -123,7 +123,7 @@ const Footer = () => {
 
       </Container>
       <Divider variant="middle" sx={{ backgroundColor: "white", height: 2, opacity: .7, my:2 }}/>
-      <Container maxWidth="xl" 
+      <Container maxWidth="lg" 
       sx={{ display: "flex",
         flexDirection: { xs: "column", md: "row"},
         alignItems: "center",

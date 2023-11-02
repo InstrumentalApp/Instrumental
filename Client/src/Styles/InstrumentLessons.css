@@ -12,15 +12,14 @@
 .instrument-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-bottom: 2em;
-    gap: 1em;
+    gap: 2em;
 }
 
 .instrument-card {
-    width: 12em;
+    min-width: 12em;
     text-align: center;
-    margin: 1em;
 }
 
 .instrument-image {

@@ -159,8 +159,8 @@ const Register = () => {
 								sx={{
 									color: styles.colors.PRIMARY,
 									fontWeight: "bold",
-									opacity: .7
-								}}
+									opacity: .8
+								}} 
 							>
 								Already have an account? Sign in
 							</Link>

@@ -158,7 +158,7 @@ const Login = () => {
               <Link component={RouterLink} to={"/register"} underline="hover" variant="body2" 
                 sx={{ color: styles.colors.PRIMARY,
                   fontWeight: "bold",
-                  opacity: .7
+                  opacity: .8
                 }} 
               >
                 Register as a new user
