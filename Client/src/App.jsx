@@ -14,6 +14,9 @@ import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
 import useLocalStorage from './Hooks/useLocalStorage';
+import SuperUserNav from './Components/SuperUserNav';
+import CreateTeacher from './Components/CreateTeacher';
+import TeacherCreationSuccess from './Components/TeacherCreationSuccess';
 
 function App() {
 
@@ -40,7 +43,14 @@ function App() {
       justifyContent: "space-between"
     }}
     >
-      <NavBar scrollPosition={scrollTop}/>
+      <div style={{
+        width: "100%"
+      }}>
+      <NavBar scrollPosition={scrollTop} />
+      {credentials && Object.keys(credentials).length > 0 ? (
+          <SuperUserNav />
+        ) : null}
+      </div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />
@@ -57,7 +67,11 @@ function App() {
         <Route path="/account" element={<Account />} />
 
         {credentials && Object.keys(credentials).length > 0 ? (
+          <>
           <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+          <Route path="/admin/teachers/create" element={<CreateTeacher />} />
+          <Route path="/teacher_creation_success" element={<TeacherCreationSuccess />} />
+          </>
         ) : null}
       </Routes>
       <Footer/>

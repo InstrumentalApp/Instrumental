@@ -1,4 +1,4 @@
-import style from "../Styles/App";
+import styles from "../Styles/App";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -15,11 +15,12 @@ import MenuItem from "@mui/material/MenuItem";
 import useLocalStorage from '../Hooks/useLocalStorage';
 
 const navStyle = {
-  display: "flex", // Use Flexbox
-  alignItems: "center", // Vertically center items
-  backgroundColor: style.colors.PRIMARY, // Background color
+  display: 'flex',            // Use Flexbox
+  alignItems: 'center',      // Vertically center items
+  backgroundColor: styles.colors.PRIMARY,  // Background color
   width: "100%",
-  color: "white",
+  height: styles.spacing.HEADER_HEIGHT,
+  color: styles.colors.BLACK,
 };
 
 const NavButton = styled(Button)(() => ({
@@ -27,12 +28,14 @@ const NavButton = styled(Button)(() => ({
   fontSize: 16,
   paddingTop: 12,
   marginLeft: 15,
-  backgroundColor: style.colors.PRIMARY,
+  color: styles.colors.BLACK,
+  backgroundColor: styles.colors.PRIMARY,
+  height: styles.spacing.HEADER_HEIGHT,
   borderRadius: 0,
-  borderBottom: `5px solid ${style.colors.PRIMARY}`,
-  "&:hover": {
-    backgroundColor: style.colors.PRIMARY,
-    borderBottom: `5px solid ${style.colors.SECONDARY}`,
+  borderBottom: `5px solid ${styles.colors.PRIMARY}`,
+  '&:hover': {
+    backgroundColor: styles.colors.PRIMARY,
+    borderBottom: `5px solid ${styles.colors.SECONDARY}`
   },
 }));
 
