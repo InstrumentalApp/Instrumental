@@ -10,6 +10,8 @@ import NotFoundPage from './Components/NotFoundPage';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import HowItWorks from './Components/HowItWorks';
+import TeachWithUs from './Components/TeachWithUs';
 import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';

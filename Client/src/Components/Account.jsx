@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Calendar from "./Calendar";
 
 const Account = () => {
 
@@ -28,10 +29,11 @@ const Account = () => {
   // if student only
   return (
     <div>
-      <h2>Edit User Information:</h2>
+      {/* <h2>Edit User Information:</h2>
       <form onSubmit={handleSubmit}>
 
-      </form>
+      </form> */}
+      <Calendar />
     </div>
   )
 
