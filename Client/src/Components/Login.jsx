@@ -58,8 +58,8 @@ const Login = () => {
           borderRadius: "10px",
         }}
       >
-        <Typography variant='h5' sx={{ 
-					fontWeight: "bold", 
+        <Typography variant='h5' sx={{
+					fontWeight: "bold",
 					opacity: .8,
 					color: styles.colors.PRIMARY,
           pb: 4
@@ -111,7 +111,7 @@ const Login = () => {
                   opacity: 1,
                 }
               }}
-            /> 
+            />
             ) : (
             <VisibilityOffIcon
               onClick={() => setPasswordVisible(!passwordVisible)}
@@ -126,9 +126,9 @@ const Login = () => {
               }}
             />
           )}
-          <div className="flex-col-center" style={{ 
+          <div className="flex-col-center" style={{
             height: "15px",
-            justifyContent: "end", 
+            justifyContent: "end",
           }}
           >
             { errors.length == 0 ? (
@@ -157,11 +157,11 @@ const Login = () => {
           </Button>
           <Grid container direction="column" alignItems="center" pt={1}>
             <Grid item xs>
-              <Link href="#" underline="hover" variant="body2" 
+              <Link href="#" underline="hover" variant="body2"
                 sx={{ color: styles.colors.PRIMARY,
                   fontWeight: "bold",
                   opacity: .8
-                }} 
+                }}
               >
                 Forgot password?
               </Link>
@@ -171,7 +171,7 @@ const Login = () => {
                 sx={{ color: styles.colors.PRIMARY,
                   fontWeight: "bold",
                   opacity: .8
-                }} 
+                }}
               >
                 Register as a new user
               </Link>
