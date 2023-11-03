@@ -25,13 +25,17 @@ const InstrumentLessonsOffered = () => {
   const [loading, setLoading] = useState(true);
   const placeholders = Array.from({ length: 20 }, (_, i) => i + 1);
 
+  const sortInstrumentList = (instruments) => {
+    const withImage = instruments.filter(instrument => instrument.name.toLowerCase().replace(' ','') in instrumentImages).sort((a, b) => a.name.localeCompare(b.name))
+    const withoutImage = instruments.filter(instrument => !(instrument.name.toLowerCase().replace(' ','') in instrumentImages)).sort((a, b) => a.name.localeCompare(b.name))
+    return withImage.concat(withoutImage);
+  };
+
   const fetchInstrumentList = async () => {
     try {
       const result = await axios.get("/api/instrument/all");
-      const withImage = result.data.filter(instrument => instrument.name.toLowerCase().replace(' ','') in instrumentImages).sort((a, b) => a.name.localeCompare(b.name))
-      const withoutImage = result.data.filter(instrument => !(instrument.name.toLowerCase().replace(' ','') in instrumentImages)).sort((a, b) => a.name.localeCompare(b.name))
-      setInstrumentList(withImage.concat(withoutImage));
-      unfilteredList.current = instrumentList;
+      setInstrumentList(sortInstrumentList(result.data));
+      unfilteredList.current = result.data;
       setLoading(false);
     } catch (error) {
       // Handle error here (e.g., show an error message)
@@ -55,7 +59,7 @@ const InstrumentLessonsOffered = () => {
       if(instrument.family.toLowerCase().includes(searchInput.toLowerCase())) return true;
     }
     );
-    setInstrumentList(filteredOptions);
+    setInstrumentList(sortInstrumentList(filteredOptions));
   }, [searchInput]);
 
   // This will create the effect of highlighting current card
