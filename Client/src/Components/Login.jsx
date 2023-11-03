@@ -53,7 +53,7 @@ const Login = () => {
           flexDirection: 'column',
           alignItems: 'center',
           backgroundColor: "white",
-          width: "360px",
+          width: "350px",
           padding: "40px 20px",
           borderRadius: "10px",
         }}
@@ -62,19 +62,17 @@ const Login = () => {
 					fontWeight: "bold", 
 					opacity: .8,
 					color: styles.colors.PRIMARY,
-					mb: 3,
+          pb: 4
           }}
         >
           Sign into your account
         </Typography>
-        {
-          errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
-        }
         <Box component="form" onSubmit={handleSubmit}
           sx={{
             display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center"
+            flexDirection: "column",
+            justifyContent: "center",
+            width: "100%",
           }}>
           <TextField
             className="mb-3"
@@ -106,7 +104,7 @@ const Login = () => {
               onClick={() => setPasswordVisible(!passwordVisible)}
               sx={{
                 position: "absolute",
-                translate: "135px 89px 0",
+                translate: "270px -37px",
                 opacity: .5,
                 "&:hover": {
                   cursor: "pointer",
@@ -119,7 +117,7 @@ const Login = () => {
               onClick={() => setPasswordVisible(!passwordVisible)}
               sx={{
                 position: "absolute",
-                translate: "135px 89px 0",
+                translate: "270px -37px",
                 opacity: .5,
                 "&:hover": {
                   cursor: "pointer",
@@ -128,6 +126,20 @@ const Login = () => {
               }}
             />
           )}
+          <div className="flex-col-center" style={{ 
+            height: "15px",
+            justifyContent: "end", 
+          }}
+          >
+            { errors.length == 0 ? (
+              null
+            ) : (
+              <Typography variant='caption' className="errorStyle"
+              >
+                Invalid email and/or password. Please try again.
+              </Typography>
+            )}
+          </div>
           <Button
             type="submit"
             color='warning'
