@@ -3,460 +3,232 @@
         "InstrumentId": 1,
         "Name": "Acoustic Guitar",
         "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/acousticguitar.jpg"
+        "ImageUrl": "/client/assets/instrument-pictures/guitar.jpg"
     },
     {
         "InstrumentId": 2,
-        "Name": "Autoharp",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/autoharp.jpg"
-    },
-    {
-        "InstrumentId": 3,
         "Name": "Violin",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/violin.jpg"
     },
     {
-        "InstrumentId": 4,
+        "InstrumentId": 3,
         "Name": "Cello",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/cello.jpg"
     },
     {
-        "InstrumentId": 5,
+        "InstrumentId": 4,
         "Name": "Banjo",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/banjo.jpg"
     },
     {
-        "InstrumentId": 6,
+        "InstrumentId": 5,
         "Name": "Yamatogoto",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/yamatogoto.jpg"
     },
     {
-        "InstrumentId": 7,
-        "Name": "Tambura",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/tambura.jpg"
-    },
-    {
-        "InstrumentId": 8,
+        "InstrumentId": 6,
         "Name": "Vina",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/vina.jpg"
     },
     {
-        "InstrumentId": 9,
+        "InstrumentId": 7,
         "Name": "Sitar",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/sitar.jpg"
     },
     {
-        "InstrumentId": 10,
-        "Name": "Tar",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/tar.jpg"
-    },
-    {
-        "InstrumentId": 11,
-        "Name": "Biwa",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/biwa.jpg"
-    },
-    {
-        "InstrumentId": 12,
+        "InstrumentId": 8,
         "Name": "Dulcimer",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/dulcimer.jpg"
     },
     {
-        "InstrumentId": 13,
-        "Name": "Fiddle",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/fiddle.jpg"
-    },
-    {
-        "InstrumentId": 14,
-        "Name": "Kora",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/kora.jpg"
-    },
-    {
-        "InstrumentId": 15,
-        "Name": "Koto",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/koto.jpg"
-    },
-    {
-        "InstrumentId": 16,
-        "Name": "Lute",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/lute.jpg"
-    },
-    {
-        "InstrumentId": 17,
-        "Name": "Lyre",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/lyre.jpg"
-    },
-    {
-        "InstrumentId": 18,
+        "InstrumentId": 9,
         "Name": "Mandolin",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/mandolin.jpg"
     },
     {
-        "InstrumentId": 19,
-        "Name": "Setar",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/setar.jpg"
-    },
-    {
-        "InstrumentId": 20,
+        "InstrumentId": 10,
         "Name": "Ukulele",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/ukulele.jpg"
     },
     {
-        "InstrumentId": 21,
+        "InstrumentId": 11,
         "Name": "Shamisen",
         "Family": "String",
         "ImageUrl": "/client/assets/instrument-pictures/shamisen.jpg"
     },
     {
-        "InstrumentId": 22,
-        "Name": "Zither",
-        "Family": "String",
-        "ImageUrl": "/client/assets/instrument-pictures/zither.jpg"
-    },
-    {
-        "InstrumentId": 23,
+        "InstrumentId": 12,
         "Name": "Flute",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/flute.jpg"
     },
     {
-        "InstrumentId": 24,
+        "InstrumentId": 13,
         "Name": "Clarinet",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/clarinet.jpg"
     },
     {
-        "InstrumentId": 25,
+        "InstrumentId": 14,
         "Name": "Saxophone",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/saxophone.jpg"
     },
     {
-        "InstrumentId": 26,
+        "InstrumentId": 15,
         "Name": "Oboe",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/oboe.jpg"
     },
     {
-        "InstrumentId": 27,
+        "InstrumentId": 16,
         "Name": "Bassoon",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/bassoon.jpg"
     },
     {
-        "InstrumentId": 28,
-        "Name": "Contrabassoon",
-        "Family": "Woodwind",
-        "ImageUrl": "/client/assets/instrument-pictures/contrabassoon.jpg"
-    },
-    {
-        "InstrumentId": 29,
+        "InstrumentId": 17,
         "Name": "English Horn",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/englishhorn.jpg"
     },
     {
-        "InstrumentId": 30,
+        "InstrumentId": 18,
         "Name": "Piccolo",
         "Family": "Woodwind",
         "ImageUrl": "/client/assets/instrument-pictures/piccolo.jpg"
     },
     {
-        "InstrumentId": 31,
+        "InstrumentId": 19,
         "Name": "Piano",
         "Family": "Keyboard",
         "ImageUrl": "/client/assets/instrument-pictures/piano.jpg"
     },
     {
-        "InstrumentId": 32,
-        "Name": "Keyboard/Synthesizer",
-        "Family": "Keyboard",
-        "ImageUrl": "/client/assets/instrument-pictures/synthesizer.jpg"
-    },
-    {
-        "InstrumentId": 33,
+        "InstrumentId": 20,
         "Name": "Organ",
         "Family": "Keyboard",
         "ImageUrl": "/client/assets/instrument-pictures/organ.jpg"
     },
     {
-        "InstrumentId": 34,
+        "InstrumentId": 21,
         "Name": "Accordion",
         "Family": "Keyboard",
         "ImageUrl": "/client/assets/instrument-pictures/accordion.jpg"
     },
     {
-        "InstrumentId": 35,
-        "Name": "Celesta",
-        "Family": "Keyboard",
-        "ImageUrl": "/client/assets/instrument-pictures/celesta.jpg"
-    },
-    {
-        "InstrumentId": 36,
+        "InstrumentId": 22,
         "Name": "Harpsichord",
         "Family": "Keyboard",
         "ImageUrl": "/client/assets/instrument-pictures/harpsichord.jpg"
     },
     {
-        "InstrumentId": 37,
+        "InstrumentId": 23,
         "Name": "Theremin",
         "Family": "Electronic",
         "ImageUrl": "/client/assets/instrument-pictures/theremin.jpg"
     },
     {
-        "InstrumentId": 38,
+        "InstrumentId": 24,
         "Name": "Beatboxing",
         "Family": "Vocal",
-        "ImageUrl": "/client/assets/instrument-pictures/microphone.jpg"
+        "ImageUrl": "/client/assets/instrument-pictures/microphone.webp"
     },
     {
-        "InstrumentId":39,
+        "InstrumentId": 25,
         "Name": "Tuvan Throat Singing",
         "Family": "Vocal",
-        "ImageUrl": "/client/assets/instrument-pictures/microphone.jpg"
+        "ImageUrl": "/client/assets/instrument-pictures/microphone.webp"
     },
     {
-        "InstrumentId": 40,
+        "InstrumentId": 26,
         "Name": "Yodeling",
         "Family": "Vocal",
-        "ImageUrl": "/client/assets/instrument-pictures/microphone.jpg"
+        "ImageUrl": "/client/assets/instrument-pictures/microphone.webp"
     },
     {
-        "InstrumentId": 41,
+        "InstrumentId": 27,
         "Name": "Singing",
         "Family": "Vocal",
-        "ImageUrl": "/client/assets/instrument-pictures/microphone.jpg"
+        "ImageUrl": "/client/assets/instrument-pictures/microphone.webp"
     },
     {
-        "InstrumentId": 42,
-        "Name": "Chimes",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/chimes.jpg"
-    },
-    {
-        "InstrumentId": 43,
+        "InstrumentId": 28,
         "Name": "Drum Kit",
         "Family": "Percussion",
         "ImageUrl": "/client/assets/instrument-pictures/drum.jpg"
     },
     {
-        "InstrumentId": 44,
-        "Name": "Snare Drum",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/snaredrum.jpg"
-    },
-    {
-        "InstrumentId": 45,
-        "Name": "Bass Drum",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/bassdrum.jpg"
-    },
-    {
-        "InstrumentId": 46,
-        "Name": "Djembe",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/djembe.jpg"
-    },
-    {
-        "InstrumentId": 47,
+        "InstrumentId": 29,
         "Name": "Marimba",
         "Family": "Percussion",
         "ImageUrl": "/client/assets/instrument-pictures/marimba.jpg"
     },
     {
-        "InstrumentId": 48,
-        "Name": "Xylophone",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/xylophone.jpg"
-    },
-    {
-        "InstrumentId": 49,
+        "InstrumentId": 30,
         "Name": "Steel Drum",
         "Family": "Percussion",
         "ImageUrl": "/client/assets/instrument-pictures/steeldrum.jpg"
     },
     {
-        "InstrumentId": 50,
-        "Name": "Taiko Drum",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/taiko.jpg"
-    },
-    {
-        "InstrumentId": 51,
-        "Name": "Bodhrán",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/bodhran.jpg"
-    },
-    {
-        "InstrumentId": 52,
-        "Name": "Congas",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/congas.jpg"
-    },
-    {
-        "InstrumentId": 53,
-        "Name": "Cymbals",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/cymbals.jpg"
-    },
-    {
-        "InstrumentId": 54,
-        "Name": "Da-daiko",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/dadaiko.jpg"
-    },
-    {
-        "InstrumentId": 55,
-        "Name": "Glockenspiel",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/glockenspiel.jpg"
-    },
-    {
-        "InstrumentId": 56,
-        "Name": "Gong",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/gong.jpg"
-    },
-    {
-        "InstrumentId": 57,
-        "Name": "Kettle Drum",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/kettledrum.jpg"
-    },
-    {
-        "InstrumentId": 58,
-        "Name": "Maracas",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/maracas.jpg"
-    },
-    {
-        "InstrumentId": 59,
-        "Name": "Marimba",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/marimba.jpg"
-    },
-    {
-        "InstrumentId": 60,
-        "Name": "Mbira",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/mbira.jpg"
-    },
-    {
-        "InstrumentId": 61,
-        "Name": "Metallophone",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/metallophone.jpg"
-    },
-    {
-        "InstrumentId": 62,
-        "Name": "Atumpan",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/atumpan.jpg"
-    },
-    {
-        "InstrumentId": 63,
-        "Name": "Bells",
-        "Family": "Percussion",
-        "ImageUrl": "/client/assets/instrument-pictures/bells.jpg"
-    },
-    {
-        "InstrumentId": 64,
-        "Name": "Claves",
-        "Family": "Perscussion",
-        "ImageUrl": "/client/assets/instrument-pictures/claves.jpg"
-    },
-    {
-        "InstrumentId": 65,
+        "InstrumentId": 31,
         "Name": "Tuba",
         "Family": "Brass",
         "ImageUrl": "/client/assets/instrument-pictures/tuba.jpg"
     },
     {
-        "InstrumentId": 66,
+        "InstrumentId": 32,
         "Name": "Trumpet",
         "Family": "Brass",
         "ImageUrl": "/client/assets/instrument-pictures/trumpet.jpg"
     },
     {
-        "InstrumentId": 67,
-        "Name": "Cornet",
-        "Family": "Brass",
-        "ImageUrl": "/client/assets/instrument-pictures/cornet.jpg"
-    },
-    {
-        "InstrumentId": 68,
+        "InstrumentId": 33,
         "Name": "Trombone",
         "Family": "Brass",
         "ImageUrl": "/client/assets/instrument-pictures/trombone.jpg"
     },
     {
-        "InstrumentId": 69,
+        "InstrumentId": 34,
         "Name": "French Horn",
         "Family": "Brass",
         "ImageUrl": "/client/assets/instrument-pictures/frenchhorn.jpg"
     },
     {
-        "InstrumentId": 70,
+        "InstrumentId": 35,
         "Name": "Bagpipe",
         "Family": "Wind",
         "ImageUrl": "/client/assets/instrument-pictures/bagpipe.jpg"
     },
     {
-        "InstrumentId": 71,
-        "Name": "Concertina",
-        "Family": "Wind",
-        "ImageUrl": "/client/assets/instrument-pictures/concertina.jpg"
-    },
-    {
-        "InstrumentId": 72,
+        "InstrumentId": 36,
         "Name": "Harmonica",
         "Family": "Wind",
         "ImageUrl": "/client/assets/instrument-pictures/harmonica.jpg"
     },
     {
-        "InstrumentId": 73,
-        "Name": "Nohkan",
-        "Family": "Wind",
-        "ImageUrl": "/client/assets/instrument-pictures/nohkan.jpg"
-    },
-    {
-        "InstrumentId": 74,
+        "InstrumentId": 37,
         "Name": "Recorder",
         "Family": "Wind",
         "ImageUrl": "/client/assets/instrument-pictures/recorder.jpg"
     },
     {
-        "InstrumentId": 75,
+        "InstrumentId": 38,
         "Name": "Shakuhachi",
         "Family": "Wind",
         "ImageUrl": "/client/assets/instrument-pictures/shakuhachi.jpg"
     },
     {
-        "InstrumentId": 76,
-        "Name": "Venu",
-        "Family": "Wind",
-        "ImageUrl": "/client/assets/instrument-pictures/venu.jpg"
-    },
-    {
-        "InstrumentId": 77,
+        "InstrumentId": 39,
         "Name": "Didgeridoo",
         "Family": "Wind",
         "ImageUrl": "/client/assets/instrument-pictures/didgeridoo.jpg"

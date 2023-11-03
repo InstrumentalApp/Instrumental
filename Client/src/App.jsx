@@ -14,6 +14,9 @@ import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
 import useLocalStorage from './Hooks/useLocalStorage';
+import SuperUserNav from './Components/SuperUserNav';
+import CreateTeacher from './Components/CreateTeacher';
+import TeacherCreationSuccess from './Components/TeacherCreationSuccess';
 
 function App() {
 
@@ -38,15 +41,16 @@ function App() {
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
-    }}>
+    }}
+    >
+      <div style={{
+        width: "100%"
+      }}>
       <NavBar scrollPosition={scrollTop} />
-      <Outlet />
-      <Footer />
-    </div>
-  );
-
-  return (
-    <>
+      {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
+          <SuperUserNav />
+        ) : null}
+      </div>
       <Routes>
         <Route element={<PageLayout />}>
           <Route path="/" element={<Navigate to="/instrumental" />} />
@@ -62,8 +66,12 @@ function App() {
           in the Navbar component depending on if a user is currently logged in.
           */}
           <Route path="/instrumental/account" element={<Account />} />
-          {credentials && Object.keys(credentials).length > 0 ? (
+          {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
+          <>
             <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+          <Route path="/admin/teachers/create" element={<CreateTeacher />} />
+          <Route path="/teacher_creation_success" element={<TeacherCreationSuccess />} />
+          </>
           ) : null}
         </Route>
         <Route path="*" element={<NotFoundPage />} />
