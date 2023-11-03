@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styles from "../Styles/App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../Assets/Logos/InstrumentalLogo.svg";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -50,7 +50,11 @@ const pages = [
   ['How it works', '/instrumental/how-it-works'], 
   ['Teach with us', '/instrumental/teach-with-us'], 
   ['Contact', '/instrumental/contact']];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = [
+  ['Profile', '/instrumental/profile'], 
+  ['Account', '/instrumental/account'], 
+  ['Dashboard', '/instrumental/dashboard']
+];
 
 const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
@@ -218,7 +222,9 @@ const NavBar = (props) => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" >{setting}</Typography>
+                    <Link to={setting[1]} style={{ textDecoration: 'none', color: styles.colors.BLACK }}>
+                      <Typography textAlign="center" >{setting[0]}</Typography>
+                    </Link>
                   </MenuItem>
 
                 ))}
