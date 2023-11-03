@@ -113,6 +113,7 @@ const AboutUs = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          width: { xs: '99%', lg: 'inherit'},
         }}>
           <Grid container={true} spacing={1} xs={12} sx={{ display: 'flex',
             justifyContent: 'center',
