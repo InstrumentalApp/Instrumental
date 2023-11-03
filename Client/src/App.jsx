@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import './Styles/App/App.css'
 import style from "./Styles/App";
-import axios from 'axios';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import LandingPage from './Components/LandingPage';
 import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
+import NotFoundPage from './Components/NotFoundPage';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
@@ -32,36 +32,43 @@ function App() {
   const [scrollTop, setScrollTop] = useState(0);
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
-  return (
+  const PageLayout = () => (
     <div className='flex-col-center' style={{
       backgroundColor: style.colors.TERTIARY,
       minHeight:"100vh",
       height: "fit-content",
       justifyContent: "space-between"
-    }}
-    >
-      <NavBar scrollPosition={scrollTop}/>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/instruments" element={<InstrumentLessonsOffered />} />
-        <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
-        <Route path="/bookingsuccess" element={<LessonBookingSuccess />} />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
-        {/*
-        Implement logic to allow access to this route when a user is logged in.
-        We would also need to conditionally render a Sign In or View Account button
-        in the Navbar component depending on if a user is currently logged in.
-        */}
-        <Route path="/account" element={<Account />} />
-
-        {credentials && Object.keys(credentials).length > 0 ? (
-          <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
-        ) : null}
-      </Routes>
-      <Footer/>
+    }}>
+      <NavBar scrollPosition={scrollTop} />
+      <Outlet />
+      <Footer />
     </div>
+  );
+
+  return (
+    <>
+      <Routes>
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<Navigate to="/instrumental" />} />
+          <Route path="/instrumental" element={<LandingPage />} />
+          <Route path="/instrumental/instruments" element={<InstrumentLessonsOffered />} />
+          <Route path="/instrumental/instruments/:instrumentId" element={<InstrumentDetail />} />
+          <Route path="/instrumental/bookingsuccess" element={<LessonBookingSuccess />} />
+          <Route path="/instrumental/sign-in" element={<Login />} />
+          <Route path="/instrumental/register" element={<Register />} />
+          {/*
+          Implement logic to allow access to this route when a user is logged in.
+          We would also need to conditionally render a Sign In or View Account button
+          in the Navbar component depending on if a user is currently logged in.
+          */}
+          <Route path="/instrumental/account" element={<Account />} />
+          {credentials && Object.keys(credentials).length > 0 ? (
+            <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+          ) : null}
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   )
 }
 
