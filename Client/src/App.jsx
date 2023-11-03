@@ -47,7 +47,7 @@ function App() {
         width: "100%"
       }}>
       <NavBar scrollPosition={scrollTop} />
-      {credentials && Object.keys(credentials).length > 0 ? (
+      {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
           <SuperUserNav />
         ) : null}
       </div>
@@ -66,7 +66,7 @@ function App() {
         */}
         <Route path="/account" element={<Account />} />
 
-        {credentials && Object.keys(credentials).length > 0 ? (
+        {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
           <>
           <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
           <Route path="/admin/teachers/create" element={<CreateTeacher />} />
