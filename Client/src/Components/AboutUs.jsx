@@ -103,10 +103,14 @@ const AboutUs = () => {
             onMouseOver={() => {setHovered(true)}} onMouseOut={() => {setHovered(false)}}/>
           </Box>
         </Grid>
-        <Grid container={true} xs={12} column={1} sx={{ border: '3px solid white', 
-          borderRadius: "30px",
+        <Grid container={true} xs={12} column={1} sx={{ border: '4px solid white', 
+          borderRadius: "40px",
           backgroundColor: "#ffeddb",
           my: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: { xs: '99vw', lg: '90vw'},
         }}>
           <Grid container={true} spacing={1} xs={12} sx={{ display: 'flex',
             justifyContent: 'center',
