@@ -10,6 +10,8 @@ import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import HowItWorks from './Components/HowItWorks';
+import TeachWithUs from './Components/TeachWithUs';
 import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
@@ -54,6 +56,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/teach-with-us" element={<TeachWithUs />} />
         <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
         <Route path="/bookingsuccess" element={<LessonBookingSuccess />} />
         <Route path="/sign-in" element={<Login />} />
