@@ -63,12 +63,13 @@ const InstrumentLessonsOffered = () => {
     <Container maxWidth="lg" className="instrument-lessons-offered" sx={{ flexGrow: 1 }}>
       <div className="d-flex flex-column align-items-center">
         <h2 className="heading" style={{ fontFamily: styles.fonts.HEADER_FONT }}>Instruments Lessons Offered</h2>
-        <SearchIcon sx={{ position: "relative", translate: "-123px 2px", opacity: .5 }}/>
+        <SearchIcon sx={{ position: "relative", translate: "-123px 2px", color: styles.colors.PRIMARY, opacity: .8 }}/>
         <input type="search"
           onChange={(e) => handleSearchInput(e)}
           style={{
             fontSize: "16px",
             outline: "none",
+            color: styles.colors.PRIMARY,
             padding: "5px 10px 5px 45px",
             marginTop: "-30px",
             marginBottom: "25px",
@@ -120,7 +121,7 @@ const InstrumentLessonsOffered = () => {
             </CardContent>
             <CardActions className="d-flex justify-content-center" sx={{ backgroundColor: styles.colors.PRIMARY, pb:3 }}>
               <HoverButton
-                link={`/instruments/${instrument.instrumentId}`}
+                link={`/instrumental/instruments/${instrument.instrumentId}`}
                 backgroundColor={styles.colors.SECONDARY}
                 color={styles.colors.BLACK}
                 fontSize="12px"

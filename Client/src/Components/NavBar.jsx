@@ -45,11 +45,11 @@ const NavButton = styled(Button)(() => ({
 }));
 
 const pages = [
-  ['Lessons', '/instruments'], 
-  // ['Rentals', '/rentals'], 
-  ['How it works', '/how-it-works'], 
-  ['Teach with us', '/teach-with-us'], 
-  ['Contact', '/contact']];
+  ['Lessons', '/instrumental/instruments'], 
+  // ['Rentals', '/instrumental/rentals'], 
+  ['How it works', '/instrumental/how-it-works'], 
+  ['Teach with us', '/instrumental/teach-with-us'], 
+  ['Contact', '/instrumental/contact']];
 const settings = ['Profile', 'Account', 'Dashboard'];
 
 const NavBar = (props) => {
@@ -251,11 +251,11 @@ const NavBar = (props) => {
                 >
                   <nobr>Sign Out</nobr>
                 </Button>
-              ) : window.location.pathname == "/sign-in" || window.location.pathname == "/register" ? (
+              ) : window.location.pathname == "/instrumental/sign-in" || window.location.pathname == "/instrumental/register" ? (
                 <></>
               ) : (
                 <HoverButton
-                  link="/sign-in"
+                  link="/instrumental/sign-in"
                   onClick={ () => {
                     handleCloseNavMenu();
                   }}
