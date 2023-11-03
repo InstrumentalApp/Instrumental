@@ -19,13 +19,16 @@ import CreateIcon from '@mui/icons-material/Create';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import ShieldIcon from '@mui/icons-material/Shield';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import Skeleton from '@mui/material/Skeleton';
 
 const AboutUs = () => {
   const [hovered, setHovered] = useState(false);
   const [selectedSection, setSelectedSection] = useState("Connection");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.getElementById("Connection").style.translate = hoverStyle.translate;
+    document.getElementById(selectedSection).style.translate = hoverStyle.translate;
+    setLoading(false);
   }, []);
 
   // This will create the effect of highlighting current card
@@ -77,7 +80,7 @@ const AboutUs = () => {
               fontSize: { xs: 26, md: 37 },
               }}
             >
-              Affordable music education with top-rated, accessible instructors
+              Affordable music education with top-rated, accessible instructors {loading}
             </Typography>
             <Typography variant="h6" width={{ xs: "100%" , sm: "82%" }} sx={{ 
               my: { sm: 0, md: 3 }, 
@@ -110,12 +113,10 @@ const AboutUs = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: { xs: '99vw', lg: '90vw'},
         }}>
           <Grid container={true} spacing={1} xs={12} sx={{ display: 'flex',
             justifyContent: 'center',
-            width: {lg: '100%', xs: '80%'},
-            gap: 3,
+            gap: 2,
             }}
           >
             {aboutSections.map((section, index) => (
@@ -139,17 +140,17 @@ const AboutUs = () => {
                   transition: "translate .2s, box-shadow .25s, border .3s",
                 }}>
                   { section.tagline === "Connection" ?
-                    <PeopleIcon sx={{ fontSize: 50 }} /> :
+                    <PeopleIcon sx={{ fontSize: 35 }} /> :
                     section.tagline === "Teachers" ?
-                    <MenuBookIcon sx={{ fontSize: 50 }} /> :
+                    <MenuBookIcon sx={{ fontSize: 35 }} /> :
                     section.tagline === "Students" ?
-                    <CreateIcon sx={{ fontSize: 50 }} /> :
+                    <CreateIcon sx={{ fontSize: 35 }} /> :
                     section.tagline === "Convenience" ?
-                    <ScheduleIcon sx={{ fontSize: 50 }} /> :
+                    <ScheduleIcon sx={{ fontSize: 35 }} /> :
                     section.tagline === "Security" ?
-                    <ShieldIcon sx={{ fontSize: 50 }} /> :
+                    <ShieldIcon sx={{ fontSize: 35 }} /> :
                     section.tagline === "Resources" ?
-                    <SettingsSuggestIcon sx={{ fontSize: 50 }} />
+                    <SettingsSuggestIcon sx={{ fontSize: 35 }} />
                     : null
                   }
                   <Typography>{section.tagline}</Typography>

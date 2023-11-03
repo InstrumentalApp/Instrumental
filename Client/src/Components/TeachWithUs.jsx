@@ -27,7 +27,7 @@ const TeachWithUs = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <HoverButton link="/teacher-signup" margin="2rem 0 0 0">Get started!</HoverButton>
+          <HoverButton link="instrumental/teacher-signup" margin="2rem 0 0 0">Get started!</HoverButton>
         </Grid>
       </Grid>
     </Container>

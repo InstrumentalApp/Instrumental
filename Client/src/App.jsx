@@ -59,6 +59,8 @@ function App() {
         <Route path="/instrumental/instruments" element={<InstrumentLessonsOffered />} />
         <Route path="/instrumental/instruments/:instrumentId" element={<InstrumentDetail />} />
         <Route path="/instrumental/bookingsuccess" element={<LessonBookingSuccess />} />
+        <Route path="/instrumental/how-it-works" element={<HowItWorks />} />
+        <Route path="/instrumental/teach-with-us" element={<TeachWithUs />} />
         <Route path="/instrumental/sign-in" element={<Login />} />
         <Route path="/instrumental/register" element={<Register />} />
         {/*
