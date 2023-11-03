@@ -13,21 +13,14 @@ import InstrumentDetail from './Components/InstrumentDetail';
 import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
-import useApi from './Hooks/useApi';
 import useLocalStorage from './Hooks/useLocalStorage';
+import SuperUserNav from './Components/SuperUserNav';
+import CreateTeacher from './Components/CreateTeacher';
+import TeacherCreationSuccess from './Components/TeacherCreationSuccess';
 
 function App() {
 
-  const [hello, setHello] = useState("");
-
-  const fetchData = async () => {
-    const result = handleSubmit("/api/auth/hello", {}, "GET")
-    setHello(result.data);
-  }
-
   useEffect(() => {
-    fetchData()
-    console.log(hello)
     const handleScroll = () => {
       setScrollTop(window.scrollY);
     };
@@ -40,7 +33,6 @@ function App() {
   }, [])
 
   const [scrollTop, setScrollTop] = useState(0);
-  const { handleSubmit, data } = useApi();
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
 
   return (
@@ -51,7 +43,14 @@ function App() {
       justifyContent: "space-between"
     }}
     >
-      <NavBar scrollPosition={scrollTop}/>
+      <div style={{
+        width: "100%"
+      }}>
+      <NavBar scrollPosition={scrollTop} />
+      {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
+          <SuperUserNav />
+        ) : null}
+      </div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruments" element={<InstrumentLessonsOffered />} />
@@ -60,15 +59,19 @@ function App() {
         <Route path="/sign-in" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 
+        {/*
         Implement logic to allow access to this route when a user is logged in.
         We would also need to conditionally render a Sign In or View Account button
         in the Navbar component depending on if a user is currently logged in.
         */}
         <Route path="/account" element={<Account />} />
 
-        {credentials && Object.keys(credentials).length > 0 ? (
+        {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
+          <>
           <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
+          <Route path="/admin/teachers/create" element={<CreateTeacher />} />
+          <Route path="/teacher_creation_success" element={<TeacherCreationSuccess />} />
+          </>
         ) : null}
       </Routes>
       <Footer/>

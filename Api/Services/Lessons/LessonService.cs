@@ -11,6 +11,7 @@ using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
@@ -30,18 +31,19 @@ public class LessonService : ILessonService
         return allLessons;
     }
 
-    public async Task<LessonDto?> OneLessonAsync(int lessonId)
+    public async Task<LessonDto?> OneLessonAsync(int lessonId, int userId)
     {
         // Fetch the lesson and its related entities in one query
         Lesson? oneLesson = await _context.Lessons
             .Include(l => l.Teacher)
             .Include(l => l.Student)
             .Include(l => l.Instrument)
+            .Where(l => l.TeacherId == userId || l.StudentId == userId)
             .FirstOrDefaultAsync(l => l.LessonId == lessonId);
 
         if (oneLesson == null)
         {
-            throw new Exception("Lesson not found in DB");
+            return null;
         }
 
         //TODO: handle null warnings.
@@ -54,35 +56,54 @@ public class LessonService : ILessonService
     }
 
 
-  // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
+    // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
 
     public async Task<LessonDto?> CreateLessonAsync(Lesson lesson)
     {
-      _context.Lessons.Add(lesson);
+        User? teacher = await _context.Users.FirstOrDefaultAsync(u => u.UserId == lesson.TeacherId);
+        User? student = await _context.Users.FirstOrDefaultAsync(u => u.UserId == lesson.StudentId);
+        Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i => i.InstrumentId == lesson.InstrumentId);
+        if (teacher == null || student == null || instrument == null)
+        {
+            return null;
+        }
+        _context.Lessons.Add(lesson);
+        int creationResult = await _context.SaveChangesAsync();
 
-      int creationResult = await _context.SaveChangesAsync();
-      User? teacher = await _context.Users.FirstOrDefaultAsync(u=>u.UserId == lesson.TeacherId);
-      User? student = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==lesson.StudentId);
-      Instrument? instrument = await _context.Instruments.FirstOrDefaultAsync(i=>i.InstrumentId ==lesson.InstrumentId);
-
-      if(teacher == null || student == null || instrument == null)
-      {
-         return null;
-      }
-
-      UserDto? lessonTeacherDto = new(teacher);
-      UserDto? lessonStudentDto = new(student);
-      InstrumentDto? lessonInstrumentDto = new(instrument);
-      LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
-
-      if(creationResult > 0)
-      {
-        return createdLessonDto;
-      }
-      else
-      {
-        throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
-      }
+        UserDto lessonTeacherDto = new(teacher);
+        UserDto lessonStudentDto = new(student);
+        InstrumentDto lessonInstrumentDto = new(instrument);
+        LessonDto createdLessonDto = new LessonDto(lesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
+        if(creationResult > 0)
+        {
+            return createdLessonDto;
+        }
+        else
+        {
+            return null;
+            throw new Exception("CreateLessonAsync - Failed to Persist lesson object to DB");
+        }
     }
 
+    public async Task<List<LessonWithStartEnd>> AllLessonsForUserIdAsync(int userId)
+    {
+      try
+      {
+            List<LessonWithStartEnd> lessonsForUser = await _context.Lessons
+                .Include(l => l.Instrument)
+                .Include(l => l.Teacher)
+                .Include(l => l.Student)
+                .Where(l => l.TeacherId == userId)
+                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .ToListAsync();
+
+        return lessonsForUser;
+      }
+      catch (Exception e)
+      {
+            Console.WriteLine(e.Message);
+            return new();
+      }
+
+    }
 }

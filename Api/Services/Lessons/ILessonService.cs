@@ -7,6 +7,7 @@ namespace TeamFive.Services.Lessons;
 public interface ILessonService
 {
     Task<List<Lesson>> AllLessons();
-    Task<LessonDto?> OneLessonAsync(int lessonId);
+    Task<LessonDto?> OneLessonAsync(int lessonId, int userId);
     Task<LessonDto?> CreateLessonAsync(Lesson lesson);
+    Task<List<LessonWithStartEnd>> AllLessonsForUserIdAsync(int userId);
 }

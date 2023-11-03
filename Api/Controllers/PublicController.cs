@@ -4,10 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace TeamFive.Controllers;
 public class PublicController : Controller
 {
-    //This controller's only purpose is to serve up the react app in Production.
-    //Nothing more should be added here, except maybe a catch-all route.
+
+    private readonly IWebHostEnvironment _hostingEnvironment;
+
+    public PublicController(IWebHostEnvironment hostingEnvironment)
+    {
+        _hostingEnvironment = hostingEnvironment;
+    }
+	public IActionResult Production()
+	{
+		var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "index.html");
+        return PhysicalFile(filePath, "text/html");
+	}
+
 	public ViewResult Index()
 	{
-		return View();
+        return View();
 	}
 }
