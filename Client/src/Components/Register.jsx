@@ -116,8 +116,8 @@ const Register = () => {
 						value={registerUser.email}
 						onChange={handleChange}
 						error={errors.includes(emailError)  ? true : false}
-						helperText={errors.includes(emailError) 
-							? "Please enter a valid email" 
+						helperText={errors.includes(emailError)
+							? "Please enter a valid email"
 							: null
 						}
 					/>
@@ -132,7 +132,7 @@ const Register = () => {
 						placeholder="Create a password"
 						value={registerUser.password}
 						onChange={handleChange}
-						error={errors.includes(passwordLengthError) || errors.includes(passwordError) 
+						error={errors.includes(passwordLengthError) || errors.includes(passwordError)
 							? true
 							: false}
 						helperText={errors.includes(passwordError)
@@ -164,8 +164,8 @@ const Register = () => {
 						value={registerUser.confirm}
 						onChange={handleChange}
 						error={errors.includes(confirmPasswordError)  ? true : false}
-						helperText={errors.includes(confirmPasswordError) 
-							? "Passwords do not match" 
+						helperText={errors.includes(confirmPasswordError)
+							? "Passwords do not match"
 							: null
 						}
 					/>
@@ -186,12 +186,12 @@ const Register = () => {
 					</Button>
 					<Grid container direction="column" alignItems="center" pt={1}>
 						<Grid item xs>
-							<Link component={RouterLink} to={"/sign-in"} underline="hover" variant="body2"
+							<Link component={RouterLink} to={"/instrumental/sign-in"} underline="hover" variant="body2"
 								sx={{
 									color: styles.colors.PRIMARY,
 									fontWeight: "bold",
 									opacity: .8
-								}} 
+								}}
 							>
 								Already have an account? Sign in
 							</Link>
