@@ -12,21 +12,26 @@ import styles from "../Styles/App";
 import Skeleton from '@mui/material/Skeleton';
 import SearchIcon from '@mui/icons-material/Search';
 import instrumentImages from "../Assets/Instruments";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const InstrumentLessonsOffered = () => {
   // API Call to Back-End When Data Gets Updated
 
   const [instrumentList, setInstrumentList] = useState([]);
+  const [seeAll, setSeeAll] = useState(false); // This will be used to display all instruments when user clicks on "See All"
   const unfilteredList = useRef([]);
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
-  const placeholders = Array.from({ length: 18 }, (_, i) => i + 1);
+  const placeholders = Array.from({ length: 20 }, (_, i) => i + 1);
 
   const fetchInstrumentList = async () => {
     try {
       const result = await axios.get("/api/instrument/all");
-      setInstrumentList(result.data);
-      unfilteredList.current = result.data;
+      const withImage = result.data.filter(instrument => instrument.name.toLowerCase().replace(' ','') in instrumentImages).sort((a, b) => a.name.localeCompare(b.name))
+      const withoutImage = result.data.filter(instrument => !(instrument.name.toLowerCase().replace(' ','') in instrumentImages)).sort((a, b) => a.name.localeCompare(b.name))
+      setInstrumentList(withImage.concat(withoutImage));
+      unfilteredList.current = instrumentList;
       setLoading(false);
     } catch (error) {
       // Handle error here (e.g., show an error message)
@@ -45,26 +50,36 @@ const InstrumentLessonsOffered = () => {
 
   // Sets state of displayed instrument list using user's search input and filtering through original, unfiltered list
   useEffect(() => {
-    const filteredOptions = unfilteredList.current.filter((instrument) =>
-      instrument.name.toLowerCase().includes(searchInput.toLowerCase())
+    const filteredOptions = unfilteredList.current.filter((instrument) => {
+      if(instrument.name.toLowerCase().includes(searchInput.toLowerCase())) return true; 
+      if(instrument.family.toLowerCase().includes(searchInput.toLowerCase())) return true;
+    }
     );
     setInstrumentList(filteredOptions);
   }, [searchInput]);
 
-  // const importAll = (r) => {
-  //   let images = {};
-  //   r.keys().map(item=> { images[item.replace('./', '')] = r(item); });
-  //   return images;
-  // }
+  // This will create the effect of highlighting current card
+  const hoverStyle = {
+    translate: "-5px -5px 0",
+    boxShadow: `5px 5px 0 ${styles.colors.PRIMARY}`, 
+  };
+  
+  const handleMouseOver = (e) => {
+    e.currentTarget.style.translate = hoverStyle.translate;
+    e.currentTarget.style.boxShadow = hoverStyle.boxShadow;
+  }
 
-  // const images = importAll(require.context('../Assets/Instruments', false, /\.(png|jpe?g|svg)$/));
-
+  const handleMouseOut = (e) => {
+    e.currentTarget.style.translate = "0 0 0";
+    e.currentTarget.style.boxShadow = "none";
+  }
   return (
     <Container maxWidth="lg" className="instrument-lessons-offered" sx={{ flexGrow: 1 }}>
-      <div className="d-flex flex-column align-items-center">
+      <div className="flex-col-center">
         <h2 className="heading" style={{ fontFamily: styles.fonts.HEADER_FONT }}>Instruments Lessons Offered</h2>
         <SearchIcon sx={{ position: "relative", translate: "-123px 2px", color: styles.colors.PRIMARY, opacity: .8 }}/>
         <input type="search"
+          id="search-bar"
           onChange={(e) => handleSearchInput(e)}
           style={{
             fontSize: "16px",
@@ -82,7 +97,7 @@ const InstrumentLessonsOffered = () => {
       </div>
       <div className="instrument-cards">
         {loading ?
-        placeholders.map((placeholder, index) => (
+        placeholders.map((_, index) => (
           <Card key={index} elevation={0} className="instrument-card" sx={{
           maxWidth: 345,
           backgroundColor: styles.colors.SECONDARY,
@@ -100,26 +115,33 @@ const InstrumentLessonsOffered = () => {
             </CardActions>
           </Card>
         )) :
-        instrumentList.map((instrument, index) => (
-          <Card key={index} elevation={0} className="instrument-card" sx={{
+        instrumentList.map((instrument) => (
+          <Card key={instrument.instrumentId} elevation={0} className="instrument-card" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} sx={{
           maxWidth: 345,
           border: `3px solid white`,
           borderRadius: "10px",
+          transition: "translate .2s, box-shadow .25s",
+          height: 'fit-content',
+          display: !(instrument.name.toLowerCase().replace(' ','') in instrumentImages) && !seeAll ? 'none' : '',
           }}>
-            <CardMedia
-            sx={{ height: 100, p:10, m: 2 }}
-            image={instrumentImages[instrument.name.replace(' ','').toLowerCase()]}
-            title={instrument.name}
-            />
+            {instrument.name.toLowerCase().replace(' ','') in instrumentImages ? (
+              <CardMedia
+              sx={{ height: 100, p:10, m: 2 }}
+              image={instrumentImages[instrument.name.replace(' ','').toLowerCase()]}
+              title={instrument.name}
+              /> 
+            ) : (
+              null
+            )}
             <CardContent sx={{ color: "white", backgroundColor: styles.colors.PRIMARY }}>
-              <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
+              <Typography gutterBottom variant="body1" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
                 {instrument.name}
               </Typography>
-              <Typography variant="body2" sx={{ opacity: .8 }}>
+              <Typography variant="caption" sx={{ opacity: .8 }}>
                 {instrument.family}
               </Typography>
             </CardContent>
-            <CardActions className="d-flex justify-content-center" sx={{ backgroundColor: styles.colors.PRIMARY, pb:3 }}>
+            <CardActions className="d-flex justify-content-center" sx={{ backgroundColor: styles.colors.PRIMARY, mt: -1, pb:3 }}>
               <HoverButton
                 link={`/instrumental/instruments/${instrument.instrumentId}`}
                 backgroundColor={styles.colors.SECONDARY}
@@ -132,6 +154,27 @@ const InstrumentLessonsOffered = () => {
             </CardActions>
           </Card>
         ))}
+      </div>
+      <div className="flex-col-center">
+        { seeAll ? (
+          <HoverButton backgroundColor={styles.colors.ACTION} 
+            padding={'5px 25px'}
+            onClick={() => setSeeAll(!seeAll)}>
+            <Typography variant='body1' sx={{ fontSize: { xs: 13, md: 15 } }}>
+              Show less
+              <ExpandLessIcon sx={{ ml: .5, mr: -1, fontSize: { xs: 16, md: 25 } }}/>
+            </Typography>
+          </HoverButton>
+        ) : (
+          <HoverButton backgroundColor={styles.colors.ACTION} 
+            padding={'5px 25px'}
+            onClick={() => setSeeAll(!seeAll)}>
+            <Typography variant='body1' sx={{ fontSize: { xs: 13, md: 15 } }}>
+              Show more
+              <ExpandMoreIcon sx={{ ml: .5, mr: -1, fontSize: { xs: 16, md: 25 } }}/>
+            </Typography>
+          </HoverButton>
+        )}
       </div>
     </Container>
   );
