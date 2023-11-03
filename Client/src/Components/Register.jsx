@@ -43,6 +43,11 @@ const Register = () => {
 		}
 	};
 
+	const emailError = "The Email field is not a valid e-mail address.";
+	const passwordError = "Your password must include at least 1 of each of the following: Uppercase letter, lowercase letter, number, and special character";
+	const passwordLengthError = "The field Password must be a string or array type with a minimum length of '8'.";
+	const confirmPasswordError = "'Confirm' and 'Password' do not match."
+
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -53,7 +58,7 @@ const Register = () => {
 					flexDirection: 'column',
 					alignItems: 'center',
 					backgroundColor: "white",
-					width: "360px",
+					width: "350px",
 					padding: "40px 20px",
 					borderRadius: "10px",
 				}}
@@ -67,9 +72,6 @@ const Register = () => {
 				>
 					Time to sign up
 				</Typography>
-				{
-					errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
-				}
 				<Box component="form" onSubmit={handleSubmit}
 					sx={{
 						mt: 2,
@@ -113,6 +115,11 @@ const Register = () => {
 						placeholder="yourname@mail.com"
 						value={registerUser.email}
 						onChange={handleChange}
+						error={errors.includes(emailError)  ? true : false}
+						helperText={errors.includes(emailError) 
+							? "Please enter a valid email" 
+							: null
+						}
 					/>
 					<TextField
 						className="mb-3"
@@ -125,6 +132,25 @@ const Register = () => {
 						placeholder="Create a password"
 						value={registerUser.password}
 						onChange={handleChange}
+						error={errors.includes(passwordLengthError) || errors.includes(passwordError) 
+							? true
+							: false}
+						helperText={errors.includes(passwordError)
+							? (
+								<div style={{ marginBottom: -15}}>
+									<span>Password must contain:</span>
+									<ul style={{ listStyleType: "square" }}>
+										{errors.includes(passwordLengthError) ? <li>At least 8 characters</li> : null}
+										<li>An uppercase letter</li>
+										<li>A lowercase letter</li>
+										<li>A number</li>
+										<li>A special character</li>
+									</ul>
+								</div>
+							) : errors.includes(passwordLengthError)
+							? "Password must contain at least 8 characters"
+							: null
+						}
 					/>
 					<TextField
 						className="mb-3"
@@ -137,6 +163,11 @@ const Register = () => {
 						placeholder="Repeat your password"
 						value={registerUser.confirm}
 						onChange={handleChange}
+						error={errors.includes(confirmPasswordError)  ? true : false}
+						helperText={errors.includes(confirmPasswordError) 
+							? "Passwords do not match" 
+							: null
+						}
 					/>
 					<Button
 						type="submit"
@@ -159,8 +190,8 @@ const Register = () => {
 								sx={{
 									color: styles.colors.PRIMARY,
 									fontWeight: "bold",
-									opacity: .7
-								}}
+									opacity: .8
+								}} 
 							>
 								Already have an account? Sign in
 							</Link>

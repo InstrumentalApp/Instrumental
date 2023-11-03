@@ -45,11 +45,11 @@ const NavButton = styled(Button)(() => ({
 }));
 
 const pages = [
-  ['Lessons', '/instruments'], 
-  // ['Rentals', '/rentals'], 
-  ['How it works', '/how-it-works'], 
-  ['Teach with us', '/teach-with-us'], 
-  ['Contact', '/contact']];
+  ['Lessons', '/instrumental/instruments'], 
+  // ['Rentals', '/instrumental/rentals'], 
+  ['How it works', '/instrumental/how-it-works'], 
+  ['Teach with us', '/instrumental/teach-with-us'], 
+  ['Contact', '/instrumental/contact']];
 const settings = ['Profile', 'Account', 'Dashboard'];
 
 const NavBar = (props) => {
@@ -79,8 +79,8 @@ const NavBar = (props) => {
   }
 
   return (
-    <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 4}>
-      <Container maxWidth="xl">
+    <AppBar position="sticky" style={navStyle} elevation={props.scrollPosition == 0 ? 0 : 3}>
+      <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ mt: {xs: .3, md: 0} }}>
           <Typography
             variant="h6"
@@ -117,7 +117,7 @@ const NavBar = (props) => {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchor={anchorNav}
+              anchorEl={anchorNav}
               anchorOrigin={{
                 vertical: "top",
                 horizontal: "left",
@@ -134,7 +134,6 @@ const NavBar = (props) => {
                 { backgroundColor: styles.colors.SECONDARY }
               },
               mt: 5.5,
-              ml: 1,
               }}
             >
               {pages.map((page) => (
@@ -193,12 +192,12 @@ const NavBar = (props) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="" src="" />
+                  <Avatar alt="User avatar" src="" sx={{ border: `3px solid ${styles.colors.PRIMARY}` }}/>
                 </IconButton>
               </Tooltip>
               <Menu
                 id="menu-appbar"
-                anchor={anchorNav}
+                anchorEl={anchorUser}
                 anchorOrigin={{
                   vertical: "top",
                   horizontal: "right",
@@ -215,7 +214,6 @@ const NavBar = (props) => {
                     "& .MuiMenu-paper": { backgroundColor: styles.colors.SECONDARY }
                   },
                   mt: 5.5,
-                  ml:-1,
                 }}
               >
                 {settings.map((setting) => (
@@ -253,11 +251,11 @@ const NavBar = (props) => {
                 >
                   <nobr>Sign Out</nobr>
                 </Button>
-              ) : window.location.pathname == "/sign-in" || window.location.pathname == "/register" ? (
+              ) : window.location.pathname == "/instrumental/sign-in" || window.location.pathname == "/instrumental/register" ? (
                 <></>
               ) : (
                 <HoverButton
-                  link="/sign-in"
+                  link="/instrumental/sign-in"
                   onClick={ () => {
                     handleCloseNavMenu();
                   }}
