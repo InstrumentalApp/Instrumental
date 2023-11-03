@@ -35,10 +35,10 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
         handleSubmit(url, lesson, "POST");
       }
   };
-  
+
   useEffect(() => {
     if (data) {
-      navigate('/bookingsuccess', { state: data });
+      navigate('/instrumental/bookingsuccess', { state: data });
     }
   }, [data])
 
