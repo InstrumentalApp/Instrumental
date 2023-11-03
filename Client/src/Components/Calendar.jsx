@@ -1,5 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import useLocalStorage from "../Hooks/useLocalStorage";
+import useApi from "../Hooks/useApi";
+import axios from "axios";
 
 const styles = {
   wrap: {
@@ -14,7 +17,12 @@ const styles = {
 };
 
 const Calendar = () => {
-  const calendarRef = useRef()
+  const [credentials, setCredentials] = useLocalStorage("credentials", {});
+  const url = "/api/lesson/1";
+
+  const { data, error, handleSubmit } = useApi();
+
+  const calendarRef = useRef();
 
   let currentDate = new Date().toJSON().slice(0, 10);
 
@@ -118,6 +126,8 @@ const Calendar = () => {
 
   useEffect(() => {
     // fetch booked lessons from database
+    handleSubmit(url, {}, "GET");
+
     const events = [
       {
         id: 1,
@@ -156,6 +166,11 @@ const Calendar = () => {
 
     calendarRef.current.control.update({ startDate, events });
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+    console.log(error);
+  }, [data, error])
 
   return (
     <div style={styles.wrap}>
