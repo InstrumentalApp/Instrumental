@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Routing.Template;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 
@@ -22,6 +21,4 @@ public class LessonDto
         Student = student;
         Instrument = instrument;
     }
-
-    // This gets filled out in the lesson service and gets sent back upon request;
 }

@@ -16,8 +16,8 @@ public class InstructorService : IInstructorService
     public async Task<List<User>> TeachersPerInstrument(int instrumentId)
     {
         List<User> teacherInstrumentList = await _context.Users
-            .Where(u => u.UserInstruments.Any(i => i.InstrumentId == instrumentId))  // Filter by the instrument
-            .Where(u => u.Role.RoleType == RoleType.TEACHER)  // Filter by the role
+            .Where(u => u.UserInstruments.Any(i => i.InstrumentId == instrumentId))
+            .Where(u => u.Role!.RoleType == RoleType.TEACHER)
             .ToListAsync();
 
         if(teacherInstrumentList != null) {
@@ -28,28 +28,4 @@ public class InstructorService : IInstructorService
             throw new Exception("Could not find teachers for instrument");
         }
     }
-
-
-    // // Get All Lessons
-    // public async Task<List<Instructor>> AllInstructors()
-    // {
-    //     List<Instructor> allInstructors = await _context.Instructors.ToListAsync();
-
-    //     return allInstructors;
-    // }
-
-
-    // // Get One Instructor
-    // public async Task<Instructor?> OneInstructor()
-    // {
-    //   Instructor? oneInstructor = await _context.Instructors.FirstOrDefaultAsync();
-
-    //   if(oneInstructor == null)
-    //   {
-    //     return null;
-    //   }
-
-    //   return oneInstructor;
-    // }
-
 }
