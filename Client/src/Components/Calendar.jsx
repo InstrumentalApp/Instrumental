@@ -18,7 +18,7 @@ const styles = {
 
 const Calendar = () => {
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
-  const url = "/api/lesson/1";
+  const url = "/api/lesson/user";
 
   const { data, error, handleSubmit } = useApi();
 
