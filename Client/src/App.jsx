@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import './Styles/App/App.css'
 import style from "./Styles/App";
-import axios from 'axios';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import LandingPage from './Components/LandingPage';
 import InstrumentLessonsOffered from './Components/InstrumentLessonsOffered';
+import NotFoundPage from './Components/NotFoundPage';
 import Footer from './Components/Footer'
 import Register from "./Components/Register";
 import InstrumentDetail from './Components/InstrumentDetail';
+import HowItWorks from './Components/HowItWorks';
+import TeachWithUs from './Components/TeachWithUs';
 import LessonBookingSuccess from './Components/LessonBookingSuccess';
 import Account from './Components/Account';
 import SuperUserDashboard from './Components/SuperUserDashboard';
@@ -52,29 +54,31 @@ function App() {
         ) : null}
       </div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/instruments" element={<InstrumentLessonsOffered />} />
-        <Route path="/instruments/:instrumentId" element={<InstrumentDetail />} />
-        <Route path="/bookingsuccess" element={<LessonBookingSuccess />} />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
+        <Route path="/" element={<Navigate to="/instrumental" />} />
+        <Route path="/instrumental" element={<LandingPage />} />
+        <Route path="/instrumental/instruments" element={<InstrumentLessonsOffered />} />
+        <Route path="/instrumental/instruments/:instrumentId" element={<InstrumentDetail />} />
+        <Route path="/instrumental/bookingsuccess" element={<LessonBookingSuccess />} />
+        <Route path="/instrumental/how-it-works" element={<HowItWorks />} />
+        <Route path="/instrumental/teach-with-us" element={<TeachWithUs />} />
+        <Route path="/instrumental/sign-in" element={<Login />} />
+        <Route path="/instrumental/register" element={<Register />} />
         {/*
         Implement logic to allow access to this route when a user is logged in.
         We would also need to conditionally render a Sign In or View Account button
         in the Navbar component depending on if a user is currently logged in.
         */}
-        <Route path="/account" element={<Account />} />
-
+        <Route path="/instrumental/account" element={<Account />} />
         {credentials && Object.keys(credentials).length > 0 && credentials["role"]=="SUPERUSER" ? (
-          <>
+        <>
           <Route path="/admin/dashboard" element={<SuperUserDashboard />} />
-          <Route path="/admin/teachers/create" element={<CreateTeacher />} />
-          <Route path="/teacher_creation_success" element={<TeacherCreationSuccess />} />
-          </>
+        <Route path="/admin/teachers/create" element={<CreateTeacher />} />
+        <Route path="/teacher_creation_success" element={<TeacherCreationSuccess />} />
+        </>
         ) : null}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
