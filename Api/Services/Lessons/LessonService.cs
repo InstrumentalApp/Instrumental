@@ -79,10 +79,9 @@ public class LessonService : ILessonService
                 .Include(l => l.Instrument)
                 .Include(l => l.Teacher)
                 .Include(l => l.Student)
-                .Where(l => l.TeacherId == userId)
-                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .Where(l => l.TeacherId == userId || l.StudentId == userId)
+                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Teacher!),new UserDto(lesson.Student!), new InstrumentDto(lesson.Instrument!)))
                 .ToListAsync();
-
         return lessonsForUser;
       }
       catch (Exception e)
