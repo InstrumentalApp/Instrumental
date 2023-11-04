@@ -14,11 +14,13 @@ public class TokenService : ITokenService
 {
     private readonly DBContext _context;
     private readonly IConfiguration _config;
+    private readonly ILogger<TokenService> _logger;
 
-    public TokenService(DBContext context, IConfiguration config)
+    public TokenService(DBContext context, IConfiguration config, ILogger<TokenService> logger)
     {
         _context = context;
         _config = config;
+        _logger = logger;
     }
 
     static string GenerateRefreshToken()
@@ -84,19 +86,9 @@ public class TokenService : ITokenService
             await _context.SaveChangesAsync();
             return new TokensDto(rft, jwt);
         }
-        catch (InvalidOperationException ex)
+        catch (Exception e)
         {
-            Console.WriteLine(ex.Message);
-            return null;
-        }
-        catch (DbUpdateException ex)
-        {
-            Console.WriteLine(ex.Message);
-            return null;
-        }
-        catch
-        {
-            Console.WriteLine("Unknown error in CreateTokensDtoAsync");
+            _logger.LogError("{Message}", e.Message);
             return null;
         }
     }
@@ -116,8 +108,9 @@ public class TokenService : ITokenService
             await _context.SaveChangesAsync();
             return true;
         }
-        catch
+        catch (Exception e)
         {
+            _logger.LogError("Error deactivating fetched tokens for user. {Message}", e.Message);
             return false;
         }
     }
