@@ -38,7 +38,7 @@ const LessonBookingModal = ({ teacher, isModalVisible, closeModal, bookLesson, i
   
   useEffect(() => {
     if (data) {
-      navigate('/bookingsuccess', { state: data });
+      navigate('/instrumental/bookingsuccess', { state: data });
     }
   }, [data])
 
