@@ -91,8 +91,8 @@ public class AuthController : ControllerBase
         return tokens;
     }
 
+    [Authorize(Policy = "SUPERUSER")]
     [HttpGet("claims")]
-    [Authorize]
     public IActionResult GetClaims()
     {
         return Ok(User.Claims.Select(c => new { c.Type, c.Value }).ToList());
