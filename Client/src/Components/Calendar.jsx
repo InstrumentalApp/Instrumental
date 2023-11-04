@@ -26,7 +26,7 @@ const Calendar = () => {
 
   let currentDate = new Date().toJSON().slice(0, 10);
 
-  // IMPORTANT: update event should also patch new data in DB (currently only affects frontend)
+  // If we want to allow users to edit events in any way, use this code and uncomment edit code in context menu below
   const editEvent = async (e) => {
     const dp = calendarRef.current.control;
     const modal = await DayPilot.Modal.prompt("Update event text:", e.text());
@@ -38,9 +38,12 @@ const Calendar = () => {
   const [calendarConfig, setCalendarConfig] = useState({
     viewType: "Week",
     durationBarVisible: false,
-    timeRangeSelectedHandling: "Enabled",
+    timeRangeSelectedHandling: "Disabled",
+    eventMoveHandling: "Disabled",
+    eventResizeHandling: "Disabled",
+    eventClickHandling: "Disabled",
 
-    // Unnecessary to allow users to create events on the calendar itself
+    // Unnecessary to allow users to create or edit event details on the calendar itself
     // onTimeRangeSelected: async args => {
     //   const dp = calendarRef.current.control;
     //   const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
@@ -53,28 +56,29 @@ const Calendar = () => {
     //     text: modal.result
     //   });
     // },
+    // onEventClick: async args => {
+    //   await editEvent(args.e);
+    // },
 
-    onEventClick: async args => {
-      await editEvent(args.e);
-    },
     contextMenu: new DayPilot.Menu({
       items: [
+        // This allows users to cancel a lesson; still need to add a backend route to take care of DB data
         {
-          text: "Delete",
+          text: "Cancel Lesson",
           onClick: async args => {
             const dp = calendarRef.current.control;
             dp.events.remove(args.source);
           },
         },
-        {
-          text: "-"
-        },
-        {
-          text: "Edit...",
-          onClick: async args => {
-            await editEvent(args.source);
-          }
-        }
+        // {
+        //   text: "-"
+        // },
+        // {
+        //   text: "Edit...",
+        //   onClick: async args => {
+        //     await editEvent(args.source);
+        //   }
+        // }
       ]
     }),
     onBeforeEventRender: args => {
@@ -105,7 +109,7 @@ const Calendar = () => {
         }
       ];
 
-      // incorporate this code when we have pictures/icons for each user
+      // Incorporate this code if/when we have picture icons for each user
       // const participants = args.data.participants;
       // if (participants > 0) {
       //   // show one icon for each participant
@@ -125,52 +129,38 @@ const Calendar = () => {
   });
 
   useEffect(() => {
-    // fetch booked lessons from database
+    // Fetch booked lessons from database
     handleSubmit(url, {}, "GET");
-
-    const events = [
-      {
-        id: 1,
-        text: "Event 1",
-        start: "2023-10-02T10:30:00",
-        end: "2023-10-02T13:00:00",
-        participants: 2,
-      },
-      {
-        id: 2,
-        text: "Event 2",
-        start: "2023-10-03T09:30:00",
-        end: "2023-10-03T11:30:00",
-        backColor: "#6aa84f",
-        participants: 1,
-      },
-      {
-        id: 3,
-        text: "Event 3",
-        start: "2023-10-03T12:00:00",
-        end: "2023-10-03T15:00:00",
-        backColor: "#f1c232",
-        participants: 3,
-      },
-      {
-        id: 4,
-        text: "Event 4",
-        start: "2023-10-01T11:30:00",
-        end: "2023-10-01T14:30:00",
-        backColor: "#cc4125",
-        participants: 4,
-      },
-    ];
-
-    const startDate = "2023-10-02";
-
-    calendarRef.current.control.update({ startDate, events });
   }, []);
 
   useEffect(() => {
     console.log(data);
-    console.log(error);
-  }, [data, error])
+    let events;
+
+    if (data) {
+      events = data.map(lessonsToEvents);
+    }
+
+    function lessonsToEvents(lesson) {
+
+      // Color should be changed later to be dependent on teacher or timeslot, instead of random
+      let randomColor = `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`
+
+      let event = {
+        id: lesson.lessonId,
+        text: `${lesson.instrument.name} Lesson with ${lesson.teacher.firstName} ${lesson.teacher.lastName}`,
+        start: lesson.start,
+        end: lesson.end,
+        backColor: randomColor,
+        // participants: 2,
+      }
+      return event;
+    }
+
+    const startDate = currentDate;
+
+    calendarRef.current.control.update({ startDate, events });
+  }, [data])
 
   return (
     <div style={styles.wrap}>
