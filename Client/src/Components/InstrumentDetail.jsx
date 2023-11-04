@@ -39,7 +39,7 @@ const InstrumentDetail = () => {
       console.log("Booking Modal Visible");
     } else {
       // If there's no accessToken, you might want to handle it, e.g., navigate to a sign-in page
-      navigate('/sign-in');
+      navigate('/instrumental/sign-in');
     }
   };
 

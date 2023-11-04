@@ -1,7 +1,6 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TeamFive.Attributes;
 
 namespace TeamFive.DataTransfer;

@@ -1,7 +1,4 @@
 #pragma warning disable CS8618
-using System.ComponentModel;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using TeamFive.Models;
 
@@ -41,7 +38,6 @@ public class DBContext : DbContext
 
         modelBuilder.Entity<UserInstrument>()
             .HasKey(ui => new { ui.UserId, ui.InstrumentId });
-
     }
 }
 

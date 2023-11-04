@@ -23,8 +23,7 @@ public class LessonController : ControllerBase
 {
     private readonly ILessonService _lessonService;
     private readonly ILogger<LessonController> _logger;
-    private readonly ITokenService
-    _tokenService;
+    private readonly ITokenService _tokenService;
 
     public LessonController(ILessonService LessonServ, ILogger<LessonController> logger, ITokenService tokenService)
     {
