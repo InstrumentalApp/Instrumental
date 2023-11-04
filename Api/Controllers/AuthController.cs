@@ -15,19 +15,13 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IUserService uServ, ITokenService tServ, DBContext context)
+    public AuthController(IUserService uServ, ITokenService tServ, ILogger<AuthController> logger)
     {
         _userService = uServ;
         _tokenService = tServ;
-    }
-
-
-    [HttpGet("hello")]
-    public async Task<ActionResult<string>> HelloWorld()
-    {
-        await Task.Delay(1);//This is here until we do something "awaitable"
-        return "Hello world, From the C# API!";
+        _logger = logger;
     }
 
     [HttpPost("register")]
@@ -77,7 +71,7 @@ public class AuthController : ControllerBase
             return StatusCode(500, "Error saving new refreshtoken to database, try again.");
         }
 
-        UserWithTokens userWithTokens = new (validUser, tokens);
+        UserWithTokens userWithTokens = new(validUser, tokens);
 
         return Ok(userWithTokens);
     }

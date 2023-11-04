@@ -1,6 +1,3 @@
-#pragma warning disable 8618
-using System.ComponentModel.DataAnnotations;
-
 namespace TeamFive.Models;
 public class InstrumentDto
 {
