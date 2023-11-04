@@ -49,8 +49,13 @@ const pages = [
   // ['Rentals', '/instrumental/rentals'], 
   ['How it works', '/instrumental/how-it-works'], 
   ['Teach with us', '/instrumental/teach-with-us'], 
-  ['Contact', '/instrumental/contact']];
-const settings = ['Profile', 'Account', 'Dashboard'];
+  ['Contact', '/instrumental/contact']
+];
+const settings = [
+  ['Profile', '#'], 
+  ['Account', '/instrumental/account'], 
+  ['Dashboard', '#'],
+];
 
 const NavBar = (props) => {
   const [anchorNav, setAnchorNav] = useState(null);
@@ -218,7 +223,7 @@ const NavBar = (props) => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" >{setting}</Typography>
+                    <Typography onClick={() => navigate(setting[1])} textAlign="center" >{setting[0]}</Typography>
                   </MenuItem>
 
                 ))}
