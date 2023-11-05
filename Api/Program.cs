@@ -10,6 +10,10 @@ using TeamFive.Services.Instructors;
 using TeamFive.Services.Lessons;
 using TeamFive.Enums;
 using System.Security.Claims;
+using Amazon.SimpleEmail;
+using Amazon.Runtime;
+using Amazon.Extensions.NETCore.Setup;
+using TeamFive.Services.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +24,19 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IInstrumentService, InstrumentService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
+
+string sesAccessKey = builder.Configuration["SES:Access"]!;
+string sesSecretKey = builder.Configuration["SES:Secret"]!;
+string sesRegion = builder.Configuration["SES:Region"]!;
+
+builder.Services.AddAWSService<IAmazonSimpleEmailService>(new AWSOptions
+{
+    Credentials = new BasicAWSCredentials(sesAccessKey, sesSecretKey),
+    Region = Amazon.RegionEndpoint.USEast1 // Choose the appropriate AWS region
+});
 
 string connectionString;
 if (builder.Environment.IsProduction())
