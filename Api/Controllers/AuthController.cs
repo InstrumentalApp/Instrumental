@@ -4,9 +4,9 @@ using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
-using TeamFive.DataTransfer;
 using Microsoft.AspNetCore.Authorization;
 using TeamFive.Models;
+using TeamFive.Services.Email;
 
 namespace TeamFive.Controllers;
 [ApiController]
@@ -15,13 +15,15 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
+    private readonly IEmailService _emailService;
     private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IUserService uServ, ITokenService tServ, ILogger<AuthController> logger)
+    public AuthController(IUserService uServ, ITokenService tServ, ILogger<AuthController> logger, IEmailService emailService)
     {
         _userService = uServ;
         _tokenService = tServ;
         _logger = logger;
+        _emailService = emailService;
     }
 
     [HttpPost("register")]
@@ -91,10 +93,18 @@ public class AuthController : ControllerBase
         return tokens;
     }
 
+    [Authorize(Policy = "SUPERUSER")]
     [HttpGet("claims")]
-    [Authorize]
     public IActionResult GetClaims()
     {
         return Ok(User.Claims.Select(c => new { c.Type, c.Value }).ToList());
+    }
+
+    [Authorize(Policy = "SUPERUSER")]
+    [HttpPost("email/test")]
+    public async Task<ActionResult<UserWithRoleDto?>> SendTestEmailAsync()
+    {
+        bool result = await _emailService.SendTestEmailAsync("terminatormunky@gmail.com");
+        return Ok(result);
     }
 }
