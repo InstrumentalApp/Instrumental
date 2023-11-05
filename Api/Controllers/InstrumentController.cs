@@ -14,41 +14,32 @@ namespace TeamFive.Controllers;
 [Route("api/instrument")]
 public class InstrumentController : ControllerBase
 {
-  // Calls on IInstrumentService
-  private readonly IInstrumentService _instrumentService;
-
-  // Imports Context and _isntrumentService
-  public InstrumentController(IInstrumentService InstService)
-  {
-    _instrumentService = InstService;
-  }
-
-  // First Call to Database to return full instrument list stored in DB.
-  // Call could be used to populate full list of instruments to choose lesson from or offer lesson for teachers.
-
-  [HttpGet("all")]
-  public async Task<ActionResult<List<Instrument>>> AllInstruments()
-  {
-
-    // Return full list of all instruments, unsorted
-    // Needs await because it is calling an API
-
-    List<Instrument> instrumentList = await _instrumentService.AllInstruments();
-
-    return instrumentList;
-  }
-
-
-  [HttpGet("one")]
-  public async Task<ActionResult<Instrument>> OneInstrument()
-  {
-    Instrument? oneInstrument = await _instrumentService.OneInstrument();
-    if (oneInstrument == null)
+    private readonly IInstrumentService _instrumentService;
+    private readonly ILogger<InstrumentController> _logger;
+    public InstrumentController(IInstrumentService InstService, ILogger<InstrumentController> logger)
     {
-        return BadRequest("Resource not found");
+        _instrumentService = InstService;
+        _logger = logger;
     }
-    return oneInstrument;
-  }
+
+    [HttpGet("all")]
+    public async Task<ActionResult<List<Instrument>>> AllInstruments()
+    {
+        List<Instrument> instrumentList = await _instrumentService.AllInstruments();
+
+        return instrumentList;
+    }
+
+    [HttpGet("one")]
+    public async Task<ActionResult<Instrument>> OneInstrument()
+    {
+        Instrument? oneInstrument = await _instrumentService.OneInstrument();
+        if (oneInstrument == null)
+        {
+            return BadRequest("Resource not found");
+        }
+        return oneInstrument;
+    }
 
 
 }

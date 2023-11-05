@@ -13,6 +13,7 @@ using TeamFive.DataTransfer.Lessons;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TeamFive.Controllers;
 [Authorize]
@@ -22,8 +23,7 @@ public class LessonController : ControllerBase
 {
     private readonly ILessonService _lessonService;
     private readonly ILogger<LessonController> _logger;
-    private readonly ITokenService
-    _tokenService;
+    private readonly ITokenService _tokenService;
 
     public LessonController(ILessonService LessonServ, ILogger<LessonController> logger, ITokenService tokenService)
     {
@@ -32,37 +32,34 @@ public class LessonController : ControllerBase
         _tokenService = tokenService;
     }
 
-
-    // Get All Lessons
+    [Authorize(Policy = "SUPERUSER")]
     [HttpGet("all")]
     public async Task<ActionResult<List<Lesson>>> AllLessons()
     {
         List<Lesson> allLessons = await _lessonService.AllLessons();
 
-        await Task.Delay(1);//This is here until we do something "awaitable"
-
         return allLessons;
     }
 
-    // Get One Lesson
     [HttpGet("{id}")]
     [ActionName(nameof(OneLesson))]
     public async Task<ActionResult<LessonDto?>> OneLesson(int id)
     {
-        try
-        {
-            LessonDto? oneLesson = await _lessonService.OneLessonAsync(id);
-            return oneLesson;
-        }
-        catch
+        int claim = _tokenService.GetIdClaimFromHeaderValue(Request);
+        if (claim < 0)
         {
             return BadRequest("Resource not found.");
         }
+        LessonDto? oneLesson = await _lessonService.OneLessonAsync(id, claim);
+        if (oneLesson == null)
+        {
+            return BadRequest("Something went wrong.");
+        }
+        return oneLesson;
     }
 
 
     // Update Lesson Service to Include Updated UserDto so Lessons can be created and return lesson info on React to be Displayed
-
     [HttpPost]
     public async Task<ActionResult<Lesson>> CreateLessonAsync(Lesson lesson)
     {

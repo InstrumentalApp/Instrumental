@@ -53,28 +53,26 @@ const Login = () => {
           flexDirection: 'column',
           alignItems: 'center',
           backgroundColor: "white",
-          width: "360px",
+          width: "350px",
           padding: "40px 20px",
           borderRadius: "10px",
         }}
       >
-        <Typography variant='h5' sx={{ 
-					fontWeight: "bold", 
+        <Typography variant='h5' sx={{
+					fontWeight: "bold",
 					opacity: .8,
 					color: styles.colors.PRIMARY,
-					mb: 3,
+          pb: 4
           }}
         >
           Sign into your account
         </Typography>
-        {
-          errors.map((v, i) => <p key={i} className="errorStyle">{v}</p>)
-        }
         <Box component="form" onSubmit={handleSubmit}
           sx={{
             display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center"
+            flexDirection: "column",
+            justifyContent: "center",
+            width: "100%",
           }}>
           <TextField
             className="mb-3"
@@ -106,20 +104,20 @@ const Login = () => {
               onClick={() => setPasswordVisible(!passwordVisible)}
               sx={{
                 position: "absolute",
-                translate: "135px 89px 0",
+                translate: "270px -37px",
                 opacity: .5,
                 "&:hover": {
                   cursor: "pointer",
                   opacity: 1,
                 }
               }}
-            /> 
+            />
             ) : (
             <VisibilityOffIcon
               onClick={() => setPasswordVisible(!passwordVisible)}
               sx={{
                 position: "absolute",
-                translate: "135px 89px 0",
+                translate: "270px -37px",
                 opacity: .5,
                 "&:hover": {
                   cursor: "pointer",
@@ -128,6 +126,20 @@ const Login = () => {
               }}
             />
           )}
+          <div className="flex-col-center" style={{
+            height: "15px",
+            justifyContent: "end",
+          }}
+          >
+            { errors.length == 0 ? (
+              null
+            ) : (
+              <Typography variant='caption' className="errorStyle"
+              >
+                Invalid email and/or password. Please try again.
+              </Typography>
+            )}
+          </div>
           <Button
             type="submit"
             color='warning'
@@ -145,21 +157,21 @@ const Login = () => {
           </Button>
           <Grid container direction="column" alignItems="center" pt={1}>
             <Grid item xs>
-              <Link href="#" underline="hover" variant="body2" 
+              <Link href="#" underline="hover" variant="body2"
                 sx={{ color: styles.colors.PRIMARY,
                   fontWeight: "bold",
                   opacity: .8
-                }} 
+                }}
               >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link component={RouterLink} to={"/register"} underline="hover" variant="body2" 
+              <Link component={RouterLink} to={"/instrumental/register"} underline="hover" variant="body2"
                 sx={{ color: styles.colors.PRIMARY,
                   fontWeight: "bold",
-                  opacity: .7
-                }} 
+                  opacity: .8
+                }}
               >
                 Register as a new user
               </Link>

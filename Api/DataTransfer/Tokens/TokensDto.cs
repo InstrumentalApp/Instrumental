@@ -1,4 +1,3 @@
-#pragma warning disable 8618
 using TeamFive.Models;
 
 namespace TeamFive.DataTransfer.Tokens;

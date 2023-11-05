@@ -19,29 +19,35 @@ public static class ModelBuilderExtensions
     string? _jsonData = File.ReadAllText(_filePath);
     List<Instrument> instrumentList = JsonSerializer.Deserialize<List<Instrument>>(_jsonData)!;
 
+    modelBuilder.Entity<Instrument>().HasData(instrumentList);
     //Create a teacher per instrument in seedInsturments.json
-    int x = 0;
-    foreach (var i in instrumentList)
+    int numberOfTeachers = 200;
+    int numberOfInstruments = instrumentList.Count;
+
+    for (int i = 1; i <= numberOfTeachers; i++)
     {
-        x++;
+        int instrumentIndex = (i - 1) % numberOfInstruments;
+        Instrument instrument = instrumentList[instrumentIndex];
+
         Faker<User> faker = new Faker<User>()
-            .RuleFor(u=>u.UserId, f => x)
+            .RuleFor(u => u.UserId, f => i)
             .RuleFor(u => u.FirstName, f => f.Name.FirstName())
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.Email, (f, u) => $"{u.FirstName.ToLower()}.{u.LastName.ToLower()}@email.com")
-            .RuleFor(u=> u.Password, f=> "99999999");
+            .RuleFor(u => u.Password, f => "99999999");
+
         User t = faker.Generate();
         t.Password = hasher.HashPassword(t, t.Password);
-        Role role = new() { UserId = t.UserId, RoleId = x, RoleType = Enums.RoleType.TEACHER };
-        Instrument instrument = instrumentList[x-1];
-        UserInstrument userInstrument = new() {InstrumentId = instrument.InstrumentId, UserId = t.UserId};
+
+        Role role = new() { UserId = t.UserId, RoleId = i, RoleType = Enums.RoleType.TEACHER };
+        UserInstrument userInstrument = new() { InstrumentId = instrument.InstrumentId, UserId = t.UserId };
 
         modelBuilder.Entity<User>().HasData(t);
         modelBuilder.Entity<Role>().HasData(role);
-        modelBuilder.Entity<Instrument>().HasData(instrument);
         modelBuilder.Entity<UserInstrument>().HasData(userInstrument);
     }
-    //create students
+
+    int x = numberOfTeachers;
     int y = 50;
     while (y > 0)
     {

@@ -5,7 +5,6 @@ namespace TeamFive.DataTransfer.Roles;
 
 public class RoleDto
 {
-
   public RoleType RoleType {get;set;}
   public string? Bio {get; set;}
 
