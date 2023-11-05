@@ -1,19 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
-using TeamFive.Services;
-using TeamFive.Services.Users;
 using TeamFive.Services.Tokens;
 using TeamFive.Services.Lessons;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using TeamFive.DataTransfer.Lessons;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authorization;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TeamFive.Controllers;
 [Authorize]
@@ -81,7 +71,7 @@ public class LessonController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
+            _logger.LogError("{Message}", ex.Message);
             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
 
@@ -98,5 +88,21 @@ public class LessonController : ControllerBase
         }
         List<LessonWithStartEnd> allLessonsForUserId = await _lessonService.AllLessonsForUserIdAsync(claim);
         return allLessonsForUserId;
+    }
+
+    [HttpPost("{id}/delete")]
+    public async Task<ActionResult<LessonNoUsers>> DeleteLessonByIdAsync(int id)
+    {
+        int claim = _tokenService.GetIdClaimFromHeaderValue(Request);
+        if (claim < 0)
+        {
+            return BadRequest();
+        }
+        LessonNoUsers? deleted = await _lessonService.DestroyLessonAsync(id,claim);
+        if (deleted == null)
+        {
+            return BadRequest("Resource not found.");
+        }
+        return deleted;
     }
 }

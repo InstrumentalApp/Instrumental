@@ -9,10 +9,12 @@ namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
 {
     private readonly DBContext _context;
+    private readonly ILogger<LessonService> _logger;
 
-    public LessonService(DBContext context)
+    public LessonService(DBContext context, ILogger<LessonService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<List<Lesson>> AllLessons()
@@ -90,5 +92,28 @@ public class LessonService : ILessonService
             return new();
       }
 
+    }
+
+    public async Task<LessonNoUsers?> DestroyLessonAsync(int lessonId, int userId)
+    {
+        Lesson? lesson = await _context.Lessons
+            .Where(l => l.LessonId == lessonId)
+            .Where(l=>l.TeacherId == userId || l.StudentId == userId)
+            .FirstOrDefaultAsync();
+        if (lesson == null)
+        {
+            return null;
+        }
+        try
+        {
+            _context.Lessons.Remove(lesson);
+            await _context.SaveChangesAsync();
+            return new(lesson);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("{Message}", e.Message);
+            return null;
+        }
     }
 }
