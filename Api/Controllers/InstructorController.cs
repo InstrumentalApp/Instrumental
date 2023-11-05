@@ -28,9 +28,9 @@ public class InstructorController : ControllerBase
         _logger = logger;
     }
     [HttpGet("{instrumentId}/instructors")]
-    public async Task<ActionResult<List<User>>> GetTeachersWithInstrumentAsync(int instrumentId)
+    public async Task<ActionResult<List<UserDto>>> GetTeachersWithInstrumentAsync(int instrumentId)
     {
-        List<User> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
+        List<UserDto> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
 
         return teachersPerInstrument;
     }
