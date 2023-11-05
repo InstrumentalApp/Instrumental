@@ -17,47 +17,22 @@ namespace TeamFive.Controllers;
 [Route("api/instructor")]
 public class InstructorController : ControllerBase
 {
-  // Calls on IInstructorService
     private readonly IInstructorService _instructorService;
     private readonly IUserService _userService;
+    private readonly ILogger<InstructorController> _logger;
 
-  // Imports Context and _isntrumentService
-  public InstructorController(IInstructorService InstService, IUserService userServ)
-  {
+    public InstructorController(IInstructorService InstService, IUserService userServ, ILogger<InstructorController> logger)
+    {
         _instructorService = InstService;
         _userService = userServ;
-  }
-
-  // First Call to Database to return full Instructor list stored in DB.
-  // Call could be used to populate full list of Instructors to choose lesson from or offer lesson for teachers.
-
-  // [HttpGet("all")]
-  // public async Task<ActionResult<List<Instructor>>> AllInstructors()
-  // {
-
-  //   // Return full list of all Instructors, unsorted
-  //   // Needs await because it is calling an API
-
-  //   List<Instructor> InstructorList = await _InstructorService.AllInstructors();
-
-  //   return InstructorList;
-  // }
-
-
-  // [HttpGet("one")]
-  // public async Task<ActionResult<Instructor>> OneInstructor()
-  // {
-  //   Instructor? oneInstructor = await _InstructorService.OneInstructor();
-
-  //   return oneInstructor;
-  // }
-
+        _logger = logger;
+    }
     [HttpGet("{instrumentId}/instructors")]
-    public async Task<ActionResult<List<User>>> GetTeachersWithInstrument(int instrumentId)
+    public async Task<ActionResult<List<UserDto>>> GetTeachersWithInstrumentAsync(int instrumentId)
     {
-      List<User> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
+        List<UserDto> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
 
-      return teachersPerInstrument;
+        return teachersPerInstrument;
     }
 
     [Authorize(Policy = "SUPERUSER")]

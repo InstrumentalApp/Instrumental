@@ -49,6 +49,7 @@ const pages = [
   // ['Rentals', '/instrumental/rentals'], 
   ['How it works', '/instrumental/how-it-works'], 
   ['Teach with us', '/instrumental/teach-with-us'], 
+
   ['Contact', '/instrumental/contact']];
 const settings = [
   ['Profile', '/instrumental/profile'], 

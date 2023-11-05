@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Routing.Template;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 
@@ -9,9 +8,9 @@ public class LessonDto
     public int LessonId { get; set; }
     public DateTime BookingDate { get; set; }
     public int DurationMinutes { get; set; }
-    public UserDto Teacher {get; set;}
-    public UserDto Student {get; set;}
-    public InstrumentDto Instrument {get; set;}
+    public UserDto? Teacher {get; set;}
+    public UserDto? Student {get; set;}
+    public InstrumentDto? Instrument {get; set;}
 
     public LessonDto(Lesson lesson, UserDto teacher, UserDto student, InstrumentDto instrument)
     {
@@ -22,6 +21,4 @@ public class LessonDto
         Student = student;
         Instrument = instrument;
     }
-
-    // This gets filled out in the lesson service and gets sent back upon request;
 }

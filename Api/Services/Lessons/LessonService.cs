@@ -1,29 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
 using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
 using TeamFive.DataTransfer.Users;
 using TeamFive.DataTransfer.Lessons;
 using TeamFive.Models;
-using TeamFive.Services;
-using TeamFive.Services.Users;
-using TeamFive.Services.Tokens;
-using TeamFive.Services.Lessons;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Diagnostics;
-using System.Text.Json;
 
 namespace TeamFive.Services.Lessons;
 public class LessonService : ILessonService
 {
     private readonly DBContext _context;
+    private readonly ILogger<LessonService> _logger;
 
-    public LessonService(DBContext context)
+    public LessonService(DBContext context, ILogger<LessonService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
-    // Get All Lessons
     public async Task<List<Lesson>> AllLessons()
     {
         List<Lesson> allLessons = await _context.Lessons.ToListAsync();
@@ -45,8 +38,6 @@ public class LessonService : ILessonService
         {
             return null;
         }
-
-        //TODO: handle null warnings.
         UserDto lessonTeacherDto = new(oneLesson.Teacher!);
         UserDto lessonStudentDto = new(oneLesson.Student!);
         InstrumentDto lessonInstrumentDto = new(oneLesson.Instrument!);
@@ -54,9 +45,6 @@ public class LessonService : ILessonService
         LessonDto oneLessonDto = new(oneLesson, lessonTeacherDto, lessonStudentDto, lessonInstrumentDto);
         return oneLessonDto;
     }
-
-
-    // TODO: Build out Lesson Dto in the CreateLessonAsync, so it can be return and create a DTO in the Lesson Creation Post Route
 
     public async Task<LessonDto?> CreateLessonAsync(Lesson lesson)
     {
@@ -93,10 +81,9 @@ public class LessonService : ILessonService
                 .Include(l => l.Instrument)
                 .Include(l => l.Teacher)
                 .Include(l => l.Student)
-                .Where(l => l.TeacherId == userId)
-                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Student!), new UserDto(lesson.Teacher!), new InstrumentDto(lesson.Instrument!)))
+                .Where(l => l.TeacherId == userId || l.StudentId == userId)
+                .Select(lesson => new LessonWithStartEnd(lesson, new UserDto(lesson.Teacher!),new UserDto(lesson.Student!), new InstrumentDto(lesson.Instrument!)))
                 .ToListAsync();
-
         return lessonsForUser;
       }
       catch (Exception e)
@@ -105,5 +92,28 @@ public class LessonService : ILessonService
             return new();
       }
 
+    }
+
+    public async Task<LessonNoUsers?> DestroyLessonAsync(int lessonId, int userId)
+    {
+        Lesson? lesson = await _context.Lessons
+            .Where(l => l.LessonId == lessonId)
+            .Where(l=>l.TeacherId == userId || l.StudentId == userId)
+            .FirstOrDefaultAsync();
+        if (lesson == null)
+        {
+            return null;
+        }
+        try
+        {
+            _context.Lessons.Remove(lesson);
+            await _context.SaveChangesAsync();
+            return new(lesson);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("{Message}", e.Message);
+            return null;
+        }
     }
 }

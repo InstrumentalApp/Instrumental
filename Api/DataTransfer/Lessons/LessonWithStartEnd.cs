@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Routing.Template;
 using TeamFive.DataTransfer.Users;
 using TeamFive.Models;
 

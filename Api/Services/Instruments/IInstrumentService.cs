@@ -7,10 +7,4 @@ public interface IInstrumentService
 {
     Task<List<Instrument>> AllInstruments();
     Task<Instrument?> OneInstrument();
-    
-    //TODO: Get One Instrument;
-    //TODO: Get All Instruments;
-
-
-
 }

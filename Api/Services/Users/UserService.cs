@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeamFive.DataStorage;
 using TeamFive.DataTransfer;
@@ -10,10 +9,12 @@ namespace TeamFive.Services.Users;
 public class UserService : IUserService
 {
     private readonly DBContext _context;
+    private readonly ILogger<UserService> _logger;
 
-    public UserService(DBContext context)
+    public UserService(DBContext context, ILogger<UserService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<UserDto?> CreateStudentAsync(User user)
@@ -30,14 +31,14 @@ public class UserService : IUserService
 
             return new UserDto(user);
         }
-        catch(DbUpdateException ex)
+        catch(DbUpdateException e)
         {
-            Console.WriteLine(ex.Message);
+            _logger.LogError("DbUpdateException - Error persisting student {FirstName} {LastName} to database. {Message}", user.FirstName, user.LastName, e.Message);
             return null;
         }
-        catch
+        catch (Exception e)
         {
-            Console.WriteLine("Unkown error in UserService.CreateStudentAsync");
+            _logger.LogError("Unkown error in CreateStudentAsync, {Message}",e.Message);
             return null;
         }
     }
