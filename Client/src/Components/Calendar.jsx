@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import useLocalStorage from "../Hooks/useLocalStorage";
 import useApi from "../Hooks/useApi";
-import axios from "axios";
 
 const styles = {
   wrap: {
@@ -17,6 +16,7 @@ const styles = {
 };
 
 const Calendar = () => {
+  const [loading, setLoading] = useState(true);
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
   const url = "/api/lesson/user";
 
@@ -66,8 +66,16 @@ const Calendar = () => {
         {
           text: "Cancel Lesson",
           onClick: async args => {
+            let id = args.source.id();
             const dp = calendarRef.current.control;
-            dp.events.remove(args.source);
+            try {
+              // Current problem: this is affecting the data variable from the useApi() hook, causing the calendar to display the wrong data.
+              handleSubmit(`/api/lesson/${id}/delete`, {}, "POST");
+              dp.events.remove(args.source);
+              console.log("Deleted successfully.")
+            } catch (err) {
+              console.log(err);
+            }
           },
         },
         // {
@@ -125,7 +133,16 @@ const Calendar = () => {
       //     });
       //   }
       // }
-    }
+    },
+    // onEventDeleted: async (args) => {
+    //   let id = args.e.id();
+    //   try {
+    //     await axios.delete(`/api/lesson/${id}`);
+    //     console.log("Deleted successfully.")
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   });
 
   useEffect(() => {
@@ -137,7 +154,9 @@ const Calendar = () => {
     console.log(data);
     let events;
 
-    if (data) {
+    if (data && data.length > 0) {
+      // Thinking of a way to implement a loading animation while still rendering calendarRef.current
+      setLoading(false);
       events = data.map(lessonsToEvents);
     }
 
