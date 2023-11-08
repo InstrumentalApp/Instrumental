@@ -1,5 +1,7 @@
 # TeamFiveApp
 
+![ezgif com-video-to-gif (2)](https://github.com/CodeZero-TeamFive/TeamFiveApp/assets/69173728/5c271db9-91f0-4660-9940-399e561e23b4)
+
  - [Installation and Setup](#installation-and-setup)  
  - [Suggested VSCode Extensions](#suggested-vscode-extensions)
  - [Github Standards](#github-standards)
