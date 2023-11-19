@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import useLocalStorage from "../Hooks/useLocalStorage";
 import useApi from "../Hooks/useApi";
+import useApiWithReturn from "../Hooks/useApiWithReturn";
 
 const styles = {
   wrap: {
@@ -20,7 +21,9 @@ const Calendar = () => {
   const [credentials, setCredentials] = useLocalStorage("credentials", {});
   const url = "/api/lesson/user";
 
+  // Still need to add client-side error handling
   const { data, error, handleSubmit } = useApi();
+  const { handleSubmit: handleSubmitWithReturn } = useApiWithReturn(); // single-use call to API which doesn't affect data state from useApi()
 
   const calendarRef = useRef();
 
@@ -62,18 +65,17 @@ const Calendar = () => {
 
     contextMenu: new DayPilot.Menu({
       items: [
-        // This allows users to cancel a lesson; still need to add a backend route to take care of DB data
         {
           text: "Cancel Lesson",
           onClick: async args => {
+            // Create warning before user cancels lesson?
             let id = args.source.id();
             const dp = calendarRef.current.control;
             try {
-              // Current problem: this is affecting the data variable from the useApi() hook, causing the calendar to display the wrong data.
-              handleSubmit(`/api/lesson/${id}/delete`, {}, "POST");
+              handleSubmitWithReturn(`/api/lesson/${id}/delete`, {}, "POST");
               dp.events.remove(args.source);
-              console.log("Deleted successfully.")
             } catch (err) {
+              // Next step: display error for user to see
               console.log(err);
             }
           },
@@ -134,15 +136,6 @@ const Calendar = () => {
       //   }
       // }
     },
-    // onEventDeleted: async (args) => {
-    //   let id = args.e.id();
-    //   try {
-    //     await axios.delete(`/api/lesson/${id}`);
-    //     console.log("Deleted successfully.")
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
   });
 
   useEffect(() => {
