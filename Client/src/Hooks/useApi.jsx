@@ -2,6 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import useLocalStorage from "./useLocalStorage";
 
+// useApi() for updatable data state (best with only one unique repeatable request to API)
+// useApiWithReturn() for single-use returns (if you have multiple unique calls to API)
+
 const useApi = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
