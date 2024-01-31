@@ -23,6 +23,21 @@
     text-align: center;
 }
 
+.teacher-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2em;
+    gap: 2em;
+}
+
+.teacher-card {
+    min-width: 10em;
+    text-align: center;
+}
+
+/* Add modal styling and animations */
+
 .instrument-image {
     border-radius: 10%;
 }
