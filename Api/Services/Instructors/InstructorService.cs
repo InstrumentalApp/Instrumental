@@ -1,10 +1,10 @@
-using TeamFive.DataStorage;
-using TeamFive.Models;
+using Instrumental.DataStorage;
+using Instrumental.Models;
 using Microsoft.EntityFrameworkCore;
-using TeamFive.Enums;
-using TeamFive.DataTransfer.Users;
+using Instrumental.Enums;
+using Instrumental.DataTransfer.Users;
 
-namespace TeamFive.Services.Instructors;
+namespace Instrumental.Services.Instructors;
 public class InstructorService : IInstructorService
 {
     private readonly DBContext _context;

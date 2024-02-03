@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using TeamFive.Enums;
+using Instrumental.Enums;
 
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class Role : BaseEntity
 {
     [Key]

@@ -1,7 +1,7 @@
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
 
-namespace TeamFive.DataTransfer.Lessons;
+namespace Instrumental.DataTransfer.Lessons;
 
 public class LessonWithStartEnd
 {

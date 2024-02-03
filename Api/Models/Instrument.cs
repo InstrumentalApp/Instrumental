@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class Instrument : BaseEntity
 {
     [Key]

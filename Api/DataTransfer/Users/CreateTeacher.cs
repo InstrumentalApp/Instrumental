@@ -1,9 +1,9 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TeamFive.Attributes;
+using Instrumental.Attributes;
 
-namespace TeamFive.DataTransfer;
+namespace Instrumental.DataTransfer;
 public class CreateTeacher
 {
     [Required]

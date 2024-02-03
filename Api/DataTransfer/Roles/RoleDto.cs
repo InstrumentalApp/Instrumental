@@ -1,7 +1,7 @@
-using TeamFive.Enums;
-using TeamFive.Models;
+using Instrumental.Enums;
+using Instrumental.Models;
 
-namespace TeamFive.DataTransfer.Roles;
+namespace Instrumental.DataTransfer.Roles;
 
 public class RoleDto
 {

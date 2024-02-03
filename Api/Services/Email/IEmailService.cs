@@ -1,6 +1,6 @@
-using TeamFive.Models;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Email;
+namespace Instrumental.Services.Email;
 public interface IEmailService
 {
     Task<bool> SendTestEmailAsync(string emailRecipient);

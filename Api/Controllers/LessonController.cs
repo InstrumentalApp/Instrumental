@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using TeamFive.Models;
-using TeamFive.Services.Tokens;
-using TeamFive.Services.Lessons;
-using TeamFive.DataTransfer.Lessons;
+using Instrumental.Models;
+using Instrumental.Services.Tokens;
+using Instrumental.Services.Lessons;
+using Instrumental.DataTransfer.Lessons;
 using Microsoft.AspNetCore.Authorization;
 
-namespace TeamFive.Controllers;
+namespace Instrumental.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/lesson")]

@@ -1,6 +1,6 @@
-using TeamFive.DataTransfer.Tokens;
+using Instrumental.DataTransfer.Tokens;
 
-namespace TeamFive.DataTransfer.Users;
+namespace Instrumental.DataTransfer.Users;
 public class UserWithTokens
 {
     public int UserId { get; set; }

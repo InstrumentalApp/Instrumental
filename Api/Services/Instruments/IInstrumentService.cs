@@ -1,8 +1,8 @@
 using System.Net.Http.Headers;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.Models;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Instruments;
+namespace Instrumental.Services.Instruments;
 public interface IInstrumentService
 {
     Task<List<Instrument>> AllInstruments();

@@ -1,7 +1,7 @@
 // Custom validation
 using System.ComponentModel.DataAnnotations;
 
-namespace TeamFive.Attributes;
+namespace Instrumental.Attributes;
 public class FutureDateAttribute : ValidationAttribute
 {
     public int DaysInAdvance { get; init; } = 0;

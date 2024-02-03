@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using TeamFive.Attributes;
+using Instrumental.Attributes;
 
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class User : BaseEntity
 {
     [Key]

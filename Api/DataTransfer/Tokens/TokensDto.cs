@@ -1,6 +1,6 @@
-using TeamFive.Models;
+using Instrumental.Models;
 
-namespace TeamFive.DataTransfer.Tokens;
+namespace Instrumental.DataTransfer.Tokens;
 public class TokensDto
 {
     public string RefreshToken { get; set; }

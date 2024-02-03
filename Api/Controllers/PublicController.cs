@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TeamFive.Controllers;
+namespace Instrumental.Controllers;
 public class PublicController : Controller
 {
 

@@ -1,7 +1,7 @@
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.Models;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Tokens;
+namespace Instrumental.Services.Tokens;
 public interface ITokenService
 {
     Task<bool> DeactivateTokensForUserAsync(int userId);
