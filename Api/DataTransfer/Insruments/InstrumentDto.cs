@@ -1,4 +1,4 @@
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class InstrumentDto
 {
     public int InstrumentId { get; set; }

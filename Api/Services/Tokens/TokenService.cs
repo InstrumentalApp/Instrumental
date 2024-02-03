@@ -5,11 +5,11 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.Models;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Tokens;
+namespace Instrumental.Services.Tokens;
 public class TokenService : ITokenService
 {
     private readonly DBContext _context;

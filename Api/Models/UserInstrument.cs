@@ -1,4 +1,4 @@
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class UserInstrument : BaseEntity
 {
     public int UserId { get; set; }

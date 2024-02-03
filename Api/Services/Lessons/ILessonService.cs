@@ -1,7 +1,7 @@
-using TeamFive.DataTransfer.Lessons;
-using TeamFive.Models;
+using Instrumental.DataTransfer.Lessons;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Lessons;
+namespace Instrumental.Services.Lessons;
 public interface ILessonService
 {
     Task<List<Lesson>> AllLessons();

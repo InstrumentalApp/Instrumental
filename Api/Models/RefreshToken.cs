@@ -1,7 +1,7 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class RefreshToken : BaseEntity
 {
     [Key]

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace TeamFive.Attributes;
+namespace Instrumental.Attributes;
 public class StrongPasswordAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)

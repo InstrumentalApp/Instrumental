@@ -2,5 +2,5 @@
 pushd Client/
 npm run build
 pushd ../Api/
-dotnet publish -c Release -o ../TeamFiveBuild --self-contained true -r linux-x64
+dotnet publish -c Release -o ../InstrumentalBuild --self-contained true -r linux-x64
 popd

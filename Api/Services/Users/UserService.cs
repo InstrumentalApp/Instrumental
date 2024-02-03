@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Users;
+namespace Instrumental.Services.Users;
 public class UserService : IUserService
 {
     private readonly DBContext _context;

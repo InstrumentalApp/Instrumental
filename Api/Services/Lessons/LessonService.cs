@@ -1,11 +1,11 @@
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Users;
-using TeamFive.DataTransfer.Lessons;
-using TeamFive.Models;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Users;
+using Instrumental.DataTransfer.Lessons;
+using Instrumental.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace TeamFive.Services.Lessons;
+namespace Instrumental.Services.Lessons;
 public class LessonService : ILessonService
 {
     private readonly DBContext _context;

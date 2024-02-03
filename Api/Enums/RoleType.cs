@@ -1,4 +1,4 @@
-namespace TeamFive.Enums;
+namespace Instrumental.Enums;
 public enum RoleType
 {
     TEACHER,

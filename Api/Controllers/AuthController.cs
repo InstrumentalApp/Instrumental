@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Services.Users;
-using TeamFive.Services.Tokens;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Services.Users;
+using Instrumental.Services.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using TeamFive.Models;
-using TeamFive.Services.Email;
+using Instrumental.Models;
+using Instrumental.Services.Email;
 
-namespace TeamFive.Controllers;
+namespace Instrumental.Controllers;
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase

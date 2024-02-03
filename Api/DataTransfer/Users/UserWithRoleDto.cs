@@ -1,7 +1,7 @@
-using TeamFive.DataTransfer.Roles;
-using TeamFive.Models;
+using Instrumental.DataTransfer.Roles;
+using Instrumental.Models;
 
-namespace TeamFive.DataTransfer.Users;
+namespace Instrumental.DataTransfer.Users;
 public class UserWithRoleDto
 {
     public int UserId { get; set; }

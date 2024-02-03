@@ -1,7 +1,7 @@
 #pragma warning disable 8618
 using System.ComponentModel.DataAnnotations;
 
-namespace TeamFive.DataTransfer.Users;
+namespace Instrumental.DataTransfer.Users;
 public class LoginUser
 {
     [Required]
