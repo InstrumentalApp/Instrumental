@@ -73,7 +73,7 @@ public static class ModelBuilderExtensions
         FirstName = "super",
         LastName = "user",
         Email = "superuser@mail.com",
-        Password = "99999999",
+        Password = "3e^8RUBz"
     };
 
     superUser.Password = hasher.HashPassword(superUser, superUser.Password);
