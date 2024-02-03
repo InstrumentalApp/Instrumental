@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
-using TeamFive.Services;
-using TeamFive.Services.Users;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
+using Instrumental.Services;
+using Instrumental.Services.Users;
 
-namespace TeamFive.Services.Instruments;
+namespace Instrumental.Services.Instruments;
 public class InstrumentService : IInstrumentService
 {
   private readonly DBContext _context;

@@ -1,15 +1,15 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
-using TeamFive.Services;
-using TeamFive.Services.Tokens;
-using TeamFive.Services.Instruments;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
+using Instrumental.Services;
+using Instrumental.Services.Tokens;
+using Instrumental.Services.Instruments;
 
-namespace TeamFive.Controllers;
+namespace Instrumental.Controllers;
 [ApiController]
 [Route("api/instrument")]
 public class InstrumentController : ControllerBase

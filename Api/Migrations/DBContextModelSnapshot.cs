@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TeamFive.DataStorage;
+using Instrumental.DataStorage;
 
 #nullable disable
 
-namespace TeamFive.Migrations
+namespace Instrumental.Migrations
 {
     [DbContext(typeof(DBContext))]
     partial class DBContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace TeamFive.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("TeamFive.Models.Instrument", b =>
+            modelBuilder.Entity("Instrumental.Models.Instrument", b =>
                 {
                     b.Property<int>("InstrumentId")
                         .ValueGeneratedOnAdd()
@@ -400,7 +400,7 @@ namespace TeamFive.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TeamFive.Models.Lesson", b =>
+            modelBuilder.Entity("Instrumental.Models.Lesson", b =>
                 {
                     b.Property<int>("LessonId")
                         .ValueGeneratedOnAdd()
@@ -438,7 +438,7 @@ namespace TeamFive.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.RefreshToken", b =>
+            modelBuilder.Entity("Instrumental.Models.RefreshToken", b =>
                 {
                     b.Property<int>("RefreshTokenId")
                         .ValueGeneratedOnAdd()
@@ -470,7 +470,7 @@ namespace TeamFive.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.Role", b =>
+            modelBuilder.Entity("Instrumental.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -2509,7 +2509,7 @@ namespace TeamFive.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TeamFive.Models.User", b =>
+            modelBuilder.Entity("Instrumental.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -5054,7 +5054,7 @@ namespace TeamFive.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TeamFive.Models.UserInstrument", b =>
+            modelBuilder.Entity("Instrumental.Models.UserInstrument", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -6477,21 +6477,21 @@ namespace TeamFive.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TeamFive.Models.Lesson", b =>
+            modelBuilder.Entity("Instrumental.Models.Lesson", b =>
                 {
-                    b.HasOne("TeamFive.Models.Instrument", "Instrument")
+                    b.HasOne("Instrumental.Models.Instrument", "Instrument")
                         .WithMany("Lessons")
                         .HasForeignKey("InstrumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeamFive.Models.User", "Student")
+                    b.HasOne("Instrumental.Models.User", "Student")
                         .WithMany("AttendedLessons")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeamFive.Models.User", "Teacher")
+                    b.HasOne("Instrumental.Models.User", "Teacher")
                         .WithMany("TaughtLessons")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -6504,9 +6504,9 @@ namespace TeamFive.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.RefreshToken", b =>
+            modelBuilder.Entity("Instrumental.Models.RefreshToken", b =>
                 {
-                    b.HasOne("TeamFive.Models.User", "User")
+                    b.HasOne("Instrumental.Models.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6515,26 +6515,26 @@ namespace TeamFive.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.Role", b =>
+            modelBuilder.Entity("Instrumental.Models.Role", b =>
                 {
-                    b.HasOne("TeamFive.Models.User", "User")
+                    b.HasOne("Instrumental.Models.User", "User")
                         .WithOne("Role")
-                        .HasForeignKey("TeamFive.Models.Role", "UserId")
+                        .HasForeignKey("Instrumental.Models.Role", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.UserInstrument", b =>
+            modelBuilder.Entity("Instrumental.Models.UserInstrument", b =>
                 {
-                    b.HasOne("TeamFive.Models.Instrument", "Instrument")
+                    b.HasOne("Instrumental.Models.Instrument", "Instrument")
                         .WithMany("UserInstruments")
                         .HasForeignKey("InstrumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeamFive.Models.User", "User")
+                    b.HasOne("Instrumental.Models.User", "User")
                         .WithMany("UserInstruments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6545,14 +6545,14 @@ namespace TeamFive.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.Instrument", b =>
+            modelBuilder.Entity("Instrumental.Models.Instrument", b =>
                 {
                     b.Navigation("Lessons");
 
                     b.Navigation("UserInstruments");
                 });
 
-            modelBuilder.Entity("TeamFive.Models.User", b =>
+            modelBuilder.Entity("Instrumental.Models.User", b =>
                 {
                     b.Navigation("AttendedLessons");
 

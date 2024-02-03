@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styles from "../Styles/App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../Assets/Logos/InstrumentalLogo.svg";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -49,12 +49,12 @@ const pages = [
   // ['Rentals', '/instrumental/rentals'], 
   ['How it works', '/instrumental/how-it-works'], 
   ['Teach with us', '/instrumental/teach-with-us'], 
-  ['Contact', '/instrumental/contact']
-];
+
+  ['Contact', '/instrumental/contact']];
 const settings = [
-  ['Profile', '#'], 
+  ['Profile', '/instrumental/profile'], 
   ['Account', '/instrumental/account'], 
-  ['Dashboard', '#'],
+  ['Dashboard', '/instrumental/dashboard']
 ];
 
 const NavBar = (props) => {
@@ -223,7 +223,9 @@ const NavBar = (props) => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography onClick={() => navigate(setting[1])} textAlign="center" >{setting[0]}</Typography>
+                    <Link to={setting[1]} style={{ textDecoration: 'none', color: styles.colors.BLACK }}>
+                      <Typography textAlign="center" >{setting[0]}</Typography>
+                    </Link>
                   </MenuItem>
 
                 ))}

@@ -1,18 +1,18 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
-using TeamFive.DataStorage;
-using TeamFive.DataTransfer.Tokens;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
-using TeamFive.Services;
-using TeamFive.Services.Tokens;
-using TeamFive.Services.Instructors;
+using Instrumental.DataStorage;
+using Instrumental.DataTransfer.Tokens;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
+using Instrumental.Services;
+using Instrumental.Services.Tokens;
+using Instrumental.Services.Instructors;
 using Microsoft.AspNetCore.Authorization;
-using TeamFive.DataTransfer;
-using TeamFive.Services.Users;
+using Instrumental.DataTransfer;
+using Instrumental.Services.Users;
 
-namespace TeamFive.Controllers;
+namespace Instrumental.Controllers;
 [ApiController]
 [Route("api/instructor")]
 public class InstructorController : ControllerBase
@@ -28,9 +28,9 @@ public class InstructorController : ControllerBase
         _logger = logger;
     }
     [HttpGet("{instrumentId}/instructors")]
-    public async Task<ActionResult<List<User>>> GetTeachersWithInstrumentAsync(int instrumentId)
+    public async Task<ActionResult<List<UserDto>>> GetTeachersWithInstrumentAsync(int instrumentId)
     {
-        List<User> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
+        List<UserDto> teachersPerInstrument = await _instructorService.TeachersPerInstrument(instrumentId);
 
         return teachersPerInstrument;
     }

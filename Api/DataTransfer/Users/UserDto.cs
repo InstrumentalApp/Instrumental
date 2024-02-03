@@ -1,6 +1,6 @@
-using TeamFive.Models;
+using Instrumental.Models;
 
-namespace TeamFive.DataTransfer.Users;
+namespace Instrumental.DataTransfer.Users;
 public class UserDto
 {
     public int UserId { get; set; }

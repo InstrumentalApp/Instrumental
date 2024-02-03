@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TeamFive.Models;
+namespace Instrumental.Models;
 public class BaseEntity
 {
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

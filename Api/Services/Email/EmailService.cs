@@ -1,8 +1,8 @@
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
-using TeamFive.DataStorage;
+using Instrumental.DataStorage;
 
-namespace TeamFive.Services.Email;
+namespace Instrumental.Services.Email;
 public class EmailService : IEmailService
 {
     private readonly IAmazonSimpleEmailService _sesClient;

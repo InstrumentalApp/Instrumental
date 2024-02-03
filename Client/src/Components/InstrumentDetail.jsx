@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import "../Styles/InstrumentLessons.css";
 import useLocalStorage from '../Hooks/useLocalStorage';
 import LessonBookingModal from './LessonBookingModal';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import HoverButton from "./HoverButton";
+import Typography from '@mui/material/Typography';
+import styles from "../Styles/App";
+import Skeleton from '@mui/material/Skeleton';
 import useApi from '../Hooks/useApi';
 
 
@@ -52,10 +61,34 @@ const InstrumentDetail = () => {
     <div className="teacher-cards">
       {
         teacherList.map((teacher, index) => (
-          <div key={index} className="teacher-card">
-            <p>{teacher.firstName} {teacher.lastName}</p>
-            <button onClick={() => openModal(teacher)}>Book a Lesson</button>
-          </div>
+          <Card key={index} className="teacher-card" sx={{
+            maxWidth: 345,
+            backgroundColor: styles.colors.SECONDARY,
+            transition: "translate .2s, box-shadow .25s",
+            padding: 2,
+            marginTop: 4,
+          }}>
+            {/* Add pictures for teachers, adjust colors */}
+            <CardMedia
+              sx={{ height: 100, p: 10, m: 2 }}
+              image="https://placehold.co/300"
+            />
+            <CardContent sx={{ color: "black" }}>
+              <Typography gutterBottom variant="body1" component="div" sx={{ fontFamily: styles.fonts.HEADER_FONT }}>
+                {teacher.firstName} {teacher.lastName}
+              </Typography>
+            </CardContent>
+            <CardActions className="d-flex justify-content-center">
+              <HoverButton
+                onClick={() => openModal(teacher)}
+                backgroundColor={styles.colors.SECONDARY}
+                color={styles.colors.BLACK}
+                fontSize="12px"
+              >
+                Book a Lesson
+              </HoverButton>
+            </CardActions>
+          </Card>
         ))
       }
       {/* Conditionally render the LessonBookingModal */}

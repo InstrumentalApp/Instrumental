@@ -1,4 +1,6 @@
-# TeamFiveApp
+# Instrumental
+
+![ezgif com-video-to-gif (2)](https://github.com/InstrumentalApp/Instrumental/assets/69173728/5c271db9-91f0-4660-9940-399e561e23b4)
 
  - [Installation and Setup](#installation-and-setup)  
  - [Suggested VSCode Extensions](#suggested-vscode-extensions)
@@ -14,7 +16,7 @@
 3. NodeJS for your OS/System: https://nodejs.org/en  
 4. Install MySQL Workbench/MySQL server
 #### Project Initialization  
-1. Clone this repository to your system and navigate to it using your console:  `cd TeamFiveApp`
+1. Clone this repository to your system and navigate to it using your console:  `cd Instrumental`
 2.  CD into the Api: `cd Api/`  
 3. Copy and rename `appsettings.Secrets.json.EXAMPLE` to `appsettings.Secrets.json` and configure the DB connection string to your local DB credentials.    
 4. Run `dotnet restore` to install dotnet project dependencies.  

@@ -1,9 +1,10 @@
-using TeamFive.DataStorage;
-using TeamFive.Models;
+using Instrumental.DataStorage;
+using Instrumental.Models;
 using Microsoft.EntityFrameworkCore;
-using TeamFive.Enums;
+using Instrumental.Enums;
+using Instrumental.DataTransfer.Users;
 
-namespace TeamFive.Services.Instructors;
+namespace Instrumental.Services.Instructors;
 public class InstructorService : IInstructorService
 {
     private readonly DBContext _context;
@@ -13,11 +14,12 @@ public class InstructorService : IInstructorService
         _context = context;
     }
 
-    public async Task<List<User>> TeachersPerInstrument(int instrumentId)
+    public async Task<List<UserDto>> TeachersPerInstrument(int instrumentId)
     {
-        List<User> teacherInstrumentList = await _context.Users
+        List<UserDto> teacherInstrumentList = await _context.Users
             .Where(u => u.UserInstruments.Any(i => i.InstrumentId == instrumentId))
             .Where(u => u.Role!.RoleType == RoleType.TEACHER)
+            .Select(t=>new UserDto(t))
             .ToListAsync();
 
         if(teacherInstrumentList != null) {

@@ -1,7 +1,8 @@
-using TeamFive.Models;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Instructors;
+namespace Instrumental.Services.Instructors;
 public interface IInstructorService
 {
-    Task<List<User>> TeachersPerInstrument(int instrumentId);
+    Task<List<UserDto>> TeachersPerInstrument(int instrumentId);
 }

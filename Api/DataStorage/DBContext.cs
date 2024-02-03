@@ -1,8 +1,8 @@
 #pragma warning disable CS8618
 using Microsoft.EntityFrameworkCore;
-using TeamFive.Models;
+using Instrumental.Models;
 
-namespace TeamFive.DataStorage;
+namespace Instrumental.DataStorage;
 public class DBContext : DbContext
 {
     public DbSet<User> Users { get; set; }

@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "npm run dev",
+    "server": "cd .. && cd Api && dotnet watch run",
+    "reset-db": "cd .. && cd Api && dotnet ef database drop && dotnet ef database update",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

@@ -1,8 +1,8 @@
-using TeamFive.DataTransfer;
-using TeamFive.DataTransfer.Users;
-using TeamFive.Models;
+using Instrumental.DataTransfer;
+using Instrumental.DataTransfer.Users;
+using Instrumental.Models;
 
-namespace TeamFive.Services.Users;
+namespace Instrumental.Services.Users;
 public interface IUserService
 {
     Task<UserDto?> CreateStudentAsync(User user);

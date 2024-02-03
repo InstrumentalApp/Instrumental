@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using TeamFive.Models;
+using Instrumental.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
 using Bogus;
 
-namespace TeamFive.DataStorage;
+namespace Instrumental.DataStorage;
 
 public static class ModelBuilderExtensions
 {

@@ -2,18 +2,18 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TeamFive.DataStorage;
-using TeamFive.Services.Users;
-using TeamFive.Services.Tokens;
-using TeamFive.Services.Instruments;
-using TeamFive.Services.Instructors;
-using TeamFive.Services.Lessons;
-using TeamFive.Enums;
+using Instrumental.DataStorage;
+using Instrumental.Services.Users;
+using Instrumental.Services.Tokens;
+using Instrumental.Services.Instruments;
+using Instrumental.Services.Instructors;
+using Instrumental.Services.Lessons;
+using Instrumental.Enums;
 using System.Security.Claims;
 using Amazon.SimpleEmail;
 using Amazon.Runtime;
 using Amazon.Extensions.NETCore.Setup;
-using TeamFive.Services.Email;
+using Instrumental.Services.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
