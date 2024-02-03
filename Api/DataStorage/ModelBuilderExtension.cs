@@ -20,7 +20,9 @@ public static class ModelBuilderExtensions
     List<Instrument> instrumentList = JsonSerializer.Deserialize<List<Instrument>>(_jsonData)!;
 
     modelBuilder.Entity<Instrument>().HasData(instrumentList);
-    //Create a teacher per instrument in seedInsturments.json
+
+    Randomizer.Seed = new Random(8765);
+
     int numberOfTeachers = 200;
     int numberOfInstruments = instrumentList.Count;
 
